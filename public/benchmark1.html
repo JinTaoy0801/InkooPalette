@@ -3,9 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Inkoo Game Design Document</title>
 </head>
+<style>
+    h1 {
+        text-align: center;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    h4 {
+        text-align: center;
+    }
+
+    .logo {
+        text-align: center;     
+    }
+
+    #logo {
+        width: 200px;
+    }
+</style>
 <body>
-    Hello World!
+    <h1>Inkoo's Palette</h1>
+    <div class="logo"><img id="logo" src="../gui-images/logo.png" alt="Logo"></div>
+    <h2>Game Design Document</h2>
+    <h4>By Devon Lum, Jin Tao Yu, and Kevin Wang</h4>
+
+    <h3>Introduction</h3>
+    <p>This document describes a game called <i>Inkoo's Palette</i>, designed to be a simple, 2D platformer, 
+        constructed and documented to help others learn to make simple, 2D platformers. The game will 
+        employ sprite-based animation, tiled backgrounds, collision detection, physics, AI, platformer 
+        & gravity, efficient memory management, and more basic 2D game techniques.</p>
+
+    <h3>Technology</h3>
+    <p><i>Inkoo's Palette</i> will be developed for the Windows Platform using the Wolfie2D game engine, 
+        which is a game engine developed by Joe Weaver and Professor Richard McKenna in Fall 2020 
+        for Stony Brooks 2D game programming course as an alternative to Phaser. The game will be 
+        coded in Typescript. Audacity will be used for all music and sound effects management. 
+        Artwork will be drawn using Piskel.</p>
+
+    <h3>Backstory</h3>
+    <p>Once there was a painter who was beloved by colors, he who gave the world color had three disciples,
+        whom he gave each a primary color. The painter wanted his disciples to venture throughout the 
+        world to spread out their color evenly, so all corners of the world can be colorful. But they 
+        got selfish and wanted to keep the color all to themselves. In a world absence of color, a single 
+        spirit of color emerges to restore color back into the world.
+        (subjective to change)</p>
+
+    <h3>Objective</h3>
+    <p>The spirit of color, Inkoo, emerges to restore color to the world; he must defeat the three disciples 
+        and restore color back to the world.</p>
+
+    <h3>Gameplay</h3>
+    <p>This game will work like a platformer where Inkoo will be able to move left and right, and jump on platforms 
+        and other surfaces. Inkoo will have attack abilities with set ranges to hit enemies.
+    </p>
+    <p>Inkoo would have a three part attack, where the player is rewarded if he makes it up to the third string and 
+        is able to hit it before the enemies hit him back since it would deal more damage. The player is not forced 
+        to do so though. 
+    </p>
+    <ul>
+        <li>Inkoo would have an unlockable dashing ability after he complete said [objective]</li>
+        <li>Inkoo would have an unlockable range attack ability after he complete said [objective]</li>
+        <li>Inkoo would have an unlockable double jump ability after he complete said [objective]</li>
+    </ul>
+
+    <h3>Controls</h3>
+    <p>This game requires a keyboard only and has the following controls:</p>
+    <ul>
+        <li>W/Spacebar - Jump</li>
+        <li>A - Move Left</li>
+        <li>S - Quick Fall</li>
+        <li>D - Move Right</li>
+        <li>Left Shift - Dash</li>
+        <li>J - Basic Attack</li>
+        <li>K - Range attack</li>
+        <li>Esc - Pause Game</li>
+    </ul>
+
+    <h3>Graphical User Interface</h3>
+    <p>As far as the GUI is concerned, if we consider</p>
+    <ul>
+        <li><b>Splash Screen</b> - The splash screen GUI simply presents the game name and the game logo.
+        Pressing any button will bring the player to the Game Menu.</li>
+        <br>
+        <img src="../gui-images/splash.png" alt="Splash Screen">
+        <br>
+        <br>
+        <li><b>Game Menu</b> - After the player presses any button from the Splash Screen, it leads the 
+            player to this menu where they will be able to select from the following options:</li>
+        <br>
+        <img src="../gui-images/menu.png" alt="Game Menu">
+        <br>
+        <br>
+        <ul>
+            <li><b>Start</b> - Upon selecting Start, the game should start immediately</li>
+            <li><b>Controls</b> - Upon selecting Controls, it would display all game controls</li>
+            <br>
+            <img src="../gui-images/controls.png" alt="Controls Menu">
+            <br>
+            <br>
+            <li><b>Story</b> - Upon selecting Story, it would display a page explaining a bit of the game's story</li>
+            <br>
+            <img src="../gui-images/story.png" alt="Story Menu">
+            <br>
+            <br>
+            <li><b>Exit</b> - Upon selecting Exit, the game would close</li>
+        </ul>
+        <br>
+        <li><b>In-Game GUI</b> - While playing the following will be displayed at all times:</li>
+        <br>
+        <img src="../gui-images/ingame.png" alt="In-Game GUI">
+        <ul>
+            <li>Ink Hearts - Amount of hearts remaining</li>
+        </ul>
+        <br>
+        <br>
+        <li><b>Pause Menu</b> - The menu that appears when the player presses esc during the game. The pause menu will have the following options:</li>
+        <br>
+        <img src="../gui-images/pause.png" alt="Pause Menu">
+        <ul>
+            <li><b>Continue</b> - Selecting this button will allow the player to continue their game</li>
+            <li><b>Controls</b> - When pressed, the game will display the Controls Menu</li>
+            <li><b>Exit</b> - When pressed, the game will exit and return to the Splash Screen</li>
+        </ul>
+    </ul>
+
+    <h3>Artwork</h3>
+    <p>All artwork in the game will be original. The following needs to be created:</p>
+    <ul>
+        <li><b>Inkoo</b> -  Inkoo's sprite will need the following animations:</li>
+        <ul>
+            <li>Moving Left</li>
+            <li>Moving Right</li>
+            <li>Jumping</li>
+            <li>Jumping Left</li>
+            <li>Jumping Right</li>
+            <li>Falling</li>
+            <li>Falling Left</li>
+            <li>Falling Right</li>
+            <li>Attacking</li>
+            <li>Dying</li>
+            <li>Dead</li>
+        </ul>
+        <br>
+        <li><b>Enemies</b></li>
+        <ul>
+            <li>Moving Left</li>
+            <li>Moving Right</li>
+            <li>Attacking Left</li>
+            <li>Attacking Right</li>
+        </ul>
+        <br>
+        <li><b>Ceiling, Floor, and Wall Tiles</b></li>
+        <br>
+        <li><b>World Background</b></li>
+    </ul>
+
+    <h3>Sound Effects</h3>
+    <p>All sound effects will be original. Sounds must be made to coincide with each of the following events:</p>
+    <ul>
+        <li>Jump</li>
+        <li>Inkoo Dying</li>
+        <li>Attacking</li>
+        <li>Monster Attacking</li>
+    </ul>
+
+    <h3>Music</h3>
+    <p>Game Music will be added when time permits.</p>
 </body>
 </html>
