@@ -1,13 +1,16 @@
 {
   "dependencies": {
-    "firebase": "^10.9.0"
+    "firebase": "^10.9.0",
+    "tsify": "^5.0.4",
+    "vinyl-source-stream": "^2.0.0",
+    "watchify-middleware": "^1.9.1"
   },
   "name": "inkoopalette",
   "description": "",
   "version": "1.0.0",
   "main": "index.js",
   "devDependencies": {
-    "gulp": "^4.0.0",
+    "gulp": "^4.0.2",
     "gulp-typescript": "^6.0.0-alpha.1",
     "typescript": "^5.4.4"
   },

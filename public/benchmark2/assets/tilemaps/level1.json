@@ -311,12 +311,30 @@
  "tileheight":16,
  "tilesets":[
         {
+         "columns":20,
          "firstgid":1,
-         "source":"inktile2.tsx"
+         "image":"tileset.png",
+         "imageheight":160,
+         "imagewidth":320,
+         "margin":0,
+         "name":"tileset",
+         "spacing":0,
+         "tilecount":200,
+         "tileheight":16,
+         "tilewidth":16
         }, 
         {
+         "columns":5,
          "firstgid":201,
-         "source":"background1.tsx"
+         "image":"background1.png",
+         "imageheight":512,
+         "imagewidth":1024,
+         "margin":0,
+         "name":"background",
+         "spacing":0,
+         "tilecount":2048,
+         "tileheight":16,
+         "tilewidth":16
         }],
  "tilewidth":16,
  "type":"map",
