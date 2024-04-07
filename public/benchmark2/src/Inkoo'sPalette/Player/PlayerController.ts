@@ -20,7 +20,7 @@ export const PlayerAnimations = {
     WALK: "WALK",
     JUMP: "JUMP",
     FALL:"FALL",
-    PREVIOUS:"PREVIOUS"
+    
 } as const
 
 export const PlayerStates = {
@@ -28,7 +28,8 @@ export const PlayerStates = {
     WALK: "WALK",
     JUMP: "JUMP",
     FALL:"FALL",
-    DEAD:"DEAD"
+    DEAD:"DEAD",
+    PREVIOUS:"PREVIOUS"
 } as const
 
 export default class PlayerController extends StateMachineAI {
