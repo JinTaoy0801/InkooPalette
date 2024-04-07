@@ -11,13 +11,14 @@ import PlayerController from "../PlayerController";
 
 import InkooAnimatedSprite from "../../Nodes/InkooAnimatedSprite";
 
+//if this code does not work change owner to GameNode and 
 export default abstract class PlayerState extends State{
-    owner:GameNode;
+    owner:InkooAnimatedSprite;
     gravity: number=1000;
     parent:PlayerController;
     positionTimer:Timer;
-
-    constructor (parent: StateMachine, owner: GameNode){
+//this parent to Statemachine
+    constructor (parent: PlayerController, owner: InkooAnimatedSprite){
         super(parent);
         this.owner = owner;
         this.positionTimer = new Timer(250);
