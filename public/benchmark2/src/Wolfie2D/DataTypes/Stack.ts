@@ -1,4 +1,4 @@
-import Collection from "../Interfaces/Collection";
+import Collection from "./Collection";
 
 /**
  * A LIFO stack with items of type T

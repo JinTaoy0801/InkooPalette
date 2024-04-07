@@ -10,7 +10,6 @@ import Graphic from "../../Nodes/Graphic";
 import AnimatedSprite from "../../Nodes/Sprites/AnimatedSprite";
 import Vec2 from "../../DataTypes/Vec2";
 import Layer from "../Layer";
-import Spritesheet from "../../DataTypes/Spritesheet";
 
 /**
  * The manager of all factories used for adding @reference[GameNode]s to the @reference[Scene].
@@ -54,8 +53,8 @@ export default class FactoryManager {
 	 * @param layerName The layer on which to add the sprite
 	 * @returns A new AnimatedSprite
 	 */
-	animatedSprite<T extends AnimatedSprite>(constr: new (s: Spritesheet) => T, key: string, layerName: string): T {
-        return this.canvasNodeFactory.addAnimatedSprite(constr, key, layerName);
+	animatedSprite(key: string, layerName: string): AnimatedSprite {
+        return this.canvasNodeFactory.addAnimatedSprite(key, layerName);
     }
 
     /**

@@ -1,4 +1,4 @@
-import Map from "../../DataTypes/Collections/Map";
+import Map from "../../DataTypes/Map";
 import CanvasNode from "../../Nodes/CanvasNode";
 import ResourceManager from "../../ResourceManager/ResourceManager";
 

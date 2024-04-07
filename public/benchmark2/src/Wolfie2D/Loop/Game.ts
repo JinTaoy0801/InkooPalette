@@ -1,7 +1,7 @@
 import EventQueue from "../Events/EventQueue";
 import Input from "../Input/Input";
 import InputHandler from "../Input/InputHandler";
-import Recorder from "../Playback/EventRecorder";
+import Recorder from "../Playback/Recorder";
 import Debug from "../Debug/Debug";
 import ResourceManager from "../ResourceManager/ResourceManager";
 import Viewport from "../SceneGraph/Viewport";
@@ -19,10 +19,6 @@ import Vec2 from "../DataTypes/Vec2";
 import RegistryManager from "../Registry/RegistryManager";
 import WebGLRenderer from "../Rendering/WebGLRenderer";
 import Scene from "../Scene/Scene";
-import RecordingManager from "../Playback/PlaybackManager";
-import InputReplayer from "../Playback/EventReplayer";
-import { TimerState } from "../Timing/Timer";
-import PlaybackManager from "../Playback/PlaybackManager";
 
 /**
  * The main loop of the game engine.
@@ -49,7 +45,7 @@ export default class Game {
     // All of the necessary subsystems that need to run here
 	private eventQueue: EventQueue;
 	private inputHandler: InputHandler;
-	private playbackManager: PlaybackManager;
+	private recorder: Recorder;
     private resourceManager: ResourceManager;
     private sceneManager: SceneManager;
     private audioManager: AudioManager;
@@ -107,11 +103,10 @@ export default class Game {
         this.eventQueue = EventQueue.getInstance();
         this.inputHandler = new InputHandler(this.GAME_CANVAS);
         Input.initialize(this.viewport, this.gameOptions.inputs);
+        this.recorder = new Recorder();
         this.resourceManager = ResourceManager.getInstance();
         this.sceneManager = new SceneManager(this.viewport, this.renderingManager);
         this.audioManager = AudioManager.getInstance();
-        this.playbackManager = new PlaybackManager();
-        
     }
 
     /**
@@ -164,14 +159,11 @@ export default class Game {
             // Handle all events that happened since the start of the last loop
             this.eventQueue.update(deltaT);
 
-            // Update the input handler - disabling/enabling user input
-            this.inputHandler.update(deltaT);
-
             // Update the input data structures so game objects can see the input
             Input.update(deltaT);
 
             // Update the recording of the game
-            this.playbackManager.update(deltaT);
+            this.recorder.update(deltaT);
 
             // Update all scenes
             this.sceneManager.update(deltaT);

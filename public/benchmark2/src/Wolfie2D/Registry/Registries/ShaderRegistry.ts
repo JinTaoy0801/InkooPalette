@@ -1,4 +1,4 @@
-import Map from "../../DataTypes/Collections/Map";
+import Map from "../../DataTypes/Map";
 import ShaderType from "../../Rendering/WebGLRendering/ShaderType";
 import LabelShaderType from "../../Rendering/WebGLRendering/ShaderTypes/LabelShaderType";
 import PointShaderType from "../../Rendering/WebGLRendering/ShaderTypes/PointShaderType";

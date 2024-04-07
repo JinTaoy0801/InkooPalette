@@ -1,4 +1,4 @@
-import Collection from "../Interfaces/Collection";
+import Collection from "./Collection";
 
 /**
  * A doubly linked list

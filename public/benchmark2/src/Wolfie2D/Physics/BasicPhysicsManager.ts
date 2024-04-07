@@ -264,7 +264,7 @@ export default class BasicPhysicsManager extends PhysicsManager {
 			// Also check for triggers
 			for(let overlap of overlaps){
 				// Check for a trigger. If we care about the trigger, react
-				if(overlap.other.isTrigger && (overlap.other.triggerMask & node.group) && node.group != -1){
+				if(overlap.other.isTrigger && (overlap.other.triggerMask & node.group)){
 					// Get the bit that this group is represented by
 					let index = Math.floor(Math.log2(node.group));
 
@@ -321,15 +321,21 @@ export default class BasicPhysicsManager extends PhysicsManager {
 		let max = new Vec2(node.sweptRect.right, node.sweptRect.bottom);
 
 		// Convert the min/max x/y to the min and max row/col in the tilemap array
-		let minIndex = tilemap.getMinColRow(node.sweptRect);
-		let maxIndex = tilemap.getMaxColRow(node.sweptRect);
+		let minIndex = tilemap.getColRowAt(min);
+		let maxIndex = tilemap.getColRowAt(max);
+
+		let tileSize = tilemap.getTileSize();
 
 		// Loop over all possible tiles (which isn't many in the scope of the velocity per frame)
 		for(let col = minIndex.x; col <= maxIndex.x; col++){
 			for(let row = minIndex.y; row <= maxIndex.y; row++){
 				if(tilemap.isTileCollidable(col, row)){
+					// Get the position of this tile
+					let tilePos = new Vec2(col * tileSize.x + tileSize.x/2, row * tileSize.y + tileSize.y/2);
+
 					// Create a new collider for this tile
-					let collider = tilemap.getTileCollider(col, row);
+					let collider = new AABB(tilePos, tileSize.scaled(1/2));
+
 					// Calculate collision area between the node and the tile
 					let area = node.sweptRect.overlapArea(collider);
 					if(area > 0){

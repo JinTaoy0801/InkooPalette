@@ -2,7 +2,7 @@ import SceneGraph from "./SceneGraph";
 import CanvasNode from "../Nodes/CanvasNode";
 import Viewport from "./Viewport";
 import Scene from "../Scene/Scene";
-import RegionQuadTree from "../DataTypes/Collections/RegionQuadTree";
+import RegionQuadTree from "../DataTypes/RegionQuadTree";
 import Vec2 from "../DataTypes/Vec2";
 import AABB from "../DataTypes/Shapes/AABB";
 import Stats from "../Debug/Stats";

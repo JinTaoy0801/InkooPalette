@@ -1,12 +1,11 @@
-import Stack from "../DataTypes/Collections/Stack";
-import Path from "../DataTypes/Pathfinding/Path";
+import Stack from "../DataTypes/Stack";
 import Vec2 from "../DataTypes/Vec2";
 import GameNode from "../Nodes/GameNode";
 
 /**
  * A path that AIs can follow. Uses finishMove() in Physical to determine progress on the route
  */
-export default class NavigationPath implements Path<Vec2> {
+export default class NavigationPath {
 	/** The navigation path, stored as a stack of next positions */
 	protected path: Stack<Vec2>;
 	/** The current direction of movement */
@@ -32,8 +31,6 @@ export default class NavigationPath implements Path<Vec2> {
 		return this.path.isEmpty();
 	}
 
-    next(): Vec2 | null { return this.path.isEmpty() ? null : this.path.peek(); }
-
 	/**
 	 * Gets the movement direction in the current position along the path
 	 * @param node The node to move along the path
@@ -49,7 +46,7 @@ export default class NavigationPath implements Path<Vec2> {
 	 * @param node The node moving along the path
 	 */
 	handlePathProgress(node: GameNode): void {
-		if(!this.path.isEmpty() && node.position.distanceSqTo(this.path.peek()) < this.distanceThreshold*this.distanceThreshold){
+		if(node.position.distanceSqTo(this.path.peek()) < this.distanceThreshold*this.distanceThreshold){
 			// We've reached our node, move on to the next destination
 			this.path.pop();
 		}

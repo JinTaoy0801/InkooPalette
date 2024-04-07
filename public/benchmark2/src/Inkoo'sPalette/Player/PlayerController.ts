@@ -3,8 +3,6 @@ import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import Debug from "../../Wolfie2D/Debug/Debug";
 import Receiver from "../../Wolfie2D/Events/Receiver";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
-
-
 import { inkooEvents } from "../inkooEvents";
 import InkooAnimatedSprite from "../Nodes/InkooAnimatedSprite";
 import Fall from "./PlayerStates/Fall";
@@ -12,6 +10,7 @@ import inAir from "./PlayerStates/inAir";
 import Jump from "./PlayerStates/Jump";
 import Idle from "./PlayerStates/Idle"; 
 import Walking from "./PlayerStates/Walking";
+import GameNode from "../../Wolfie2D/Nodes/GameNode";
 
 
 export const PlayerAnimations = {
@@ -51,6 +50,7 @@ export default class PlayerController extends StateMachineAI {
         this._maxHealth = 100;
 
         this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
+        
         this.addState(PlayerStates.IDLE, new Idle(this, this.owner));
         this.addState(PlayerStates.JUMP, new Jump(this, this.owner));
         this.addState(PlayerStates.FALL, new Fall(this, this.owner));

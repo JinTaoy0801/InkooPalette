@@ -1,4 +1,4 @@
-import Map from "../DataTypes/Collections/Map";
+import Map from "../DataTypes/Map";
 import CanvasNode from "../Nodes/CanvasNode";
 import Graphic from "../Nodes/Graphic";
 import Point from "../Nodes/Graphics/Point";
@@ -22,8 +22,6 @@ import Vec2 from "../DataTypes/Vec2";
 import Color from "../Utils/Color";
 import Line from "../Nodes/Graphics/Line";
 import Debug from "../Debug/Debug";
-import IsometricTilemap from "../Nodes/Tilemaps/IsometricTilemap";
-import StaggeredIsometricTilemap from "../Nodes/Tilemaps/StaggeredIsometricTilemap";
 
 /**
  * An implementation of the RenderingManager class using CanvasRenderingContext2D.
@@ -231,8 +229,9 @@ export default class CanvasRenderer extends RenderingManager {
 
     // @override
     protected renderTilemap(tilemap: Tilemap): void {
-        this.tilemapRenderer.renderTilemap(tilemap);
-        
+        if(tilemap instanceof OrthogonalTilemap){
+            this.tilemapRenderer.renderOrthogonalTilemap(<OrthogonalTilemap>tilemap);
+        }
     }
 
     // @override

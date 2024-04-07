@@ -18,7 +18,7 @@ import TweenController from "../Rendering/Animations/TweenController";
 import Debug from "../Debug/Debug";
 import Color from "../Utils/Color";
 import Circle from "../DataTypes/Shapes/Circle";
-import GoapAI from "../DataTypes/Goap/GoapAI";
+import GoapAI from "../DataTypes/Interfaces/GoapAI";
 
 /**
  * The representation of an object in the game world.
@@ -159,7 +159,7 @@ export default abstract class GameNode implements Positioned, Unique, Updateable
 	};
 
 	moveOnPath(speed: number, path: NavigationPath): void {
-		if(this.frozen || path.isDone()) return;
+		if(this.frozen) return;
 		this.path = path;
 		let dir = path.getMoveDirection(this);
 		this.moving = true;

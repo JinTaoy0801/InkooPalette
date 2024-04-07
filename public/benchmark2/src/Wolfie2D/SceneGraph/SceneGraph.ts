@@ -1,6 +1,6 @@
 import Viewport from "./Viewport";
 import CanvasNode from "../Nodes/CanvasNode";
-import Map from "../DataTypes/Collections/Map";
+import Map from "../DataTypes/Map";
 import Vec2 from "../DataTypes/Vec2";
 import Scene from "../Scene/Scene";
 import AABB from "../DataTypes/Shapes/AABB";

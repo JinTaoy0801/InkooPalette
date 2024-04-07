@@ -1,4 +1,4 @@
-import Map from "../DataTypes/Collections/Map";
+import Map from "../DataTypes/Map";
 import CanvasNode from "../Nodes/CanvasNode";
 import Graphic from "../Nodes/Graphic";
 import AnimatedSprite from "../Nodes/Sprites/AnimatedSprite";

@@ -1,4 +1,4 @@
-import Map from "../../DataTypes/Collections/Map";
+import Map from "../../DataTypes/Map";
 import Emitter from "../../Events/Emitter";
 import CanvasNode from "../../Nodes/CanvasNode";
 import { AnimationData, AnimationState } from "./AnimationTypes";

@@ -1,4 +1,4 @@
-import Collection from "../Interfaces/Collection";
+import Collection from "./Collection";
 
 /**
  * Associates strings with elements of type T

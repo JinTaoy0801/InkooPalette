@@ -1,4 +1,4 @@
-import Map from "../DataTypes/Collections/Map"
+import Map from "../DataTypes/Map"
 
 /**
  * A representation of an in-game event that is passed through the @reference[EventQueue]

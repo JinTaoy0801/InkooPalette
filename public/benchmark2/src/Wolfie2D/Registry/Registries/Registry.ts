@@ -1,4 +1,4 @@
-import Map from "../../DataTypes/Collections/Map";
+import Map from "../../DataTypes/Map";
 
 /** */
 export default abstract class Registry<T> extends Map<T>{

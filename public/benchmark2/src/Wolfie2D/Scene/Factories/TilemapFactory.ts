@@ -9,16 +9,8 @@ import { TiledCollectionTile } from "../../DataTypes/Tilesets/TiledData";
 import Sprite from "../../Nodes/Sprites/Sprite";
 import PositionGraph from "../../DataTypes/Graphs/PositionGraph";
 import Navmesh from "../../Pathfinding/Navmesh";
-import IsometricTilemap from "../../Nodes/Tilemaps/IsometricTilemap";
-import StaggeredIsometricTilemap from "../../Nodes/Tilemaps/StaggeredIsometricTilemap";
 
 // @ignorePage
-export enum TilemapOrientation {
-    ORTHOGONAL = "orthogonal",
-    ISOMETRIC = "isometric",
-    STAGGERED_ISOMETRIC = "staggered"
-}
-
 
 /**
  * A factory that abstracts adding @reference[Tilemap]s to the @reference[Scene].
@@ -52,23 +44,11 @@ export default class TilemapFactory {
 
         // Set the constructor for this tilemap to either be orthographic or isometric
         let constr: new(...args: any) => Tilemap;
-
-        switch(tilemapData.orientation) {
-            case TilemapOrientation.ORTHOGONAL: {
-                constr = OrthogonalTilemap;
-                break;
-            }
-            case TilemapOrientation.ISOMETRIC: {
-                constr = IsometricTilemap;
-                break;
-            }
-            case TilemapOrientation.STAGGERED_ISOMETRIC: {
-                constr = StaggeredIsometricTilemap;
-                break;
-            }
-            default: {
-                throw new Error(`Unknown Tilemap Orientation "${tilemapData.orientation}"`);
-            }
+        if(tilemapData.orientation === "orthographic"){
+            constr = OrthogonalTilemap;
+        } else {
+            // No isometric tilemap support right now, so Orthographic tilemap
+            constr = OrthogonalTilemap;
         }
 
         // Initialize the return value array

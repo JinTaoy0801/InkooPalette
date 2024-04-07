@@ -15,7 +15,7 @@ import Emitter from "../Events/Emitter";
 import Updateable from "../DataTypes/Interfaces/Updateable";
 import NavigationManager from "../Pathfinding/NavigationManager";
 import AIManager from "../AI/AIManager";
-import Map from "../DataTypes/Collections/Map";
+import Map from "../DataTypes/Map";
 import ParallaxLayer from "./Layers/ParallaxLayer";
 import UILayer from "./Layers/UILayer";
 import CanvasNode from "../Nodes/CanvasNode";

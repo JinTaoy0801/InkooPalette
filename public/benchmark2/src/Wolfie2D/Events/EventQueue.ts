@@ -1,5 +1,5 @@
-import Queue from "../DataTypes/Collections/Queue";
-import Map from "../DataTypes/Collections/Map";
+import Queue from "../DataTypes/Queue";
+import Map from "../DataTypes/Map";
 import GameEvent from "./GameEvent";
 import Receiver from "./Receiver";
 import { GameEventType } from "./GameEventType";
@@ -35,7 +35,7 @@ export default class EventQueue {
 	private receivers: Map<Array<Receiver>>;
 
     private constructor(){
-        this.MAX_SIZE = 200;
+        this.MAX_SIZE = 100;
         this.q = new Queue<GameEvent>(this.MAX_SIZE);
         this.receivers = new Map<Array<Receiver>>();
 	}

@@ -1,7 +1,7 @@
 import Shape from "../Shapes/Shape";
 import AABB from "../Shapes/AABB";
 import Vec2 from "../Vec2";
-import Map from "../Collections/Map";
+import Map from "../Map";
 
 /**
  * Describes an object that can opt into physics.

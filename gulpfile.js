@@ -5,7 +5,7 @@ var watchify = require('watchify');
 var tsify = require('tsify');
 var fancy_log = require('fancy-log');
 var paths = {
-    pages: ['src/*.html']
+    pages: ['public/benchmark2/*.html']
 };
 
 var watchedBrowserify = watchify(browserify({
@@ -18,7 +18,7 @@ var watchedBrowserify = watchify(browserify({
 
 gulp.task('copy-html', function () {
     return gulp.src(paths.pages)
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('public/benchmark2'));
 });
 
 function bundle() {
@@ -26,7 +26,7 @@ function bundle() {
         .bundle()
         .on('error', fancy_log)
         .pipe(source('bundle.js'))
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('public/benchmark2'));
 }
 
 gulp.task('default', gulp.series(gulp.parallel('copy-html'), bundle));

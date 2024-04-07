@@ -3,8 +3,6 @@ import ResourceManager from "../ResourceManager/ResourceManager";
 import Viewport from "../SceneGraph/Viewport";
 import RenderingManager from "../Rendering/RenderingManager";
 import MemoryUtils from "../Utils/MemoryUtils";
-import Receiver from "../Events/Receiver";
-import { GameEventType } from "../Events/GameEventType";
 
 /**
  * The SceneManager acts as an interface to create Scenes, and handles the lifecycle methods of Scenes.
@@ -30,8 +28,6 @@ export default class SceneManager {
 	protected pendingScene: Scene;
 	protected pendingSceneInit: Record<string, any>;
 
-	protected receiver: Receiver;
-
 	/**
 	 * Creates a new SceneManager
 	 * @param viewport The Viewport of the game
@@ -44,9 +40,6 @@ export default class SceneManager {
 		this.renderingManager = renderingManager;
 		this.idCounter = 0;
 		this.pendingScene = null;
-
-		this.receiver = new Receiver();
-		this.receiver.subscribe(GameEventType.CHANGE_SCENE);
 	}
 
 	/**
@@ -121,11 +114,6 @@ export default class SceneManager {
 	 * @param deltaT The timestep of the Scene
 	 */
 	public update(deltaT: number){
-		while (this.receiver.hasNextEvent()) {
-			let ev = this.receiver.getNextEvent();
-			if (ev.type === GameEventType.CHANGE_SCENE) this.changeToScene(ev.data.get("scene"), ev.data.get("init"));
-		}
-
 		if(this.pendingScene !== null){
 			this.doSceneChange();
 		}

@@ -1,7 +1,7 @@
-import Vec2 from "../Vec2";
-import Collection from "../Interfaces/Collection";
-import AABB from "../Shapes/AABB"
-import Positioned from "../Interfaces/Positioned";
+import Vec2 from "./Vec2";
+import Collection from "./Collection";
+import AABB from "./Shapes/AABB"
+import Positioned from "./Interfaces/Positioned";
 
 // TODO - Make max depth
 

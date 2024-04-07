@@ -1,4 +1,4 @@
-import Map from "../DataTypes/Collections/Map";
+import Map from "../DataTypes/Map";
 import EventQueue from "./EventQueue";
 import GameEvent from "./GameEvent";
 

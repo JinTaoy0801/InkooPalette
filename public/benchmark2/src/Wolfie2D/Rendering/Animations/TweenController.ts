@@ -1,4 +1,4 @@
-import Map from "../../DataTypes/Collections/Map";
+import Map from "../../DataTypes/Map";
 import GameNode from "../../Nodes/GameNode";
 import { AnimationState, TweenData } from "./AnimationTypes";
 import EaseFunctions from "../../Utils/EaseFunctions";
@@ -143,16 +143,7 @@ export default class TweenController {
 
             // If it has an onEnd, send an event
             if(tween.onEnd){
-                let data: Record<string, any> = {key: key, node: this.owner.id}
-                // If it has onEnd event data, add each entry, as long as the key is not named 'key' or 'node'
-                if (tween.onEndData) {
-                    Object.keys(tween.onEndData).forEach(key => {
-                        if (key !== "key" && key !== "node") {
-                            data[key] = tween.onEndData[key];
-                        }
-                    })
-                }
-                this.emitter.fireEvent(tween.onEnd, data); 
+                this.emitter.fireEvent(tween.onEnd, {key: key, node: this.owner.id}); 
             }
         }
     }

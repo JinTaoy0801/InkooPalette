@@ -1,26 +1,29 @@
+import GoapActionPlanner from "../../AI/GoapActionPlanner";
 import GameEvent from "../../Events/GameEvent";
 import GameNode from "../../Nodes/GameNode";
-import Queue from "../Collections/Queue";
-import Stack from "../Collections/Stack";
-import AI from "../Interfaces/AI";
+import Queue from "../Queue";
+import Stack from "../Stack";
 import GoapAction from "./GoapAction";
-import Updateable from "../Interfaces/Updateable";
+import Updateable from "./Updateable";
 
 /**
  * Defines a controller for a bot or a human. Must be able to update
  */
-export default interface GoapAI extends AI {
+export default interface GoapAI extends Updateable {
     /** Current goal of the AI */
-    get goal(): string;
+    goal: string;
 
     /** All current statuses this AI has */
-    get currentStatus(): Array<string>;
+    currentStatus: Array<string>;
 
     /** All possible actions that can be carried out */
-    get possibleActions(): Array<GoapAction>;
+    possibleActions: Array<GoapAction>;
 
     /** Current actions to be carried out */
-    get plan(): Stack<GoapAction>;
+    plan: Stack<GoapAction>;
+    
+    /** Once we have no actions, the planner can be called to find a new sequence of actions */
+    planner: GoapActionPlanner;
 
     /** Clears references from to the owner */
     destroy(): void;
@@ -33,4 +36,7 @@ export default interface GoapAI extends AI {
 
     /** Initializes the AI with the actor and any additional config */
     initializeAI(owner:GameNode, options: Record<string, any>): void
+
+    /** Change the goal to a new goal */
+    changeGoal(goal: string): void
 }

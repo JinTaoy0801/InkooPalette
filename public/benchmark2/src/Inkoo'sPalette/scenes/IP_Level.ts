@@ -16,6 +16,8 @@ import Scene from "../../Wolfie2D/Scene/Scene";
 import SceneManager from "../../Wolfie2D/Scene/SceneManager";
 import Viewport from "../../Wolfie2D/SceneGraph/Viewport";
 import Timer from "../../Wolfie2D/Timing/Timer";
+import PlayerController from "../Player/PlayerController"
+import { inkooEvents } from "../inkooEvents";
 
 export default class IP_Level extends Scene {
     protected playerSpawn: Vec2;
@@ -23,6 +25,10 @@ export default class IP_Level extends Scene {
 
 
     startScene(): void {
+        this.initLayers();
+        this.initViewport();
+        this.initPlayer();
+        this.subscribeToEvents();
     }
 
     updateScene(deltaT: number): void {
@@ -34,16 +40,25 @@ export default class IP_Level extends Scene {
     }
 
     protected initViewport(): void {
+        this.viewport.setZoomLevel(2);
     }
 
-    protected subscribeToEvents(){
+    protected subscribeToEvents() {
+        this.receiver.subscribe([
+            inkooEvents.PLAYER_MOVE,
+            inkooEvents.PLAYER_ATTACK,
+            inkooEvents.LEVEL_START,
+            inkooEvents.LEVEL_END,
+            inkooEvents.PLAYER_KILLED
+        ]);
     }
 
     protected addUI(){
+
     }
 
     protected initPlayer(): void {
-        this.player = this.add.animatedSprite("player", "primary");
+        this.player = this.add.animatedSprite('player', 'primary')
         this.player.scale.set(1, 1);
         this.player.position.copy(this.playerSpawn);
 

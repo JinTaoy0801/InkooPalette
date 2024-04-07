@@ -2,7 +2,7 @@ import Updateable from "../DataTypes/Interfaces/Updateable";
 import Tilemap from "../Nodes/Tilemap";
 import Receiver from "../Events/Receiver";
 import Emitter from "../Events/Emitter";
-import Map from "../DataTypes/Collections/Map";
+import Map from "../DataTypes/Map";
 import Physical from "../DataTypes/Interfaces/Physical";
 
 /**

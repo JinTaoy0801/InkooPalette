@@ -1,8 +1,8 @@
-import Vec2 from "../Vec2";
-import Collection from "../Interfaces/Collection";
-import AABB from "../Shapes/AABB";
-import Region from "../Interfaces/Region";
-import Unique from "../Interfaces/Unique";
+import Vec2 from "./Vec2";
+import Collection from "./Collection";
+import AABB from "./Shapes/AABB";
+import Region from "./Interfaces/Region";
+import Unique from "./Interfaces/Unique";
 import Map from "./Map";
 
 /**

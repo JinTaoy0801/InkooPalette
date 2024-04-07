@@ -1,5 +1,5 @@
 import Graph from "../DataTypes/Graphs/Graph";
-import Map from "../DataTypes/Collections/Map";
+import Map from "../DataTypes/Map";
 import Vec2 from "../DataTypes/Vec2";
 import Debug from "../Debug/Debug";
 import CanvasNode from "../Nodes/CanvasNode";

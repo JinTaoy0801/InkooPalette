@@ -25,29 +25,24 @@ export default class MainMenu extends Scene {
         this.viewport.setZoomLevel(1);
 
         // Create a play button
-        let playBtn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: new Vec2(size.x, size.y), text: "Play Game"});
-        playBtn.backgroundColor = Color.TRANSPARENT;
-        playBtn.borderColor = Color.WHITE;
-        playBtn.borderRadius = 0;
-        playBtn.setPadding(new Vec2(50, 10));
-        playBtn.font = "PixelSimple";
+        let playBtn = this.createButton("Play Game", new Vec2(size.x, size.y + 100));
+        let mapSelect = this.createButton("Map", new Vec2(size.x, size.y + 100));
+
 
         // When the play button is clicked, go to the next scene
         playBtn.onClick = () => {
-
-            let sceneOptions = {
-                physics: {
-                    groupNames: ["ground", "player", "balloon"],
-                    collisions:
-                    [
-                        [0, 1, 1],
-                        [1, 0, 0],
-                        [1, 0, 0]
-                    ]
-                }
-            }
-            this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
+            this.sceneManager.changeToScene(IP_Level1);
         }
+    }
+
+    private createButton(text: String, pos: Vec2): Button {
+        let btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: pos, text: text});
+        btn.backgroundColor = Color.TRANSPARENT;
+        btn.borderColor = Color.WHITE;
+        btn.borderRadius = 0;
+        btn.setPadding(new Vec2(50, 10));
+        btn.font = "PixelSimple";
+        return btn;
     }
 
     unloadScene(): void {
