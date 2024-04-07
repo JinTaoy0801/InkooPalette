@@ -2,7 +2,6 @@ import StateMachineAI from "../../Wolfie2D/AI/StateMachineAI";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import Debug from "../../Wolfie2D/Debug/Debug";
 import Receiver from "../../Wolfie2D/Events/Receiver";
-import GameNode, { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 
 
@@ -20,7 +19,7 @@ export const PlayerAnimations = {
     WALK: "WALK",
     JUMP: "JUMP",
     FALL:"FALL",
-    PREVIOUS:"PREVIOUS"
+    
 } as const
 
 export const PlayerStates = {
@@ -28,7 +27,8 @@ export const PlayerStates = {
     WALK: "WALK",
     JUMP: "JUMP",
     FALL:"FALL",
-    DEAD:"DEAD"
+    DEAD:"DEAD",
+    PREVIOUS:"PREVIOUS"
 } as const
 
 export default class PlayerController extends StateMachineAI {
@@ -47,14 +47,40 @@ export default class PlayerController extends StateMachineAI {
         this.owner = owner;
         this.velocity = Vec2.ZERO;
         this.speed = 200;
-        this.health = 100;
-        this.maxhealth = 100;
+        this._health = 100;
+        this._maxHealth = 100;
 
         this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
         this.addState(PlayerStates.IDLE, new Idle(this, this.owner));
         this.addState(PlayerStates.JUMP, new Jump(this, this.owner));
         this.addState(PlayerStates.FALL, new Fall(this, this.owner));
         this.addState(PlayerStates.WALK, new Walking(this, this.owner));
+
+
+        this.initialize(PlayerStates.IDLE);
+
+    }
+    changeState(stateName: string): void {
+        // If we jump or fall, push the state so we can go back to our current state later
+        // unless we're going from jump to fall or something
+        if((stateName === PlayerStates.JUMP || stateName === PlayerStates.FALL) && !(this.stack.peek() instanceof inAir)){
+            this.stack.push(this.stateMap.get(stateName));
+        }
+
+        super.changeState(stateName);
+    }
+
+    update(deltaT: number): void {
+        super.update(deltaT);
+        if(this.currentState instanceof Jump){
+			Debug.log("playerstate", "Player State: Jump");
+		} else if (this.currentState instanceof Walking){
+			Debug.log("playerstate", "Player State: Walk");
+		} else if (this.currentState instanceof Idle){
+			Debug.log("playerstate", "Player State: Idle");
+		} else if(this.currentState instanceof Fall){
+            Debug.log("playerstate", "Player State: Fall");
+        }
     }
 
 }
