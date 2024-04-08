@@ -12,11 +12,7 @@
         "destination": "/index.html",
         "type": 301
       },
-      {
-        "source": "/benchmark1",
-        "destination": "/benchmark1/benchmark1.html",
-        "type": 302
-      },
+
       {
         "source": "/benchmark2",
         "destination": "/benchmark2/benchmark2.html",

@@ -5,20 +5,20 @@ var watchify = require('watchify');
 var tsify = require('tsify');
 var fancy_log = require('fancy-log');
 var paths = {
-    pages: ['public/benchmark2/*.html']
+    pages: ['src/*.html']
 };
 
 var watchedBrowserify = watchify(browserify({
     basedir: '.',
     debug: true,
-    entries: ['public/benchmark2/main.ts'],
+    entries: ['src/main.ts'],
     cache: {},
     packageCache: {}
 }).plugin(tsify));
 
 gulp.task('copy-html', function () {
     return gulp.src(paths.pages)
-        .pipe(gulp.dest('public/benchmark2'));
+        .pipe(gulp.dest('dist'));
 });
 
 function bundle() {
@@ -26,7 +26,7 @@ function bundle() {
         .bundle()
         .on('error', fancy_log)
         .pipe(source('bundle.js'))
-        .pipe(gulp.dest('public/benchmark2'));
+        .pipe(gulp.dest('dist'));
 }
 
 gulp.task('default', gulp.series(gulp.parallel('copy-html'), bundle));
