@@ -20,7 +20,7 @@
       {
         "source": "/benchmark2",
         "destination": "/benchmark2/benchmark2.html",
-        "type": 303
+        "type": 302
       }
     ]
   }
