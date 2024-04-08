@@ -14,7 +14,7 @@
       },
       {
         "source": "/benchmark1",
-        "destination": "/benchmark1/benchmark1.html",
+        "destination": "/benchmark1/index.html",
         "type": 302
       },
       {
