@@ -11,7 +11,7 @@ var paths = {
 var watchedBrowserify = watchify(browserify({
     basedir: '.',
     debug: true,
-    entries: ['public/benchmark2/src/main.ts'],
+    entries: ['public/benchmark2/main.ts'],
     cache: {},
     packageCache: {}
 }).plugin(tsify));
