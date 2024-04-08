@@ -15,7 +15,7 @@
 
       {
         "source": "/benchmark2",
-        "destination": "/benchmark2/benchmark2.html",
+        "destination": "/benchmark2/dist/benchmark2.html",
         "type": 303
       }
     ]
