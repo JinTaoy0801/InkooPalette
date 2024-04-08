@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "firebase": "^10.9.0",
+    "firebase": "^10.6.0",
     "tsify": "^5.0.4",
     "vinyl-source-stream": "^2.0.0",
     "watchify-middleware": "^1.9.1"
@@ -8,15 +8,16 @@
   "name": "inkoopalette",
   "description": "",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "public/benchmark2/src/main.ts",
   "devDependencies": {
     "@types/browserify": "^12.0.40",
     "@types/fancy-log": "^2.0.2",
     "@types/gulp": "^4.0.17",
     "@types/vinyl-source-stream": "^0.0.34",
     "@types/watchify": "^3.11.4",
-    "gulp": "^4.0.2",
-    "gulp-typescript": "^6.0.0-alpha.1",
+    "gulp": "^5.0.0",
+    "gulp-install": "^1.1.0",
+    "gulp-typescript": "^2.14.1",
     "typescript": "^5.4.4"
   },
   "scripts": {

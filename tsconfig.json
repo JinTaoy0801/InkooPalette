@@ -1,0 +1,10 @@
+{
+  "include": [
+      "public/benchmark2/src/**/*",
+      "public/benchmark2/src/*"
+, "public/benchmark2/main.ts"  ],
+  "compilerOptions": {
+      "noImplicitAny": true,
+      "target": "es2016"
+  }
+}

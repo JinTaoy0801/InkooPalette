@@ -8,9 +8,7 @@ import Color from "../../Wolfie2D/Utils/Color";
 import IP_Level1 from "./IP_Level1";
 
 export default class MainMenu extends Scene {
-
-    animatedSprite: AnimatedSprite;
-
+    
     loadScene(): void {
         // Load the menu song
     }
@@ -25,8 +23,9 @@ export default class MainMenu extends Scene {
         this.viewport.setZoomLevel(1);
 
         // Create a play button
-        let playBtn = this.createButton("Play Game", new Vec2(size.x, size.y + 100));
+        let playBtn = this.createButton("Play Game", new Vec2(size.x, size.y));
         let mapSelect = this.createButton("Map", new Vec2(size.x, size.y + 100));
+        let ctrl = this.createButton("Controls", new Vec2(size.x, size.y + 200));
 
 
         // When the play button is clicked, go to the next scene

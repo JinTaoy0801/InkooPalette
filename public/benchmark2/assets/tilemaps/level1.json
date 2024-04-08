@@ -324,7 +324,7 @@
          "tilewidth":16
         }, 
         {
-         "columns":5,
+         "columns":64,
          "firstgid":201,
          "image":"background1.png",
          "imageheight":512,
