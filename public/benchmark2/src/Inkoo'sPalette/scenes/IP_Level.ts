@@ -52,8 +52,8 @@ export default class IP_Level extends Scene {
 
     protected initViewport(): void {
         this.viewport.setZoomLevel(2);
-        this.viewport.setBounds(0, 0, 512, 512);
-        this.viewport.follow(this.player);
+        // this.viewport.setBounds(0, 0, 512, 512);
+        // this.viewport.follow(this.player);
     }
 
     protected subscribeToEvents() {
