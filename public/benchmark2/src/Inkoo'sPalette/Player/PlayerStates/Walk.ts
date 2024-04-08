@@ -1,16 +1,13 @@
-import Input from "../../../Wolfie2D/Input/Input";
-import InkooAnimatedSprite from "../../Nodes/InkooAnimatedSprite";
-import { inkooEvents } from "../../inkooEvents";
+
 import { PlayerStates } from "../PlayerController";
 import OnGround from "./onGround";
+import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 
-
-export default class Walking extends OnGround{
-    owner:InkooAnimatedSprite;
+export default class Walk extends OnGround{
+    owner:AnimatedSprite;
 
     onEnter(options: Record<string, any>): void {
         this.parent.speed = this.parent.MIN_SPEED;
-        this.owner.animation.playIfNotAlready("WALK", true);
     }
 
     update(deltaT: number): void {

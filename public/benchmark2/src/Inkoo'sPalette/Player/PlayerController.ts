@@ -9,7 +9,7 @@ import Fall from "./PlayerStates/Fall";
 import inAir from "./PlayerStates/inAir";
 import Jump from "./PlayerStates/Jump";
 import Idle from "./PlayerStates/Idle"; 
-import Walking from "./PlayerStates/Walking";
+import Walking from "./PlayerStates/Walk";
 import GameNode from "../../Wolfie2D/Nodes/GameNode";
 
 
