@@ -13,8 +13,8 @@ export default class IP_Level1 extends IP_Level {
      */
     loadScene(): void {
         // Load resources
-        this.load.tilemap("level1", "../../assets/tilemaps/level1.json");
-        this.load.spritesheet("player", "../../assets/player/inkoo.json");
+        this.load.tilemap("level1", "assets/tilemaps/level1.json");
+        this.load.spritesheet("player", "assets/player/inkoo.json");
     }
 
     unloadScene(){
@@ -26,7 +26,7 @@ export default class IP_Level1 extends IP_Level {
         this.add.tilemap("level1", new Vec2(2, 2));
         this.viewport.setBounds(0, 0, 64*32, 20*32);
 
-        this.playerSpawn = new Vec2(5*32, 14*32);
+        this.playerSpawn = new Vec2(0, 0);
 
         // Do generic setup for a GameLevel
         super.startScene();

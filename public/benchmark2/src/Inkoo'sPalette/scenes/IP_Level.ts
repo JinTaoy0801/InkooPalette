@@ -18,10 +18,19 @@ import Viewport from "../../Wolfie2D/SceneGraph/Viewport";
 import Timer from "../../Wolfie2D/Timing/Timer";
 import PlayerController from "../Player/PlayerController"
 import { inkooEvents } from "../inkooEvents";
+import Color from "../../Wolfie2D/Utils/Color";
+import Graphic from "../../Wolfie2D/Nodes/Graphic";
+import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 
 export default class IP_Level extends Scene {
     protected playerSpawn: Vec2;
     protected player: AnimatedSprite;
+
+    private healthBar: Sprite;
+
+    // Labels for the UI
+    protected static livesCount: number = 3;
+    protected livesCountLabel: Label;
 
 
     startScene(): void {
@@ -29,6 +38,7 @@ export default class IP_Level extends Scene {
         this.initViewport();
         this.initPlayer();
         this.subscribeToEvents();
+        this.addUI();
     }
 
     updateScene(deltaT: number): void {
@@ -36,6 +46,7 @@ export default class IP_Level extends Scene {
     }
 
     protected initLayers(): void {
+        this.addUILayer("UI");
         this.addLayer("primary", 1);
     }
 
@@ -54,7 +65,13 @@ export default class IP_Level extends Scene {
     }
 
     protected addUI(){
+        this.livesCountLabel = <Label>this.add.uiElement(UIElementType.LABEL, "UI", {position: new Vec2(50, 60), text: "Lives: " + IP_Level.livesCount});
+        this.livesCountLabel.textColor = new Color(0, 0, 0, 1);
+        this.livesCountLabel.font = "PixelSimple";
 
+        this.healthBar = this.add.sprite('healthBar', 'assets/player/heart.png')
+        this.healthBar.scale.set(1, 1);
+        this.healthBar.position = new Vec2(50, 50)
     }
 
     protected initPlayer(): void {
