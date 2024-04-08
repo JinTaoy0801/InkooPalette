@@ -1,51 +1,212 @@
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
-import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
-import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
-import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
+import Layer from "../../Wolfie2D/Scene/Layer";
 import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
+import Label from "../../Wolfie2D/Nodes/UIElements/Label";
+import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
+import GameEvent from "../../Wolfie2D/Events/GameEvent";
+import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import IP_Level1 from "./IP_Level1";
+// import Level from "./IP_Level";
+
+const MainMenuName = {
+    MAIN_MENU: "MAIN_MENU",
+    LEVEL_SELECT: "LEVEL_SELECT",
+    CONTROLS: "CONTROLS",
+    STORY: "STORY",
+    START_GAME: "START_GAME",
+    MENU: "MENU"
+} as const
 
 export default class MainMenu extends Scene {
-    
+
+    private mainMenu: Layer;
+    private levelSelector: Layer;
+    private controls: Layer;
+    private story: Layer;
+    private currentLayer: Layer;
+    private logo: Sprite;
+    private controlsText = "W/Space - Jump\n" + 
+                            "A - Move Left\n" +
+                            "S - Quick Fall\n" +
+                            "D - Move Right\n" +
+                            "Left Shift - Dash\n" +
+                            "J - Basic Attack\n" +
+                            "K - Range Attack\n" +
+                            "Esc - Pause Game\n";
+
     loadScene(): void {
-        // Load the menu song
+        // If we want menu music
+        // this.load.audio("menu", "path");
+        // this.load.image("logo", "assets/logo.png");
     }
 
     startScene(): void {
-        this.addUILayer("Main");
+        const center = this.viewport.getCenter();
 
-        // Center the viewport
-        let size = this.viewport.getHalfSize();
-        this.viewport.setFocus(size);
+        // Create screens
+        this.mainMenu = this.addUILayer(MainMenuName.MAIN_MENU);
+        this.levelSelector = this.addUILayer(MainMenuName.LEVEL_SELECT);
+        this.controls = this.addUILayer(MainMenuName.CONTROLS);
+        this.story = this.addUILayer(MainMenuName.STORY);
+        this.levelSelector.setHidden(true);
+        this.controls.setHidden(true);
+        this.story.setHidden(true);
 
-        this.viewport.setZoomLevel(1);
+        // Set current layer to main menu initially
+        this.currentLayer = this.mainMenu;
 
-        // Create a play button
-        let playBtn = this.createButton("Play Game", new Vec2(size.x, size.y));
-        let mapSelect = this.createButton("Map", new Vec2(size.x, size.y + 100));
-        let ctrl = this.createButton("Controls", new Vec2(size.x, size.y + 200));
+        // Set background color
+        const background = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.MAIN_MENU, {position: new Vec2(center.x, center.y), text: ""});
+        background.size.set(center.x, center.y);
+        background.backgroundColor = new Color(100, 100, 100);
+        background.borderRadius = 0
 
+        // this.logo = this.add.sprite("logo", MainMenuName.MAIN_MENU)
+        // this.logo.position = new Vec2(center.x, center.y - 150);
 
-        // When the play button is clicked, go to the next scene
-        playBtn.onClick = () => {
-            this.sceneManager.changeToScene(IP_Level1);
+        // Start button
+        const startGame = this.add.uiElement(UIElementType.BUTTON, MainMenuName.MAIN_MENU, {position: new Vec2(center.x, center.y - 15), text: "Start"});
+        startGame.size.set(200, 50);
+        startGame.borderWidth = 2;
+        startGame.borderColor = Color.WHITE;
+        startGame.backgroundColor = new Color(150, 150, 150);
+        startGame.onClickEventId = MainMenuName.START_GAME;
+
+        // Level Select button
+        const levelSelect = this.add.uiElement(UIElementType.BUTTON, MainMenuName.MAIN_MENU, {position: new Vec2(center.x, center.y + 60), text: "Level Select"});
+        levelSelect.size.set(200, 50);
+        levelSelect.borderWidth = 2;
+        levelSelect.borderColor = Color.WHITE;
+        levelSelect.backgroundColor = new Color(150, 150, 150);
+        levelSelect.onClickEventId = MainMenuName.START_GAME;
+
+        // Controls button
+        const controls = this.add.uiElement(UIElementType.BUTTON, MainMenuName.MAIN_MENU, {position: new Vec2(center.x, center.y + 135), text: "Controls"});
+        controls.size.set(200, 50);
+        controls.borderWidth = 2;
+        controls.borderColor = Color.WHITE;
+        controls.backgroundColor = new Color(150, 150, 150);
+        controls.onClickEventId = MainMenuName.CONTROLS;
+
+        // Story button
+        const story = this.add.uiElement(UIElementType.BUTTON, MainMenuName.MAIN_MENU, {position: new Vec2(center.x, center.y + 210), text: "Story"});
+        controls.size.set(200, 50);
+        controls.borderWidth = 2;
+        controls.borderColor = Color.WHITE;
+        controls.backgroundColor = new Color(150, 150, 150);
+        controls.onClickEventId = MainMenuName.STORY;
+
+        // Controls layout
+        const controlsBack = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.CONTROLS, {position: new Vec2(center.x - this.viewport.getHalfSize().x + 130, center.y - this.viewport.getHalfSize().y + 50), text: "Back"});
+        controlsBack.size.set(200, 50);
+        controlsBack.borderWidth = 2;
+        controlsBack.borderColor = Color.BLACK;
+        controlsBack.backgroundColor = new Color(150, 150, 150);
+        controlsBack.onClickEventId = MainMenuName.MENU;
+        controlsBack.textColor = Color.BLACK;
+
+        const controlsHeader = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x, center.y - 150), text: "Controls"});
+        controlsHeader.size.set(700, 75);
+        controlsHeader.borderWidth = 2;
+        controlsHeader.borderRadius = 0;
+        controlsHeader.borderColor = Color.BLACK;
+        controlsHeader.textColor = Color.BLACK;
+        controlsHeader.backgroundColor = new Color(150, 150, 150);
+
+        const controlsBox = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x, center.y + 62.5), text: ""});
+        controlsBox.size.set(700, 350);
+        controlsBox.borderWidth = 2;
+        controlsBox.borderRadius = 0;
+        controlsBox.borderColor = Color.BLACK;
+        controlsBox.textColor = Color.BLACK;
+        controlsBox.backgroundColor = new Color(150, 150, 150);
+
+        const controlsText = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x, center.y - 60), text: this.controlsText});
+        controlsText.textColor = Color.BLACK;
+
+        // Story layout
+        const storyBack = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.STORY, {position: new Vec2(center.x - this.viewport.getHalfSize().x + 130, center.y - this.viewport.getHalfSize().y + 50), text: "Back"});
+        storyBack.size.set(200, 50);
+        storyBack.borderWidth = 2;
+        storyBack.borderColor = Color.BLACK;
+        storyBack.backgroundColor = new Color(150, 150, 150);
+        storyBack.onClickEventId = MainMenuName.MENU;
+        storyBack.textColor = Color.BLACK;
+
+        const storyLabel = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.STORY, {position: new Vec2(center.x - 350, center.y - 200), text: "Story"});
+        storyLabel.size.set(350, 50);
+        storyLabel.borderWidth = 2;
+        storyLabel.borderRadius = 0;
+        storyLabel.borderColor = Color.BLACK;
+        storyLabel.backgroundColor = new Color(150, 150, 150);
+        storyLabel.textColor = Color.BLACK;
+
+        const storyBG = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.STORY, {position: new Vec2(center.x, center.y + 50), text: ""});
+        storyBG.size.set(350 * 3, 450);
+        storyBG.borderWidth = 2;
+        storyBG.borderRadius = 0;
+        storyBG.borderColor = Color.BLACK;
+        storyBG.backgroundColor = new Color(150, 150, 150);
+
+        const storyText = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.STORY, {position: new Vec2(center.x, center.y - 50), text: "Story Placeholder Text"});
+        storyText.textColor = Color.BLACK;
+
+        this.receiver.subscribe(MainMenuName.START_GAME);
+        this.receiver.subscribe(MainMenuName.LEVEL_SELECT);
+        this.receiver.subscribe(MainMenuName.CONTROLS);
+        this.receiver.subscribe(MainMenuName.STORY);
+        this.receiver.subscribe(MainMenuName.MENU);
+    }
+
+    updateScene() {
+        while(this.receiver.hasNextEvent()){
+            this.handleEvent(this.receiver.getNextEvent());
         }
     }
 
-    private createButton(text: String, pos: Vec2): Button {
-        let btn = <Button>this.add.uiElement(UIElementType.BUTTON, "Main", {position: pos, text: text});
-        btn.backgroundColor = Color.TRANSPARENT;
-        btn.borderColor = Color.WHITE;
-        btn.borderRadius = 0;
-        btn.setPadding(new Vec2(50, 10));
-        btn.font = "PixelSimple";
-        return btn;
-    }
+    protected handleEvent(event: GameEvent): void {
+        switch(event.type) {
+            case MainMenuName.START_GAME: {
+                let sceneOptions = {
+                    physics: {
+                        groupNames: ["ground", "player"],
+                        collisions:
+                        [
+                            [0, 1],
+                            [1, 0]
+                        ]
+                    }
+                }
+                this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
+                break;
+            }
 
-    unloadScene(): void {
-        // The scene is being destroyed, so we can stop playing the song
+            case MainMenuName.CONTROLS: {
+                this.currentLayer.setHidden(true);
+                this.controls.setHidden(false);
+                this.currentLayer = this.controls;
+                break;
+            }
+
+            case MainMenuName.STORY: {
+                this.currentLayer.setHidden(true);
+                this.story.setHidden(false);
+                this.currentLayer = this.story;
+                break;
+            }
+
+            case MainMenuName.MENU: {
+                this.mainMenu.setHidden(false);
+                this.currentLayer.setHidden(true);
+                this.currentLayer = this.mainMenu;
+                break;
+            }
+
+            default: {
+                throw new Error(`Unhandled event caught in MainMenu: "${event.type}"`);
+            }
+        }
     }
 }
-

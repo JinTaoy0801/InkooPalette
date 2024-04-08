@@ -11,8 +11,10 @@
   "main": "public/benchmark2/src/main.ts",
   "devDependencies": {
     "@types/browserify": "^12.0.40",
+    "@types/expect": "^24.3.0",
     "@types/fancy-log": "^2.0.2",
     "@types/gulp": "^4.0.17",
+    "@types/streamx": "^2.9.5",
     "@types/vinyl-source-stream": "^0.0.34",
     "@types/watchify": "^3.11.4",
     "gulp": "^5.0.0",
