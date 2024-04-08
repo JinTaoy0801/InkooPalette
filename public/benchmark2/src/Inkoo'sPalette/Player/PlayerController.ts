@@ -9,7 +9,7 @@ import Fall from "./PlayerStates/Fall";
 import inAir from "./PlayerStates/inAir";
 import Jump from "./PlayerStates/Jump";
 import Idle from "./PlayerStates/Idle"; 
-import Walking from "./PlayerStates/Walk";
+import Walk from "./PlayerStates/Walk";
 import GameNode from "../../Wolfie2D/Nodes/GameNode";
 
 
@@ -22,16 +22,16 @@ export const PlayerAnimations = {
 } as const
 
 export const PlayerStates = {
-    IDLE: "IDLE",
-    WALK: "WALK",
-    JUMP: "JUMP",
-    FALL:"FALL",
-    DEAD:"DEAD",
-    PREVIOUS:"PREVIOUS"
+    IDLE: "idle",
+    WALK: "walk",
+    JUMP: "jump",
+    FALL:"fall",
+    DEAD:"dead",
+    PREVIOUS:"previous"
 } as const
 
 export default class PlayerController extends StateMachineAI {
-    protected owner: InkooAnimatedSprite;
+    protected owner: GameNode;
     protected _health: number;
     protected _maxHealth: number;
     velocity: Vec2;
@@ -49,20 +49,21 @@ export default class PlayerController extends StateMachineAI {
         this._health = 100;
         this._maxHealth = 100;
 
-        this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
-        
         this.addState(PlayerStates.IDLE, new Idle(this, this.owner));
         this.addState(PlayerStates.JUMP, new Jump(this, this.owner));
         this.addState(PlayerStates.FALL, new Fall(this, this.owner));
-        this.addState(PlayerStates.WALK, new Walking(this, this.owner));
-
+        this.addState(PlayerStates.WALK, new Walk(this, this.owner));
 
         this.initialize(PlayerStates.IDLE);
+
+        this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
 
     }
     changeState(stateName: string): void {
         console.log('stateNamestateNamestateNamestateName',stateName);
-
+        if((stateName === PlayerStates.JUMP || stateName === PlayerStates.FALL) && !(this.stack.peek() instanceof inAir)){
+            this.stack.push(this.stateMap.get(stateName));
+        }
         super.changeState(stateName);
     }
 
@@ -70,7 +71,7 @@ export default class PlayerController extends StateMachineAI {
         super.update(deltaT);
         if(this.currentState instanceof Jump){
 			Debug.log("playerstate", "Player State: Jump");
-		} else if (this.currentState instanceof Walking){
+		} else if (this.currentState instanceof Walk){
 			Debug.log("playerstate", "Player State: Walk");
 		} else if (this.currentState instanceof Idle){
 			Debug.log("playerstate", "Player State: Idle");

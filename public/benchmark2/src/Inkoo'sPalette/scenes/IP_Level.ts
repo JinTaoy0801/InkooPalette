@@ -91,7 +91,6 @@ export default class IP_Level extends Scene {
 
     protected subscribeToEvents() {
         this.receiver.subscribe([
-            inkooEvents.PLAYER_MOVE,
             inkooEvents.PLAYER_ATTACK,
             inkooEvents.LEVEL_START,
             inkooEvents.LEVEL_END,
@@ -114,7 +113,7 @@ export default class IP_Level extends Scene {
         }
         this.player.position.copy(this.playerSpawn);
 
-        this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));
+        this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(16, 16)));
         this.player.colliderOffset.set(0, 2);
         this.player.addAI(PlayerController, {playerType: "platformer", tilemap: "ground"});
 
