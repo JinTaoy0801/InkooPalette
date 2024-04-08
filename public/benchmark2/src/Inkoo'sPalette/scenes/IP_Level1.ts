@@ -6,15 +6,11 @@ import IP_Level from "./IP_Level";
 // import Level2 from "./Level2";
 
 export default class IP_Level1 extends IP_Level {
-    
-    // HOMEWORK 5 - TODO
-    /**
-     * Add your balloon pop sound here and use it throughout the code
-     */
     loadScene(): void {
         // Load resources
         this.load.tilemap("level1", "assets/tilemaps/level1.json");
         this.load.spritesheet("player", "assets/player/inkoo.json");
+        this.load.image("healthBar", "assets/player/heart.png")
     }
 
     unloadScene(){
@@ -24,9 +20,8 @@ export default class IP_Level1 extends IP_Level {
     startScene(): void {
         // Add the level 1 tilemap
         this.add.tilemap("level1", new Vec2(2, 2));
-        this.viewport.setBounds(0, 0, 64*32, 20*32);
 
-        this.playerSpawn = new Vec2(0, 0);
+        this.playerSpawn = new Vec2(20, 20);
 
         // Do generic setup for a GameLevel
         super.startScene();
@@ -35,5 +30,16 @@ export default class IP_Level1 extends IP_Level {
 
     updateScene(deltaT: number): void {
         super.updateScene(deltaT);
+    }
+
+    protected initViewport(): void {
+        super.initViewport();
+        this.viewport.setBounds(16, 16, 1600, 700);
+    }
+
+    protected addUI() {
+        super.addUI();
+
+
     }
 }
