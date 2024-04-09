@@ -112,10 +112,9 @@ export default class IP_Level extends Scene {
 
         this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));
         this.player.colliderOffset.set(0, 2);
-        this.player.addAI(PlayerController, {playerType: "platformer", tilemap: "Main"});
+        this.player.addAI(PlayerController, {playerType: "platformer", tilemap: "ground"});
 
         this.player.setGroup("player");
-        this.viewport.follow(this.player);
     }
     protected respawnPlayer():void{
         this.sceneManager.changeToScene(MainMenu,{});

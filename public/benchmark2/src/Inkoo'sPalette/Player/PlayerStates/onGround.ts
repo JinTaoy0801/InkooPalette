@@ -1,10 +1,12 @@
 
 import Input from "../../../Wolfie2D/Input/Input";
+import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
 import MathUtils from "../../../Wolfie2D/Utils/MathUtils";
 import PlayerState from "./PlayerState";
 
 export default class OnGround extends PlayerState {
+	owner: AnimatedSprite
 	onEnter(options: Record<string, any>): void {}
 
 	update(deltaT: number): void {
@@ -22,7 +24,8 @@ export default class OnGround extends PlayerState {
 		if(Input.isJustPressed("jump")){
 			this.finished("jump");
 			this.parent.velocity.y = -500;
-		} else if(!this.owner.onGround){
+		} else if(!this.owner.onGround) {
+			this.owner.animation.playIfNotAlready("FELL", true);
 			this.finished("fall");
 		}
 	}

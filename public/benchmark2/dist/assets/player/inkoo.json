@@ -91,7 +91,7 @@
                     {"index": 85, "duration": 10.75}
         ]
       },
-      {"name": "MOVING_RIGHT",
+      {"name": "MOVING_LEFT",
         "frames": [ {"index": 86, "duration": 10.75},
                     {"index": 87, "duration": 10.75},
                     {"index": 88, "duration": 10.75},
