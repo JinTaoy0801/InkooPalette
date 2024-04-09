@@ -13,7 +13,7 @@ export default class IP_Level1 extends IP_Level {
         // Load resources
         this.load.tilemap("level1", "assets/tilemaps/level1.json");
         this.load.spritesheet("player", "assets/player/inkoo.json");
-        this.load.spritesheet("goblin", "assets/enemies/goblin/goblin_movement.json")
+        // this.load.spritesheet("goblin", "assets/enemies/goblin/goblin_movement.json")
         this.load.image("healthBar", "assets/player/heart.png")
     }
 
@@ -39,10 +39,10 @@ export default class IP_Level1 extends IP_Level {
     }
 
     protected initGoblin(): void {
-        this.goblin = this.add.animatedSprite('goblin', 'primary');
-        this.goblin.scale.set(2, 2);
-        this.goblin.position.copy(new Vec2(100, 460));
-        this.goblin.setGroup("goblin");
+        // this.goblin = this.add.animatedSprite('goblin', 'primary');
+        // this.goblin.scale.set(2, 2);
+        // this.goblin.position.copy(new Vec2(100, 460));
+        // this.goblin.setGroup("goblin");
     }
 
     protected addUI() {
