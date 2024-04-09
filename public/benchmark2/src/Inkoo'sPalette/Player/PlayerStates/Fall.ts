@@ -1,4 +1,3 @@
-
 import InAir from "./InAir";
 import InkooAnimatedSprite from "../../Nodes/InkooAnimatedSprite";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
