@@ -1,7 +1,7 @@
 
 import { PlayerStates } from "../PlayerController";
 import InkooAnimatedSprite from "../../Nodes/InkooAnimatedSprite";
-import InAir from "./inAir";
+import InAir from "./InAir";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 export default class Jump extends InAir{
     owner: AnimatedSprite;

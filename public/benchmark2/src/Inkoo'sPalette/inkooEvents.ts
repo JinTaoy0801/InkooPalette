@@ -1,10 +1,9 @@
-export const inkooEvents = {
-    LEVEL_START:"LEVEL_START",
-    LEVEL_END:"LEVEL_END",
-    PLAYER_KILLED:"PLAYER_KILLED",
-    PLAYER_ATTACK:"PLAYER_ATTACK",
-    PLAYER_MOVE:"PLAYER_MOVE",
-    PLAYER_ENTERED_LEVEL_END: "PLAYER_ENTERED_LEVEL_END",
-    PAUSE_MENU:"PAUSE_MENU",
+export enum inkooEvents {
+    LEVEL_START = "LevelStart",
+    LEVEL_END = "LevelEnd",
+    PLAYER_KILLED = "PlayerKilled",
+    PLAYER_ATTACK="PLAYER_ATTACK",
+    PLAYER_MOVE = "PlayerMove",
+    PLAYER_JUMP = "PlayerJump",
 
 }

@@ -2,18 +2,19 @@
 import { PlayerStates } from "../PlayerController";
 import OnGround from "./onGround";
 import InkooAnimatedSprite from "../../Nodes/InkooAnimatedSprite";
-
+import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 export default class Walk extends OnGround{
-    owner:InkooAnimatedSprite;
+    owner:AnimatedSprite;
 
     onEnter(options: Record<string, any>): void {
-        this.parent.speed = this.parent.MIN_SPEED;
+        (this.parent.speed) = this.parent.MIN_SPEED;
     }
 
     update(deltaT: number): void {
         super.update(deltaT);
-        this.owner.animation.playIfNotAlready("WALK", true)
         let dir = this.getInputDirection();
+        this.owner.animation.playIfNotAlready("WALK", true)
+
         console.log("walk input:", dir);
         if(dir.isZero()) {
             this.finished(PlayerStates.IDLE);
