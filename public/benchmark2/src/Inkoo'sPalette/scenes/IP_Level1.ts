@@ -8,7 +8,7 @@ import IP_Level from "./IP_Level";
 export default class IP_Level1 extends IP_Level {
     loadScene(): void {
         // Load resources
-        this.load.tilemap("level1", "assets/tilemaps/level1.json");
+        this.load.tilemap("level1", "assets/tilemaps/level2.json");
         this.load.spritesheet("player", "assets/player/spike.json");
         this.load.image("healthBar", "assets/player/heart.png")
     }

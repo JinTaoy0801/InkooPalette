@@ -1,6 +1,4 @@
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
-import MathUtils from "../../Wolfie2D/Utils/MathUtils";
-import { inkooEvents } from "../inkooEvents";
 import IP_Level from "../scenes/IP_Level";
 
 export default class InkooAnimatedSprite extends AnimatedSprite {

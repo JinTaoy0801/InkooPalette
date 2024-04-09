@@ -1,9 +1,9 @@
 
 import InAir from "./inAir";
 import InkooAnimatedSprite from "../../Nodes/InkooAnimatedSprite";
-
+import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 export default class Fall extends InAir{
-    owner: InkooAnimatedSprite
+    owner: AnimatedSprite
     onEnter(options: Record<string, any>): void { 
         this.owner.animation.playIfNotAlready("FALL", true);
     }

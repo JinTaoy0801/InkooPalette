@@ -3,9 +3,9 @@ import InkooAnimatedSprite from "../../Nodes/InkooAnimatedSprite";
 import { PlayerStates } from "../PlayerController";
 import OnGround from "./onGround";
 import Input from "../../../Wolfie2D/Input/Input";
-
+import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 export default class Idle extends OnGround{
-    owner : InkooAnimatedSprite;
+    owner : AnimatedSprite;
     
 	onEnter(options: Record<string, any>): void {
 		this.parent.speed = this.parent.MIN_SPEED;

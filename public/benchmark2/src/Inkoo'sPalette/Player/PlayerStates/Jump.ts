@@ -2,9 +2,9 @@
 import { PlayerStates } from "../PlayerController";
 import InkooAnimatedSprite from "../../Nodes/InkooAnimatedSprite";
 import InAir from "./inAir";
-
+import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 export default class Jump extends InAir{
-    owner: InkooAnimatedSprite;
+    owner: AnimatedSprite;
 
     onEnter(options: Record<string, any>): void {
     //this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "jump", loop: false, holdReference: false});
