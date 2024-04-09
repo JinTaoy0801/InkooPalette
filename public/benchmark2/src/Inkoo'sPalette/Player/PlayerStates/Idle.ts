@@ -13,7 +13,6 @@ export default class Idle extends OnGround{
 	}
 
 	update(deltaT: number): void {
-		
 		super.update(deltaT);
 		this.owner.animation.playIfNotAlready("IDLE_RIGHT", true);
 		let dir = this.getInputDirection();
@@ -32,7 +31,6 @@ export default class Idle extends OnGround{
 	}
 
 	onExit(): Record<string, any> {
-		this.owner.animation.stop();
 		return {};
 	}
 }

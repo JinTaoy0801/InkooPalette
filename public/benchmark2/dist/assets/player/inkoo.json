@@ -4,7 +4,7 @@
   "spriteWidth": 24,
   "spriteHeight": 24,
   "columns": 27,
-  "rows": 9,
+  "rows": 13,
   "durationType": "time",
   "animations": [
       { 
@@ -118,22 +118,22 @@
       },
       {
           "name": "STOP_RIGHT",
-          "frames":[ {"index": 108, "duration": 25},
-                     {"index": 109, "duration": 25},
-                     {"index": 110, "duration": 25},  
-                     {"index": 111, "duration": 25},  
-                     {"index": 112, "duration": 25},  
-                     {"index": 113, "duration": 25}
+          "frames":[ {"index": 108, "duration": 10},
+                     {"index": 109, "duration": 10},
+                     {"index": 110, "duration": 10},  
+                     {"index": 111, "duration": 10},  
+                     {"index": 112, "duration": 10},  
+                     {"index": 113, "duration": 10}
         ]
       },
       {
         "name": "STOP_LEFT",
-        "frames":[ {"index": 135, "duration": 25},
-                   {"index": 136, "duration": 25},
-                   {"index": 137, "duration": 25},  
-                   {"index": 138, "duration": 25},  
-                   {"index": 139, "duration": 25},  
-                   {"index": 140, "duration": 25}
+        "frames":[ {"index": 135, "duration": 10},
+                   {"index": 136, "duration": 10},
+                   {"index": 137, "duration": 10},  
+                   {"index": 138, "duration": 10},  
+                   {"index": 139, "duration": 10},  
+                   {"index": 140, "duration": 10}
       ]
     },
     {
@@ -170,12 +170,12 @@
     },
     {
       "name": "STOP_IN_AIR",
-        "frames":[  {"index": 190, "duration": 3},  
-                    {"index": 191, "duration": 3}, 
-                    {"index": 192, "duration": 3}, 
-                    {"index": 193, "duration": 3}, 
-                    {"index": 194, "duration": 3}, 
-                    {"index": 195, "duration": 3}, 
+        "frames":[  {"index": 190, "duration": 2},  
+                    {"index": 191, "duration": 2}, 
+                    {"index": 192, "duration": 2}, 
+                    {"index": 193, "duration": 2}, 
+                    {"index": 194, "duration": 2}, 
+                    {"index": 195, "duration": 2}, 
                     {"index": 196, "duration": 10}, 
                     {"index": 197, "duration": 4},
                     {"index": 198, "duration": 4},  
@@ -225,6 +225,46 @@
                     {"index": 236, "duration": 4},
                     {"index": 237, "duration": 4},
                     {"index": 238, "duration": 4}
+        ]
+    },
+    {
+      "name": "ATTACK_RIGHT",
+        "frames":[  {"index": 243, "duration": 1},  
+                    {"index": 244, "duration": 1}, 
+                    {"index": 245, "duration": 1}, 
+                    {"index": 246, "duration": 1}, 
+                    {"index": 247, "duration": 1}, 
+                    {"index": 248, "duration": 1}, 
+                    {"index": 249, "duration": 1},  
+                    {"index": 250, "duration": 1}, 
+                    {"index": 251, "duration": 1}, 
+                    {"index": 252, "duration": 1}, 
+                    {"index": 253, "duration": 1}, 
+                    {"index": 254, "duration": 1}, 
+                    {"index": 255, "duration": 1},  
+                    {"index": 256, "duration": 1}, 
+                    {"index": 257, "duration": 1}, 
+                    {"index": 258, "duration": 2}, 
+                    {"index": 259, "duration": 2}, 
+                    {"index": 260, "duration": 2}, 
+                    {"index": 261, "duration": 2},
+                    {"index": 262, "duration": 2},
+                    {"index": 263, "duration": 2},
+                    {"index": 264, "duration": 2},
+                    {"index": 265, "duration": 2},
+                    {"index": 266, "duration": 2},
+                    {"index": 267, "duration": 2},
+                    {"index": 268, "duration": 2},
+                    {"index": 269, "duration": 2},
+                    {"index": 270, "duration": 1.5},
+                    {"index": 271, "duration": 1.5},
+                    {"index": 272, "duration": 1.5},
+                    {"index": 273, "duration": 1.5},
+                    {"index": 274, "duration": 1.5},
+                    {"index": 275, "duration": 1.5},
+                    {"index": 276, "duration": 1.5},
+                    {"index": 277, "duration": 1.5},
+                    {"index": 278, "duration": 1.5}
         ]
     }
   ]

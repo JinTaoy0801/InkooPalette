@@ -23,6 +23,7 @@ import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import MainMenu from "./MainMenu";
 import InkooAnimatedSprite from "../Nodes/InkooAnimatedSprite";
+
 export default class IP_Level extends Scene {
     protected playerSpawn: Vec2;
     protected player: AnimatedSprite;
@@ -103,16 +104,19 @@ export default class IP_Level extends Scene {
     protected initPlayer(): void {
         this.player = this.add.animatedSprite('player', 'primary');
 
-        this.player.scale.set(2, 2);
+        this.player.scale.set(1.5, 1.5);
+        this.player.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(100,100)))
         if(!this.playerSpawn){
             console.warn("Player spawn was never set - setting spawn to (0, 0)");
             this.playerSpawn = Vec2.ZERO;
         }
         this.player.position.copy(this.playerSpawn);
 
+        // this.player.set
         this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));
-        this.player.colliderOffset.set(0, 2);
+        // this.player.colliderOffset.set(0, 2);
         this.player.addAI(PlayerController, {playerType: "platformer", tilemap: "ground"});
+        this.player.colliderOffset.set(0, 5);
 
         this.player.setGroup("player");
     }

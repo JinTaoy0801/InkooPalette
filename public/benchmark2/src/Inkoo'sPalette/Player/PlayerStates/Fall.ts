@@ -4,12 +4,17 @@ import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 export default class Fall extends InAir{
     owner: AnimatedSprite
     onEnter(options: Record<string, any>): void { 
-        this.owner.animation.playIfNotAlready("STOP_IN_AIR", true);
+        this.owner.animation.play("STOP_IN_AIR", false);
+    }
+
+    update(deltaT: number): void {
+        super.update(deltaT);
+        if (!this.owner.animation.isPlaying("STOP_IN_AIR")) {
+            this.owner.animation.playIfNotAlready("FALLING", true);
+        }
     }
 
     onExit(): Record<string, any> {
-        this.owner.animation.playIfNotAlready("FELL", true);
-        this.owner.animation.stop();
         return {};
     }
 
