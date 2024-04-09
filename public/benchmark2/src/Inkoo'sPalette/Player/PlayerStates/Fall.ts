@@ -1,13 +1,11 @@
 
-import PlayerState from "./PlayerState";
-import GameEvent from "../../../Wolfie2D/Events/GameEvent";
-import InAir from "./inAir";
-import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+import InAir from "./InAir";
 import InkooAnimatedSprite from "../../Nodes/InkooAnimatedSprite";
-
-export default class Fall extends PlayerState{
-    owner: InkooAnimatedSprite
+import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+export default class Fall extends InAir{
+    owner: AnimatedSprite
     onEnter(options: Record<string, any>): void { 
+        this.owner.animation.playIfNotAlready("IDLE_LEFT", true);
         this.owner.animation.playIfNotAlready("MOVE_RIGHT", true);
     }
 

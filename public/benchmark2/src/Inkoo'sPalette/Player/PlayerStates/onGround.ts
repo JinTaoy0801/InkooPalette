@@ -1,15 +1,13 @@
+
 import Input from "../../../Wolfie2D/Input/Input";
 import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
 import MathUtils from "../../../Wolfie2D/Utils/MathUtils";
 import PlayerState from "./PlayerState";
 
-
 export default class OnGround extends PlayerState {
+	onEnter(options: Record<string, any>): void {}
 
-    onEnter(options: Record<string, any>): void {
-        throw new Error("Method not implemented.");
-    }
-    update(deltaT: number): void {
+	update(deltaT: number): void {
 		if(this.parent.velocity.y > 0){
 			this.parent.velocity.y = 0;
 		}
@@ -20,15 +18,16 @@ export default class OnGround extends PlayerState {
 		if(direction.x !== 0){
 			(<Sprite>this.owner).invertX = MathUtils.sign(direction.x) < 0;
 		}
-        if(Input.isJustPressed("jump")){
-            this.finished("jump");
-            this.parent.velocity.y = -500;
-        } else if(!this.owner.onGround){
-            this.finished("fall");
-        }
-    }
-    onExit(): Record<string, any> {
-        return {};
-    }
 
+		if(Input.isJustPressed("jump")){
+			this.finished("jump");
+			this.parent.velocity.y = -500;
+		} else if(!this.owner.onGround){
+			this.finished("fall");
+		}
+	}
+
+	onExit(): Record<string, any> {
+		return {};
+	}
 }
