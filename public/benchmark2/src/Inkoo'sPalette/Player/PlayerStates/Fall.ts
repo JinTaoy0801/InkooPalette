@@ -8,10 +8,17 @@ import InkooAnimatedSprite from "../../Nodes/InkooAnimatedSprite";
 export default class Fall extends PlayerState{
     owner: InkooAnimatedSprite
     onEnter(options: Record<string, any>): void { 
-        this.owner.animation.playIfNotAlready("FALL", true);
+        this.owner.animation.playIfNotAlready("MOVE_RIGHT", true);
+    }
+
+    update(deltaT: number): void {
+        if(!this.owner.onGround)
+            this.owner.animation.playIfNotAlready("FALLING", true);
+        else this.finished("fall");
     }
 
     onExit(): Record<string, any> {
+        this.owner.animation.playIfNotAlready("FELL", true);
         this.owner.animation.stop();
         return {};
     }

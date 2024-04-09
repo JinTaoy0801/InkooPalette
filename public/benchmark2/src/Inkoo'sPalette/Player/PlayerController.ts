@@ -17,15 +17,15 @@ export const PlayerAnimations = {
     IDLE: "IDLE",
     WALK: "WALK",
     JUMP: "JUMP",
-    FALL:"FALL",
+    FALL:"fall",
     
 } as const
 
 export const PlayerStates = {
     IDLE: "IDLE",
     WALK: "WALK",
-    JUMP: "JUMP",
-    FALL:"FALL",
+    JUMP: "jump",
+    FALL:"fall",
     DEAD:"DEAD",
     PREVIOUS:"PREVIOUS"
 } as const
@@ -56,12 +56,15 @@ export default class PlayerController extends StateMachineAI {
         this.addState(PlayerStates.FALL, new Fall(this, this.owner));
         this.addState(PlayerStates.WALK, new Walking(this, this.owner));
 
-
         this.initialize(PlayerStates.IDLE);
 
     }
+    
     changeState(stateName: string): void {
         console.log('stateNamestateNamestateNamestateName',stateName);
+        if((stateName === PlayerStates.JUMP || stateName === PlayerStates.FALL) && !(this.stack.peek() instanceof inAir)){
+            this.stack.push(this.stateMap.get(stateName));
+        }
 
         super.changeState(stateName);
     }

@@ -7,11 +7,11 @@ import OnGround from "./onGround";
 export default class Idle extends OnGround{
     owner : InkooAnimatedSprite;
     onEnter(options: Record<string, any>): void {
-		  this.parent.speed = this.parent.MIN_SPEED;
-      this.owner.animation.playIfNotAlready("IDLE", true);
+		this.parent.speed = this.parent.MIN_SPEED;
+    	this.owner.animation.playIfNotAlready("IDLE", true);
 	}
 
-  update(deltaT: number): void {
+  	update(deltaT: number): void {
 		super.update(deltaT);
 
 		let dir = this.getInputDirection();

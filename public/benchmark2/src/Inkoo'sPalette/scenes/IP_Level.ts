@@ -91,7 +91,6 @@ export default class IP_Level extends Scene {
 
     protected subscribeToEvents() {
         this.receiver.subscribe([
-            inkooEvents.PLAYER_MOVE,
             inkooEvents.PLAYER_ATTACK,
             inkooEvents.LEVEL_START,
             inkooEvents.LEVEL_END,
@@ -106,7 +105,8 @@ export default class IP_Level extends Scene {
     }
 
     protected initPlayer(): void {
-        this.player = this.add.animatedSprite('player', 'primary')
+        this.player = this.add.animatedSprite('player', 'primary');
+
         this.player.scale.set(2, 2);
         if(!this.playerSpawn){
             console.warn("Player spawn was never set - setting spawn to (0, 0)");
