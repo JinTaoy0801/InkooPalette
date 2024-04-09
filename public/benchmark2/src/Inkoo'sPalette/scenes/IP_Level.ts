@@ -43,11 +43,11 @@ export default class IP_Level extends Scene {
     }
 
     updateScene(deltaT: number): void {
-        // const viewportCenter = this.viewport.getCenter().clone();
-        // const baseViewportSize = this.viewport.getHalfSize().scaled(2);
-        // while (this.receiver.hasNextEvent()) {
-        //     this.handleEvent(this.receiver.getNextEvent());
-        // }
+        const viewportCenter = this.viewport.getCenter().clone();
+        const baseViewportSize = this.viewport.getHalfSize().scaled(2);
+        while (this.receiver.hasNextEvent()) {
+            this.handleEvent(this.receiver.getNextEvent());
+        }
         
     }
 
@@ -65,9 +65,6 @@ export default class IP_Level extends Scene {
                 break;
             }
             case inkooEvents.PLAYER_ATTACK: {
-                break;
-            }
-            case inkooEvents.PLAYER_ENTERED_LEVEL_END: {
                 break;
             }
             case inkooEvents.PLAYER_KILLED: {
