@@ -15,7 +15,7 @@ export default class Idle extends OnGround{
 	update(deltaT: number): void {
 		
 		super.update(deltaT);
-		this.owner.animation.playIfNotAlready("IDLE", true);
+		this.owner.animation.playIfNotAlready("IDLE_RIGHT", true);
 		let dir = this.getInputDirection();
 
 		if(!dir.isZero() && dir.y === 0){

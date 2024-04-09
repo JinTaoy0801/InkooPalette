@@ -16,6 +16,5 @@ export default abstract class InAir extends PlayerState {
         if(this.owner.onGround){
 			this.finished(PlayerStates.PREVIOUS);
 		}
-        console.log("airdir:", dir);
     }
 }

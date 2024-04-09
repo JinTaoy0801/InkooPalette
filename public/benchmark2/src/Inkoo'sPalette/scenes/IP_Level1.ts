@@ -8,8 +8,8 @@ import IP_Level from "./IP_Level";
 export default class IP_Level1 extends IP_Level {
     loadScene(): void {
         // Load resources
-        this.load.tilemap("level1", "assets/tilemaps/level2.json");
-        this.load.spritesheet("player", "assets/player/spike.json");
+        this.load.tilemap("level1", "assets/tilemaps/level1.json");
+        this.load.spritesheet("player", "assets/player/inkoo.json");
         this.load.image("healthBar", "assets/player/heart.png")
     }
 
@@ -34,7 +34,7 @@ export default class IP_Level1 extends IP_Level {
 
     protected initViewport(): void {
         super.initViewport();
-        this.viewport.setBounds(16, 16, 1600, 700);
+        this.viewport.setBounds(0,0, 64*31,64*64);
     }
 
     protected addUI() {

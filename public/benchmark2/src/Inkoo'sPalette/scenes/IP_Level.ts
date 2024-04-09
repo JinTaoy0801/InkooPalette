@@ -39,13 +39,12 @@ export default class IP_Level extends Scene {
         this.isPaused = false;
 
 
-        Input.disableInput();
+        Input.enableInput();
     }
-
+    //this never runs yets
     updateScene(deltaT: number): void {
-        const viewportCenter = this.viewport.getCenter().clone();
-        const baseViewportSize = this.viewport.getHalfSize().scaled(2);
         while (this.receiver.hasNextEvent()) {
+            console.log("event:",this.receiver.getNextEvent())
             this.handleEvent(this.receiver.getNextEvent());
         }
         
@@ -83,8 +82,7 @@ export default class IP_Level extends Scene {
 
     protected initViewport(): void {
         this.viewport.setZoomLevel(1.5);
-        this.viewport.setBounds(0, 0, 512, 512);
-       // this.viewport.follow(this.player);
+        
     }
 
     protected subscribeToEvents() {
