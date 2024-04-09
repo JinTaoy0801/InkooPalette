@@ -22,17 +22,13 @@ import Color from "../../Wolfie2D/Utils/Color";
 import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import MainMenu from "./MainMenu";
-
+import InkooAnimatedSprite from "../Nodes/InkooAnimatedSprite";
 export default class IP_Level extends Scene {
     protected playerSpawn: Vec2;
     protected player: AnimatedSprite;
 
     private healthBar: Sprite;
-
-    // Labels for the UI
-    protected static livesCount: number = 3;
-    protected livesCountLabel: Label;
-
+    protected isPaused: Boolean;
 
     startScene(): void {
         this.initLayers();
@@ -40,14 +36,19 @@ export default class IP_Level extends Scene {
         this.initViewport();
         this.subscribeToEvents();
         this.addUI();
+        this.isPaused = false;
+
 
         Input.disableInput();
     }
 
     updateScene(deltaT: number): void {
-        while (this.receiver.hasNextEvent()) {
-            this.handleEvent(this.receiver.getNextEvent());
-        }
+        // const viewportCenter = this.viewport.getCenter().clone();
+        // const baseViewportSize = this.viewport.getHalfSize().scaled(2);
+        // while (this.receiver.hasNextEvent()) {
+        //     this.handleEvent(this.receiver.getNextEvent());
+        // }
+        
     }
 
     protected handleEvent(event: GameEvent): void {
@@ -84,9 +85,9 @@ export default class IP_Level extends Scene {
     }
 
     protected initViewport(): void {
-        this.viewport.setZoomLevel(1);
+        this.viewport.setZoomLevel(1.5);
         this.viewport.setBounds(0, 0, 512, 512);
-        this.viewport.follow(this.player);
+       // this.viewport.follow(this.player);
     }
 
     protected subscribeToEvents() {
@@ -113,11 +114,17 @@ export default class IP_Level extends Scene {
         }
         this.player.position.copy(this.playerSpawn);
 
-        this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(16, 16)));
+        this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));
         this.player.colliderOffset.set(0, 2);
         this.player.addAI(PlayerController, {playerType: "platformer", tilemap: "ground"});
 
         this.player.setGroup("player");
+        this.viewport.follow(this.player);
+    }
+    protected respawnPlayer():void{
+        this.sceneManager.changeToScene(MainMenu,{});
+        Input.enableInput();
+
     }
 }
 

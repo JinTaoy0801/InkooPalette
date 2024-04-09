@@ -3,7 +3,6 @@ import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import Debug from "../../Wolfie2D/Debug/Debug";
 import Receiver from "../../Wolfie2D/Events/Receiver";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
-import { inkooEvents } from "../inkooEvents";
 import InkooAnimatedSprite from "../Nodes/InkooAnimatedSprite";
 import Fall from "./PlayerStates/Fall";
 import inAir from "./PlayerStates/inAir";
@@ -13,13 +12,6 @@ import Walk from "./PlayerStates/Walk";
 import GameNode from "../../Wolfie2D/Nodes/GameNode";
 
 
-export const PlayerAnimations = {
-    IDLE: "IDLE",
-    WALK: "WALK",
-    JUMP: "JUMP",
-    FALL:"FALL",
-    
-} as const
 
 export const PlayerStates = {
     IDLE: "idle",
@@ -27,6 +19,7 @@ export const PlayerStates = {
     JUMP: "jump",
     FALL:"fall",
     DEAD:"dead",
+    RUN:"run",
     PREVIOUS:"previous"
 } as const
 
@@ -34,8 +27,8 @@ export default class PlayerController extends StateMachineAI {
     protected owner: GameNode;
     protected _health: number;
     protected _maxHealth: number;
-    velocity: Vec2;
-	speed: number;
+    velocity: Vec2 = Vec2.ZERO;
+	speed: number = 200;
 	MIN_SPEED: number = 200;
     MAX_SPEED: number = 300;
     tilemap: OrthogonalTilemap;
@@ -44,16 +37,21 @@ export default class PlayerController extends StateMachineAI {
 
     initializeAI(owner: InkooAnimatedSprite, options: Record<string, any>){
         this.owner = owner;
-        this.velocity = Vec2.ZERO;
-        this.speed = 200;
+
         this._health = 100;
         this._maxHealth = 100;
 
-        this.addState(PlayerStates.IDLE, new Idle(this, this.owner));
-        this.addState(PlayerStates.JUMP, new Jump(this, this.owner));
-        this.addState(PlayerStates.FALL, new Fall(this, this.owner));
-        this.addState(PlayerStates.WALK, new Walk(this, this.owner));
-
+        let idle = new Idle(this, this.owner);
+        this.addState(PlayerStates.IDLE, idle);
+        let walk = new Walk(this, this.owner);
+        this.addState(PlayerStates.WALK, walk);
+        // let run = new Run(this, this.owner);
+        // this.addState(PlayerStates.RUN, run);
+        let jump = new Jump(this, this.owner);
+        this.addState(PlayerStates.JUMP, jump);
+        let fall = new Fall(this, this.owner);
+        this.addState(PlayerStates.FALL, fall);
+        
         this.initialize(PlayerStates.IDLE);
 
         this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
@@ -68,7 +66,7 @@ export default class PlayerController extends StateMachineAI {
     }
 
     update(deltaT: number): void {
-        super.update(deltaT);
+        super.update(deltaT);  
         if(this.currentState instanceof Jump){
 			Debug.log("playerstate", "Player State: Jump");
 		} else if (this.currentState instanceof Walk){
