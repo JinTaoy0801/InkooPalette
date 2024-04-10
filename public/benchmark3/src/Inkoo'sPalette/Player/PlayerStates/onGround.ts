@@ -13,35 +13,34 @@ export default class OnGround extends PlayerState {
 	}
 
 	update(deltaT: number): void {
-		if(this.parent.velocity.y > 0){
+		if(this.parent.velocity.y > 0) {
 			this.parent.velocity.y = 0;
 		}
 		super.update(deltaT);
 
 		let direction = this.getInputDirection();
 
-		if(direction.x !== 0){
+		if(direction.x !== 0) {
 			(<Sprite>this.owner).invertX = MathUtils.sign(direction.x) < 0;
+		}
+
+		if(Input.isJustPressed("jump")){
+			// console.log('ran');
+			this.finished(PlayerStates.JUMP);
+			if (direction.x) {
+				this.owner.tweens.play("tilt_right");
+			}
 		}
 
 		if (Input.isJustPressed("attack")) {
 			this.finished(PlayerStates.ATTACK);
 		}
 
-		if(Input.isJustPressed("jump")){
-			// console.log('ran');
-			this.finished(PlayerStates.JUMP);
-			this.parent.velocity.y = -500;
-			// console.log('direciton.x',direction.x);
-			if (direction.x && !this.isAttacking()) {
-				this.owner.tweens.play("tilt_right");
-			}
-		} else if(!this.owner.onGround) {
-			this.finished(PlayerStates.FALL);
-		}
+		if (!this.owner.onGround) this.finished(PlayerStates.FALL);
 	}
 
 	onExit(): Record<string, any> {
+		this.owner.animation.stop();
 		return {};
 	}
 }

@@ -158,24 +158,34 @@
     },
     {
       "name": "JUMP",
-        "frames":[ {"index": 178, "duration": 6},  
+        "frames":[  
+                    {"index": 171, "duration": 2},
+                    {"index": 172, "duration": 2},
+                    {"index": 173, "duration": 2},
+                    {"index": 174, "duration": 2},
+                    {"index": 175, "duration": 2},
+                    {"index": 176, "duration": 2},
+                    {"index": 177, "duration": 2},
+                    
+
+                   {"index": 178, "duration": 6},  
                    {"index": 179, "duration": 6},
                    {"index": 180, "duration": 6},  
                    {"index": 181, "duration": 6},  
                    {"index": 182, "duration": 6},
                    {"index": 183, "duration": 6},  
                    {"index": 184, "duration": 6},  
-                   {"index": 185, "duration": 6}
+                   {"index": 185, "duration": 8},
+                   {"index": 186, "duration": 8},  
+                   {"index": 190, "duration": 8},
+                   {"index": 191, "duration": 8},
+                   {"index": 192, "duration": 8}
         ]
     },
     {
       "name": "STOP_IN_AIR",
-        "frames":[  {"index": 190, "duration": 2},  
-                    {"index": 191, "duration": 2}, 
-                    {"index": 192, "duration": 2}, 
-                    {"index": 193, "duration": 2}, 
-                    {"index": 194, "duration": 2}, 
-                    {"index": 195, "duration": 2}, 
+        "frames":[  {"index": 194, "duration": 7}, 
+                    {"index": 195, "duration": 7}, 
                     {"index": 196, "duration": 10}, 
                     {"index": 197, "duration": 4},
                     {"index": 198, "duration": 4},  
@@ -183,10 +193,7 @@
                     {"index": 200, "duration": 4}, 
                     {"index": 201, "duration": 4}, 
                     {"index": 202, "duration": 3}, 
-                    {"index": 203, "duration": 3}, 
-                    {"index": 204, "duration": 3}, 
-                    {"index": 205, "duration": 3}, 
-                    {"index": 206, "duration": 3}
+                    {"index": 203, "duration": 3}
        ]
     },
     {

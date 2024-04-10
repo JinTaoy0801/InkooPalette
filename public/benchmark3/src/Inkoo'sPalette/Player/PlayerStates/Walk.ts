@@ -7,15 +7,14 @@ export default class Walk extends OnGround{
     owner:AnimatedSprite;
 
     onEnter(options: Record<string, any>): void {
-        (this.parent.speed) = this.parent.MIN_SPEED;
-        if (!this.isAttacking())
-            this.owner.animation.play("MOVE_RIGHT", false);
+        this.parent.speed = this.parent.MIN_SPEED;
+        this.owner.animation.play("MOVE_RIGHT", false);
     }
 
     update(deltaT: number): void {
         super.update(deltaT);
         let dir = this.getInputDirection();
-        if (!this.owner.animation.isPlaying("MOVE_RIGHT") && !this.isAttacking()) {
+        if (!this.owner.animation.isPlaying("MOVE_RIGHT")) {
             this.owner.animation.playIfNotAlready("MOVING_RIGHT", true);
         }
         if(dir.isZero()) {
@@ -28,7 +27,7 @@ export default class Walk extends OnGround{
     }
 
 	onExit(): Record<string, any> {
-		// this.owner.animation.stop();
+		this.owner.animation.stop();
 		return {};
 	}
 }

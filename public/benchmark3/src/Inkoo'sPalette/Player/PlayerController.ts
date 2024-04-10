@@ -5,7 +5,7 @@ import Receiver from "../../Wolfie2D/Events/Receiver";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import InkooAnimatedSprite from "../Nodes/InkooAnimatedSprite";
 import Fall from "./PlayerStates/Fall";
-import inAir from "./PlayerStates/InAir";
+import InAir from "./PlayerStates/InAir";
 import Jump from "./PlayerStates/Jump";
 import Idle from "./PlayerStates/Idle"; 
 import Walk from "./PlayerStates/Walk";
@@ -13,6 +13,7 @@ import Attack from "./PlayerStates/Attack";
 import GameNode from "../../Wolfie2D/Nodes/GameNode";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import State from "../../Wolfie2D/DataTypes/State/State";
+import OnGround from "./PlayerStates/onGround";
 
 
 export enum PlayerType {
@@ -41,7 +42,7 @@ export default class PlayerController extends StateMachineAI {
 
     initializeAI(owner: InkooAnimatedSprite, options: Record<string, any>){
         this.owner = owner;
-
+        console.log('owner in playercontroller', owner);
         let idle = new Idle(this, this.owner);
         this.addState(PlayerStates.IDLE, idle);
         let walk = new Walk(this, this.owner);
@@ -80,13 +81,13 @@ export default class PlayerController extends StateMachineAI {
                 {
                     property: "scaleX",
                     start: 1.5,
-                    end: 1.8,
+                    end: 2,
                     ease: EaseFunctionType.IN_OUT_QUAD
                 },
                 {
                     property: "scaleY",
                     start: 1.5,
-                    end: 1.2,
+                    end: 1,
                     ease: EaseFunctionType.IN_OUT_QUAD
                 }
 
@@ -98,9 +99,6 @@ export default class PlayerController extends StateMachineAI {
     
     changeState(stateName: string): void {
         console.log('stateNamestateNamestateNamestateName',stateName);
-        if((stateName === PlayerStates.JUMP || stateName === PlayerStates.FALL) && !(this.stack.peek() instanceof inAir) || stateName === PlayerStates.ATTACK){
-            this.stack.push(this.stateMap.get(stateName));
-        }
         super.changeState(stateName);
     }
 

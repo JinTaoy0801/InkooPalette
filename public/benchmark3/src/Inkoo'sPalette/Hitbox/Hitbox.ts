@@ -7,16 +7,10 @@ import HitboxController from "./HitboxController";
 export default class Hitbox {
     box: AnimatedSprite
 
-    constructor(owner: AnimatedSprite, sprite: AnimatedSprite, eventType: string, center: Vec2, halfSize: Vec2, invertX: boolean, offset: Vec2) {
-        this.box = sprite;
+    constructor(settings: Record<string, any>) {
+        this.box = settings.sprite;
+        this.box.addPhysics(new AABB(settings.center, settings.halfSize), new Vec2(0, 0));
 
-        this.box.addPhysics(new AABB(center, halfSize), new Vec2(0, 0));
-
-        this.box.addAI(HitboxController, {
-            invertX: invertX,
-            offset: offset,
-            eventType: eventType,
-            owner: owner,
-          });
+        this.box.addAI(HitboxController, settings);
     }
 }

@@ -16,8 +16,6 @@ export default abstract class InAir extends PlayerState {
 		this.owner.move(this.parent.velocity.scaled(deltaT));
 
         if(this.owner.onGround){
-            if (!this.isAttacking())
-                this.owner.tweens.play("flatten");
 			this.finished(PlayerStates.PREVIOUS);
 		}
 
