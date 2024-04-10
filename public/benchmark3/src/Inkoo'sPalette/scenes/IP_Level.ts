@@ -24,9 +24,16 @@ import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import MainMenu from "./MainMenu";
 import InkooAnimatedSprite from "../Nodes/InkooAnimatedSprite";
 
+export enum Layers {
+    Main = "main",
+    UI = "ui",
+    Hidden = "hidden",
+    Pause = "pause"
+  }
+
 export default class IP_Level extends Scene {
     protected playerSpawn: Vec2;
-    protected player: AnimatedSprite;
+    player: AnimatedSprite;
 
     private healthBar: Sprite;
     protected isPaused: Boolean;
@@ -77,8 +84,8 @@ export default class IP_Level extends Scene {
     }
 
     protected initLayers(): void {
-        this.addUILayer("UI");
-        this.addLayer("primary", 1);
+        this.addUILayer(Layers.UI);
+        this.addLayer(Layers.Main, 1);
     }
 
     protected initViewport(): void {
@@ -96,13 +103,13 @@ export default class IP_Level extends Scene {
     }
 
     protected addUI() {
-        this.healthBar = this.add.sprite('healthBar', 'UI')
+        this.healthBar = this.add.sprite('healthBar', Layers.UI)
         this.healthBar.scale.set(2, 2);
         this.healthBar.position.copy(new Vec2(30, 30));
     }
 
     protected initPlayer(): void {
-        this.player = this.add.animatedSprite('player', 'primary');
+        this.player = this.add.animatedSprite('player', Layers.Main);
 
         this.player.scale.set(1.5, 1.5);
         this.player.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(100,100)))

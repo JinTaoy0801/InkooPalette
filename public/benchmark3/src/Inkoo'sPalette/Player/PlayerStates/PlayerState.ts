@@ -7,23 +7,25 @@ import Timer from "../../../Wolfie2D/Timing/Timer";
 import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import { inkooEvents } from "../../inkooEvents";
 import PlayerController from "../PlayerController";
+import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 
 
 //if this code does not work change owner to GameNode and 
 export default abstract class PlayerState extends State{
-    owner:GameNode;
+    owner: AnimatedSprite;
     gravity: number=1000;
-    parent:PlayerController;
-    positionTimer:Timer;
+    parent: PlayerController;
+    positionTimer: Timer;
 //this parent to Statemachine
     constructor (parent: StateMachine, owner: GameNode){
         super(parent);
-        this.owner = owner;
+        this.owner = <AnimatedSprite>owner;
         this.positionTimer = new Timer(250);
 		this.positionTimer.start();
 
     }
 	handleInput(event: GameEvent): void {
+		
 	}
 
 	getInputDirection(): Vec2 {
@@ -41,5 +43,9 @@ export default abstract class PlayerState extends State{
 			this.positionTimer.start();
 		}
 		this.parent.velocity.y += this.gravity*deltaT;
+	}
+
+	isAttacking () {
+		return this.owner.animation.isPlaying("ATTACK_RIGHT");
 	}
 }

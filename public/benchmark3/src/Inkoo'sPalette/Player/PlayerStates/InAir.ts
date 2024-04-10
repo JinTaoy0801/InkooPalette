@@ -1,3 +1,4 @@
+import Input from "../../../Wolfie2D/Input/Input";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import { PlayerStates } from "../PlayerController";
 import PlayerState from "./PlayerState";
@@ -15,7 +16,13 @@ export default abstract class InAir extends PlayerState {
 		this.owner.move(this.parent.velocity.scaled(deltaT));
 
         if(this.owner.onGround){
+            if (!this.isAttacking())
+                this.owner.tweens.play("flatten");
 			this.finished(PlayerStates.PREVIOUS);
+		}
+
+        if (Input.isJustPressed("attack")) {
+			this.finished(PlayerStates.ATTACK);
 		}
     }
 }

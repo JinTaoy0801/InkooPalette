@@ -14,7 +14,7 @@ import MainMenu from "./Inkoo'sPalette/scenes/MainMenu";
             {name: "left", keys: ["a"]},
             {name: "right", keys: ["d"]},
             {name: "jump", keys: ["w", "space"]},
-            {name:"attack", keys:["j"]}
+            {name: "attack", keys: ["j"]}
         ],
         useWebGL: false,                        // Tell the game we want to use webgl
         showDebug: true                       // Whether to show debug messages. You can change this to true if you want

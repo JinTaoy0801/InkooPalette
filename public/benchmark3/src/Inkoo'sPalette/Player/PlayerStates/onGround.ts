@@ -4,6 +4,7 @@ import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
 import MathUtils from "../../../Wolfie2D/Utils/MathUtils";
 import { PlayerStates } from "../PlayerController";
+import Idle from "./Idle";
 import PlayerState from "./PlayerState";
 
 export default class OnGround extends PlayerState {
@@ -23,10 +24,18 @@ export default class OnGround extends PlayerState {
 			(<Sprite>this.owner).invertX = MathUtils.sign(direction.x) < 0;
 		}
 
+		if (Input.isJustPressed("attack")) {
+			this.finished(PlayerStates.ATTACK);
+		}
+
 		if(Input.isJustPressed("jump")){
 			// console.log('ran');
 			this.finished(PlayerStates.JUMP);
 			this.parent.velocity.y = -500;
+			// console.log('direciton.x',direction.x);
+			if (direction.x && !this.isAttacking()) {
+				this.owner.tweens.play("tilt_right");
+			}
 		} else if(!this.owner.onGround) {
 			this.finished(PlayerStates.FALL);
 		}
