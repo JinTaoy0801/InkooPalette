@@ -4,6 +4,8 @@ import InkooAnimatedSprite from "../../Nodes/InkooAnimatedSprite";
 import InAir from "./InAir";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Input from "../../../Wolfie2D/Input/Input";
+import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
 export default class Jump extends InAir{
     owner: AnimatedSprite;
     startingHeight = 0;
@@ -16,8 +18,9 @@ export default class Jump extends InAir{
 
     update(deltaT: number): void {
         super.update(deltaT);
- 
-        this.owner.animation.playIfNotAlready("JUMP", true);
+
+        if (!this.owner.animation.isPlaying("ATTACK_RIGHT"))
+            this.owner.animation.playIfNotAlready("JUMP", true);
         
         if (this.owner.onCeiling) {
             this.parent.velocity.y = 0;
@@ -35,8 +38,10 @@ export default class Jump extends InAir{
 	}
 
 	onExit(): Record<string, any> {
-		this.owner.animation.stop();
-        this.owner.animation.play("STOP_IN_AIR", false);
+		// this.owner.animation.stop();
+        if (!this.owner.animation.isPlaying("ATTACK_RIGHT"))
+            this.owner.animation.stop();
+            this.owner.animation.play("STOP_IN_AIR", false);
 		return {};
 	}
 }

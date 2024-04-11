@@ -23,6 +23,7 @@ import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import MainMenu from "./MainMenu";
 import InkooAnimatedSprite from "../Nodes/InkooAnimatedSprite";
+import Goblin from "../Enemies/Goblin/Goblin";
 
 export enum Layers {
     Main = "main",
@@ -34,6 +35,7 @@ export enum Layers {
 export default class IP_Level extends Scene {
     protected playerSpawn: Vec2;
     player: AnimatedSprite;
+    protected goblins = new Array<Goblin>();
 
     private healthBar: Sprite;
     protected isPaused: Boolean;
@@ -98,7 +100,9 @@ export default class IP_Level extends Scene {
             inkooEvents.PLAYER_ATTACK,
             inkooEvents.LEVEL_START,
             inkooEvents.LEVEL_END,
-            inkooEvents.PLAYER_KILLED
+           
+            inkooEvents.PLAYER_KILLED,
+            "GOBLIN_MOVED"
         ]);
     }
 
@@ -119,10 +123,9 @@ export default class IP_Level extends Scene {
         }
         this.player.position.copy(this.playerSpawn);
 
-        // this.player.set
-        this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));
+        this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(12, 8)));
         this.player.addAI(PlayerController, {playerType: "platformer", tilemap: "ground"});
-        this.player.colliderOffset.set(0, 5);
+        this.player.colliderOffset.set(0, 10);
 
         this.player.setGroup("player");
     }
