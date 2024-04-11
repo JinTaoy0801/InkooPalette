@@ -85,7 +85,6 @@ export default class FixedUpdateGameLoop extends GameLoop {
         this.fps = 0.9 * this.framesSinceLastFpsUpdate * 1000 / (timestamp - this.lastFpsUpdate) +(1 - 0.9) * this.fps;
         this.lastFpsUpdate = timestamp;
         this.framesSinceLastFpsUpdate = 0;
-
         Debug.log("fps", "FPS: " + this.fps.toFixed(1));
         Stats.updateFPS(this.fps);
     }
