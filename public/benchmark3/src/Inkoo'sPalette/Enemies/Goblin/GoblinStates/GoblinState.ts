@@ -4,6 +4,7 @@ import Vec2 from "../../../../Wolfie2D/DataTypes/Vec2";
 import GameEvent from "../../../../Wolfie2D/Events/GameEvent";
 import GameNode from "../../../../Wolfie2D/Nodes/GameNode";
 import AnimatedSprite from "../../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+import Sprite from "../../../../Wolfie2D/Nodes/Sprites/Sprite";
 import { inkooEvents } from "../../../inkooEvents";
 import GoblinController, { GoblinStates } from "../GoblinController";
 
@@ -14,16 +15,18 @@ export default abstract class GoblinState extends State {
 
     constructor(parent: StateMachine, owner: AnimatedSprite) {
 		super(parent);
-
 		this.owner = owner;
 	}
 
     handleInput(event: GameEvent): void {
-        if (event.type == inkooEvents.PLAYER_MOVE) 
-            this.playerPosition = event.data.get("position");
+   
     }
+    
 
     update(deltaT: number): void {
-        console.log('buhhh');
+        let direction = this.parent.directionPatrol;
+        (<Sprite>this.owner).invertX = (direction == "right") ? true : false;
+        // console.log('goblin position', this.owner.position);
     }
+    
 }

@@ -39,10 +39,9 @@ export default class PlayerController extends StateMachineAI {
     MAX_SPEED: number = 300;
     tilemap: OrthogonalTilemap;
 
-
     initializeAI(owner: InkooAnimatedSprite, options: Record<string, any>){
         this.owner = owner;
-        console.log('owner in playercontroller', owner);
+        // console.log('owner in playercontroller', owner);
         let idle = new Idle(this, this.owner);
         this.addState(PlayerStates.IDLE, idle);
         let walk = new Walk(this, this.owner);
@@ -115,6 +114,10 @@ export default class PlayerController extends StateMachineAI {
         } else if(this.currentState instanceof Attack){
             Debug.log("playerstate", "Player State: Attack");
         }
+    }
+
+    isAttacking(): any {
+        return this.currentState instanceof Attack;
     }
 
 }

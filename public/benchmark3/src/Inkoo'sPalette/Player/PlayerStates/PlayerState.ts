@@ -22,8 +22,8 @@ export default abstract class PlayerState extends State{
         this.owner = <AnimatedSprite>owner;
         this.positionTimer = new Timer(250);
 		this.positionTimer.start();
-
     }
+	
 	handleInput(event: GameEvent): void {
 		
 	}

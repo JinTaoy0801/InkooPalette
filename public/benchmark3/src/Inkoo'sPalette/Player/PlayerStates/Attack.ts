@@ -26,19 +26,16 @@ export default class Attack extends PlayerState {
         }
         let hitbox = new Hitbox(HB_options);
 
-        if (this.owner.onGround)
-            this.finished(PlayerStates.IDLE);
-        else
-            this.finished(PlayerStates.FALL);
-    }
-
-    update(deltaT: number): void {
-        // if (!this.owner.animation.isPlaying("ATTACK_RIGHT")) {
+        if (!this.attack.animation.isPlaying("ATTACK_RIGHT")) {
             if (this.owner.onGround)
                 this.finished(PlayerStates.IDLE);
             else
                 this.finished(PlayerStates.FALL);
-        // }
+        }
+    }
+
+    update(deltaT: number): void {
+        super.update(deltaT);
     }
 
     onExit(): Record<string, any> {
