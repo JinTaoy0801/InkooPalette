@@ -9,7 +9,6 @@ import InAir from "./PlayerStates/InAir";
 import Jump from "./PlayerStates/Jump";
 import Idle from "./PlayerStates/Idle"; 
 import Walk from "./PlayerStates/Walk";
-import Attack from "./PlayerStates/Attack";
 import GameNode from "../../Wolfie2D/Nodes/GameNode";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import State from "../../Wolfie2D/DataTypes/State/State";
@@ -50,10 +49,6 @@ export default class PlayerController extends StateMachineAI {
         this.addState(PlayerStates.JUMP, jump);
         let fall = new Fall(this, this.owner);
         this.addState(PlayerStates.FALL, fall);
-
-        let attack = new Attack(this, this.owner)
-        this.addState(PlayerStates.ATTACK, attack);
-
         
         this.initialize(PlayerStates.IDLE);
 
@@ -111,13 +106,6 @@ export default class PlayerController extends StateMachineAI {
 			Debug.log("playerstate", "Player State: Idle");
 		} else if(this.currentState instanceof Fall){
             Debug.log("playerstate", "Player State: Fall");
-        } else if(this.currentState instanceof Attack){
-            Debug.log("playerstate", "Player State: Attack");
         }
     }
-
-    isAttacking(): any {
-        return this.currentState instanceof Attack;
-    }
-
 }

@@ -4,6 +4,9 @@ import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
 import MathUtils from "../../../Wolfie2D/Utils/MathUtils";
 import { PlayerStates } from "../PlayerController";
 import PlayerState from "./PlayerState";
+import { Layers } from "../../scenes/IP_Level";
+import Hitbox from "../../Hitbox/Hitbox";
+import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 
 export default abstract class InAir extends PlayerState {
     owner: AnimatedSprite;
@@ -21,12 +24,24 @@ export default abstract class InAir extends PlayerState {
 
 		this.owner.move(this.parent.velocity.scaled(deltaT));
 
-        if(this.owner.onGround){
-			this.finished(PlayerStates.PREVIOUS);
-		}
-        
-        if (Input.isJustPressed("attack") && !this.owner.animation.isPlaying("ATTACK_RIGHT")) {
-			this.finished(PlayerStates.ATTACK);
+        if (Input.isJustPressed("attack") && !this.isAttacking()) {
+			// this.finished(PlayerStates.ATTACK);
+			this.owner.animation.playIfNotAlready("JUMP_ATTACK", false);
+			this.attack = this.owner.getScene().add.animatedSprite("arm_right", Layers.Main);
+			this.attack.scale.set(2, 1.5);
+
+			const HB_options = {
+				actor: this.owner,
+				sprite: this.attack,
+				attack_name: "ARM_RIGHT",
+				eventType: "Ally",
+				center: new Vec2(0, 0),
+				halfSize: new Vec2(48, 10.5),
+				invertX: this.owner.invertX,
+				offset: new Vec2(52, 0)
+			}
+			let hitbox = new Hitbox(HB_options);
+
 		}
     }
 }

@@ -12,7 +12,7 @@ export default class Active extends HitboxState {
         this.owner = this.attack;
         this.setting = this.parent.settings;
 
-        this.owner.animation.play("ARM_RIGHT", false);
+        this.owner.animation.play(this.setting.attack_name, false);
       }
 
     update(deltaT: number): void {
@@ -23,12 +23,12 @@ export default class Active extends HitboxState {
         let boxY = player.position.y + this.setting.offset.y;
         if (this.setting.invertX) {
             boxX = player.position.x - this.setting.offset.x;
-            this.owner.invertX = true;
         }
+        this.owner.invertX = this.setting.invertX
 
         this.owner.position = new Vec2(boxX, boxY);
 
-        if (!this.owner.animation.isPlaying("ARM_RIGHT")) {
+        if (!this.owner.animation.isPlaying(this.setting.attack_name)) {
             this.owner.destroy();
         }
     }

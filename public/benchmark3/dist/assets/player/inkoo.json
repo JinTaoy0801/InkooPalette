@@ -4,7 +4,7 @@
   "spriteWidth": 24,
   "spriteHeight": 24,
   "columns": 27,
-  "rows": 13,
+  "rows": 14,
   "durationType": "time",
   "animations": [
       { 
@@ -272,6 +272,31 @@
                     {"index": 276, "duration": 1.5},
                     {"index": 277, "duration": 1.5},
                     {"index": 278, "duration": 1.5}
+        ]
+    },
+    {
+      "name": "JUMP_ATTACK",
+        "frames":[  {"index": 351, "duration": 1},  
+                    {"index": 352, "duration": 1}, 
+                    {"index": 353, "duration": 1}, 
+                    {"index": 354, "duration": 1}, 
+                    {"index": 355, "duration": 1}, 
+                    {"index": 356, "duration": 1}, 
+                    {"index": 357, "duration": 1},  
+                    {"index": 358, "duration": 1}, 
+                    {"index": 359, "duration": 3}, 
+                    {"index": 360, "duration": 1}, 
+                    {"index": 361, "duration": 1}, 
+                    {"index": 362, "duration": 1}, 
+                    {"index": 363, "duration": 1},  
+                    {"index": 364, "duration": 1}, 
+                    {"index": 365, "duration": 1}, 
+                    {"index": 366, "duration": 1}, 
+                    {"index": 367, "duration": 1}, 
+                    {"index": 368, "duration": 1}, 
+                    {"index": 369, "duration": 1},
+                    {"index": 370, "duration": 1},
+                    {"index": 371, "duration": 1}
         ]
     }
   ]

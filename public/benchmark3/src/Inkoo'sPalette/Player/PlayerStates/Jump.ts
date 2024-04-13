@@ -14,12 +14,14 @@ export default class Jump extends InAir{
         //this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "jump", loop: false, holdReference: false});
         this.startingHeight = this.owner.position.y;
         this.parent.velocity.y = -215;
+        this.owner.setCollisionShape(new AABB(new Vec2(0, 0), new Vec2(12, 16)));
+        this.owner.colliderOffset.set(0, 0);
     }
 
     update(deltaT: number): void {
         super.update(deltaT);
 
-        if (!this.owner.animation.isPlaying("ATTACK_RIGHT"))
+        if (!this.isAttacking())
             this.owner.animation.playIfNotAlready("JUMP", true);
         
         if (this.owner.onCeiling) {
@@ -38,8 +40,9 @@ export default class Jump extends InAir{
 	}
 
 	onExit(): Record<string, any> {
-		// this.owner.animation.stop();
-        if (!this.owner.animation.isPlaying("ATTACK_RIGHT"))
+		this.owner.setCollisionShape(new AABB(new Vec2(0, 0), new Vec2(12,8)));
+        this.owner.colliderOffset.set(0, 10);
+        if (!this.isAttacking())
             this.owner.animation.stop();
             this.owner.animation.play("STOP_IN_AIR", false);
 		return {};

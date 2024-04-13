@@ -10,13 +10,11 @@ export default class Idle extends OnGround{
     
 	onEnter(options: Record<string, any>): void {
 		this.parent.speed = this.parent.MIN_SPEED;
-		if (!this.owner.animation.isPlaying("ATTACK_RIGHT"))
-			this.owner.animation.playIfNotAlready("IDLE_RIGHT", true);
 	}
 
 	update(deltaT: number): void {
 		super.update(deltaT);
-		if (!this.owner.animation.isPlaying("ATTACK_RIGHT"))
+		if (!this.isAttacking())
 			this.owner.animation.playIfNotAlready("IDLE_RIGHT", true);
 
 		let dir = this.getInputDirection();

@@ -1,7 +1,7 @@
 {
     "name": "arm_right",
     "spriteSheetImage": "arm_right.png",
-    "spriteWidth": 28,
+    "spriteWidth": 48,
     "spriteHeight": 14,
     "columns": 36,
     "rows": 1,
@@ -29,7 +29,7 @@
                         {"index": 17, "duration": 2}, 
                         {"index": 18, "duration": 2},
                         {"index": 19, "duration": 2},
-                        {"index": 20, "duration": 2},
+                        {"index": 20, "duration": 4},
                         {"index": 21, "duration": 2},
                         {"index": 22, "duration": 2},
                         {"index": 23, "duration": 2},
