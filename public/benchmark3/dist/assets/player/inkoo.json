@@ -4,7 +4,7 @@
   "spriteWidth": 24,
   "spriteHeight": 24,
   "columns": 27,
-  "rows": 14,
+  "rows": 15,
   "durationType": "time",
   "animations": [
       { 
@@ -284,7 +284,7 @@
                     {"index": 356, "duration": 1}, 
                     {"index": 357, "duration": 1},  
                     {"index": 358, "duration": 1}, 
-                    {"index": 359, "duration": 3}, 
+                    {"index": 359, "duration": 1}, 
                     {"index": 360, "duration": 1}, 
                     {"index": 361, "duration": 1}, 
                     {"index": 362, "duration": 1}, 
@@ -296,7 +296,40 @@
                     {"index": 368, "duration": 1}, 
                     {"index": 369, "duration": 1},
                     {"index": 370, "duration": 1},
-                    {"index": 371, "duration": 1}
+                    {"index": 371, "duration": 50}
+        ]
+    },
+    {
+      "name": "IDLE_ATTACK_UP",
+        "frames":[  {"index": 378, "duration": 2},  
+                    {"index": 379, "duration": 2},
+                    {"index": 380, "duration": 2},  
+                    {"index": 381, "duration": 2},
+                    {"index": 382, "duration": 2},  
+                    {"index": 383, "duration": 2},
+                    {"index": 384, "duration": 2},  
+                    {"index": 385, "duration": 2},
+                    {"index": 386, "duration": 2},  
+                    {"index": 387, "duration": 2},
+                    {"index": 388, "duration": 4},  
+                    {"index": 389, "duration": 6},
+                    {"index": 388, "duration": 4}, 
+                    {"index": 387, "duration": 2},   
+                    {"index": 386, "duration": 2}, 
+                    {"index": 385, "duration": 2},
+                    {"index": 384, "duration": 2},  
+                    {"index": 383, "duration": 2},
+                    {"index": 382, "duration": 2},
+                    {"index": 381, "duration": 2},
+                    {"index": 380, "duration": 2},
+                    {"index": 379, "duration": 2},
+                    {"index": 378, "duration": 2},
+                    {"index": 0, "duration": 25}
+        ]
+    },
+    {
+      "name": "SPIN_ATTACK",
+        "frames":[  {"index": 26, "duration": 58}
         ]
     }
   ]

@@ -13,7 +13,7 @@ export default class Active extends HitboxState {
         this.setting = this.parent.settings;
 
         this.owner.animation.play(this.setting.attack_name, false);
-      }
+    }
 
     update(deltaT: number): void {
         super.update(deltaT);
@@ -27,6 +27,10 @@ export default class Active extends HitboxState {
         this.owner.invertX = this.setting.invertX
 
         this.owner.position = new Vec2(boxX, boxY);
+
+        if (this.setting.attack_name == "ATTACK_UP") {
+            this.owner.colliderOffset.set(0, 16);
+        }
 
         if (!this.owner.animation.isPlaying(this.setting.attack_name)) {
             this.owner.destroy();
