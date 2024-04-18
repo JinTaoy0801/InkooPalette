@@ -31,6 +31,7 @@ export default class IP_Level1 extends IP_Level {
     startScene(): void {
         this.playerSpawn = new Vec2(50, 750);
         this.add.tilemap("level1", new Vec2(2, 2));
+        
         super.startScene();
 
         this.initGoblin();

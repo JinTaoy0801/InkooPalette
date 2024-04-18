@@ -87,7 +87,7 @@ export default class IP_Level extends Scene {
 
     protected initLayers(): void {
         this.addUILayer(Layers.UI);
-        this.addLayer(Layers.Main, 1);
+        this.addLayer(Layers.Main, 2);
     }
 
     protected initViewport(): void {
