@@ -22,7 +22,7 @@ import MainMenu from "./Inkoo'sPalette/scenes/MainMenu";
 
     // Create a game with the options specified
     const game = new Game(options);
-
+    
     // Start our game
     game.start(MainMenu, {});
 })();

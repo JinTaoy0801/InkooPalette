@@ -97,7 +97,7 @@ export default class PlayerController extends StateMachineAI {
     }
     
     changeState(stateName: string): void {
-        console.log('stateNamestateNamestateNamestateName',stateName);
+        // console.log('stateNamestateNamestateNamestateName',stateName);
         super.changeState(stateName);
     }
 
@@ -114,6 +114,10 @@ export default class PlayerController extends StateMachineAI {
         } else if(this.currentState instanceof Attack){
             Debug.log("playerstate", "Player State: Attack");
         }
+        let playPos = this.tilemap.getTileAtWorldPosition(new Vec2(this.owner.position.x, this.owner.position.y));
+        console.log("PlayerX:", this.owner.position.x)
+        console.log("PlayerY:", this.owner.position.y)
+        console.log("playerPos:", playPos);
     }
 
     isAttacking(): any {

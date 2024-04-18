@@ -6,7 +6,7 @@ import GoblinState from "./GoblinState";
 export default class Walking extends GoblinState {
     onEnter(options: Record<string, any>): void {
         this.owner.animation.playIfNotAlready("TURN_LEFT", false);
-        console.log('went inside goblin walking elft')
+        //console.log('went inside goblin walking elft')
     }
 
     update(deltaT: number): void {
@@ -16,7 +16,7 @@ export default class Walking extends GoblinState {
         super.update(deltaT);
         // console.log('ownerposition', this.owner.position);
         if (this.parent.coinFlip()) {
-            console.log('AVENTURINE')
+            //console.log('AVENTURINE')
             this.finished(GoblinStates.IDLE);
         }
         let dir = 0;
