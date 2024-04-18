@@ -11,9 +11,11 @@ import MainMenu from "./Inkoo'sPalette/scenes/MainMenu";
         canvasSize: {x: 1200, y: 800},          // The size of the game
         clearColor: {r: 150, g: 150, b: 150},   // The color the game clears to
         inputs: [
+            {name: "up", keys: ["w"]},
             {name: "left", keys: ["a"]},
             {name: "right", keys: ["d"]},
-            {name: "jump", keys: ["w", "space"]},
+            {name: "down", keys: ["s"]},
+            {name: "jump", keys: ["space"]},
             {name: "attack", keys: ["j"]}
         ],
         useWebGL: false,                        // Tell the game we want to use webgl

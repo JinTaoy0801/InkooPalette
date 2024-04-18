@@ -2,6 +2,9 @@ import InAir from "./InAir";
 import InkooAnimatedSprite from "../../Nodes/InkooAnimatedSprite";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import { PlayerStates } from "../PlayerController";
+import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
+import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+
 export default class Fall extends InAir{
     owner: AnimatedSprite
     onEnter(options: Record<string, any>): void { 
@@ -11,12 +14,11 @@ export default class Fall extends InAir{
             !this.owner.onCeiling && 
             !this.owner.onWall) 
             this.finished(PlayerStates.IDLE);
-
     }
 
     update(deltaT: number): void {
         super.update(deltaT);
-        if (!this.owner.animation.isPlaying("STOP_IN_AIR") && !this.owner.animation.isPlaying("ATTACK_RIGHT")) {
+        if (!this.owner.animation.isPlaying("STOP_IN_AIR") && !this.isAttacking()) {
             this.owner.animation.playIfNotAlready("FALLING", true);
         }
 
@@ -29,8 +31,7 @@ export default class Fall extends InAir{
     }
 
     onExit(): Record<string, any> {
-        // this.owner.collisionShape.set(12, 8);
-        if (!this.owner.animation.isPlaying("ATTACK_RIGHT")) {
+        if (!this.isAttacking()) {
             this.owner.animation.stop();
             this.owner.tweens.play("flatten");
         }
