@@ -22,17 +22,14 @@ import Color from "../../Wolfie2D/Utils/Color";
 import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import MainMenu from "./MainMenu";
+import InkooAnimatedSprite from "../Nodes/InkooAnimatedSprite";
 
 export default class IP_Level extends Scene {
     protected playerSpawn: Vec2;
     protected player: AnimatedSprite;
 
     private healthBar: Sprite;
-
-    // Labels for the UI
-    protected static livesCount: number = 3;
-    protected livesCountLabel: Label;
-
+    protected isPaused: Boolean;
 
     startScene(): void {
         this.initLayers();
@@ -40,14 +37,18 @@ export default class IP_Level extends Scene {
         this.initViewport();
         this.subscribeToEvents();
         this.addUI();
+        this.isPaused = false;
 
-        Input.disableInput();
+
+        Input.enableInput();
     }
-
+    //this never runs yets
     updateScene(deltaT: number): void {
         while (this.receiver.hasNextEvent()) {
+            console.log("event:",this.receiver.getNextEvent())
             this.handleEvent(this.receiver.getNextEvent());
         }
+        
     }
 
     protected handleEvent(event: GameEvent): void {
@@ -66,9 +67,6 @@ export default class IP_Level extends Scene {
             case inkooEvents.PLAYER_ATTACK: {
                 break;
             }
-            case inkooEvents.PLAYER_ENTERED_LEVEL_END: {
-                break;
-            }
             case inkooEvents.PLAYER_KILLED: {
                 break;
             }
@@ -84,9 +82,8 @@ export default class IP_Level extends Scene {
     }
 
     protected initViewport(): void {
-        this.viewport.setZoomLevel(1);
-        this.viewport.setBounds(0, 0, 512, 512);
-        this.viewport.follow(this.player);
+        this.viewport.setZoomLevel(1.5);
+        
     }
 
     protected subscribeToEvents() {
@@ -105,19 +102,27 @@ export default class IP_Level extends Scene {
     }
 
     protected initPlayer(): void {
-        this.player = this.add.animatedSprite('player', 'primary')
-        this.player.scale.set(2, 2);
+        this.player = this.add.animatedSprite('player', 'primary');
+
+        this.player.scale.set(1.5, 1.5);
+        this.player.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(100,100)))
         if(!this.playerSpawn){
             console.warn("Player spawn was never set - setting spawn to (0, 0)");
             this.playerSpawn = Vec2.ZERO;
         }
         this.player.position.copy(this.playerSpawn);
 
-        this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(16, 16)));
-        this.player.colliderOffset.set(0, 2);
+        // this.player.set
+        this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));
+        // this.player.colliderOffset.set(0, 2);
         this.player.addAI(PlayerController, {playerType: "platformer", tilemap: "ground"});
+        this.player.colliderOffset.set(0, 5);
 
         this.player.setGroup("player");
+    }
+    protected respawnPlayer():void{
+        this.sceneManager.changeToScene(MainMenu,{});
+        Input.enableInput();
     }
 }
 

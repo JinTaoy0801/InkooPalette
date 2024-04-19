@@ -1,24 +1,25 @@
-import GameEvent from "../../../Wolfie2D/Events/GameEvent";
-import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
-import { inkooEvents } from "../../inkooEvents";
+
 import { PlayerStates } from "../PlayerController";
 import InkooAnimatedSprite from "../../Nodes/InkooAnimatedSprite";
-import InAir from "./inAir";
-
+import InAir from "./InAir";
+import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 export default class Jump extends InAir{
-    owner: InkooAnimatedSprite;
+    owner: AnimatedSprite;
 
     onEnter(options: Record<string, any>): void {
-    //this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "jump", loop: false, holdReference: false});
-    this.owner.animation.playIfNotAlready("JUMP", false);
+        //this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "jump", loop: false, holdReference: false});
     }
 
     update(deltaT: number): void {
         super.update(deltaT);
-        if(this.owner.onCeiling){
+ 
+        this.owner.animation.playIfNotAlready("JUMP", true);
+        
+        if (this.owner.onCeiling) {
             this.parent.velocity.y = 0;
         }
-        if(this.parent.velocity.y >= 0){
+
+        if (this.parent.velocity.y >= 0) {
 			this.finished(PlayerStates.FALL);
 		}
 	}
