@@ -3,12 +3,13 @@ import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Layer from "../../Wolfie2D/Scene/Layer";
 import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
-import Label from "../../Wolfie2D/Nodes/UIElements/Label";
+import Label, { HAlign } from "../../Wolfie2D/Nodes/UIElements/Label";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import GameEvent from "../../Wolfie2D/Events/GameEvent";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import IP_Level1 from "./IP_Level1";
 import { inkooEvents } from "../inkooEvents";
+import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 
 const MainMenuName = {
     MAIN_MENU: "MAIN_MENU",
@@ -27,11 +28,19 @@ export default class MainMenu extends Scene {
     private story: Layer;
     private currentLayer: Layer;
     private logo: Sprite;
+    private main_bg: Sprite;
+    private level_bg: Sprite;
+    private controls_bg: Sprite;
+    private story_bg: Sprite;
+    private lock0: Sprite;
+    private lock1: Sprite;
 
     loadScene(): void {
         // If we want menu music
         // this.load.audio("menu", "path");
-        this.load.image("logo", "assets/logo.png");
+        this.load.image("logo", "assets/images/logo.png");
+        this.load.image("background", "assets/images/mainmenu_bg.png");
+        this.load.image("lock", "assets/images/lock.png");
     }
 
     startScene(): void {
@@ -49,122 +58,176 @@ export default class MainMenu extends Scene {
         // Set current layer to main menu initially
         this.currentLayer = this.mainMenu;
 
-        // Set background color
-        const background = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.MAIN_MENU, {position: new Vec2(center.x, center.y), text: ""});
-        background.size.set(1280, 800);
-        background.backgroundColor = new Color(150, 150, 150);
-        background.borderRadius = 0;
+        // Set background
+        this.main_bg = this.add.sprite("background", MainMenuName.MAIN_MENU);
+        this.main_bg.scale.set(5, 5);
+        this.main_bg.position = new Vec2(center.x, center.y);
+
+        const inkoo = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.MAIN_MENU, {position: new Vec2(center.x - 50, center.y - 300), text: "Inkoo's"});
+        inkoo.textColor = Color.WHITE;
+        inkoo.font = "daydream";
+        const palette = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.MAIN_MENU, {position: new Vec2(center.x + 50, center.y - 250), text: "Palette"});
+        palette.textColor = Color.WHITE;
+        palette.font = "daydream";
 
         this.logo = this.add.sprite("logo", MainMenuName.MAIN_MENU)
-        this.logo.scale.set(0.25, 0.25);
-        this.logo.position = new Vec2(center.x, center.y - 150);
+        this.logo.scale.set(0.15, 0.15);
+        this.logo.position = new Vec2(center.x + 100, center.y - 310);
 
         // Start button
-        const startGame = this.add.uiElement(UIElementType.BUTTON, MainMenuName.MAIN_MENU, {position: new Vec2(center.x, center.y - 15), text: "Start"});
-        startGame.size.set(200, 50);
-        startGame.borderWidth = 2;
-        startGame.borderColor = Color.WHITE;
-        startGame.backgroundColor = new Color(34, 27, 48);
+        const startGame = <Button>this.add.uiElement(UIElementType.BUTTON, MainMenuName.MAIN_MENU, {position: new Vec2(center.x, center.y - 100), text: "Start"});
+        startGame.font = "daydream"
+        startGame.size.set(140, 50);
+        startGame.borderColor = Color.TRANSPARENT;
+        startGame.backgroundColor = Color.TRANSPARENT;
         startGame.onClickEventId = MainMenuName.START_GAME;
 
         // Level Select button
-        const levelSelect = this.add.uiElement(UIElementType.BUTTON, MainMenuName.MAIN_MENU, {position: new Vec2(center.x, center.y + 60), text: "Level Select"});
-        levelSelect.size.set(200, 50);
-        levelSelect.borderWidth = 2;
-        levelSelect.borderColor = Color.WHITE;
-        levelSelect.backgroundColor = new Color(34, 27, 48);
+        const levelSelect = <Button>this.add.uiElement(UIElementType.BUTTON, MainMenuName.MAIN_MENU, {position: new Vec2(center.x, center.y - 25), text: "Level Select"});
+        levelSelect.font = "daydream"
+        levelSelect.size.set(260, 50);
+        levelSelect.borderColor = Color.TRANSPARENT;
+        levelSelect.backgroundColor = Color.TRANSPARENT;
         levelSelect.onClickEventId = MainMenuName.LEVEL_SELECT;
 
         // Controls button
-        const controls = this.add.uiElement(UIElementType.BUTTON, MainMenuName.MAIN_MENU, {position: new Vec2(center.x, center.y + 135), text: "Controls"});
-        controls.size.set(200, 50);
-        controls.borderWidth = 2;
-        controls.borderColor = Color.WHITE;
-        controls.backgroundColor = new Color(34, 27, 48);
+        const controls = <Button>this.add.uiElement(UIElementType.BUTTON, MainMenuName.MAIN_MENU, {position: new Vec2(center.x, center.y + 50), text: "Controls"});
+        controls.font = "daydream"
+        controls.size.set(210, 50);
+        controls.borderColor = Color.TRANSPARENT;
+        controls.backgroundColor = Color.TRANSPARENT;
         controls.onClickEventId = MainMenuName.CONTROLS;
 
         // Story button
-        const story = this.add.uiElement(UIElementType.BUTTON, MainMenuName.MAIN_MENU, {position: new Vec2(center.x, center.y + 210), text: "Story"});
-        story.size.set(200, 50);
-        story.borderWidth = 2;
-        story.borderColor = Color.WHITE;
-        story.backgroundColor = new Color(34, 27, 48);
+        const story = <Button> this.add.uiElement(UIElementType.BUTTON, MainMenuName.MAIN_MENU, {position: new Vec2(center.x, center.y + 125), text: "Story"});
+        story.font = "daydream"
+        story.size.set(140, 50);
+        story.borderColor = Color.TRANSPARENT;
+        story.backgroundColor = Color.TRANSPARENT;
         story.onClickEventId = MainMenuName.STORY;
 
         // Select Level layout
-        const levelBack = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x - this.viewport.getHalfSize().x + 130, center.y - this.viewport.getHalfSize().y + 50), text: "Back"});
-        levelBack.size.set(200, 50);
-        levelBack.borderWidth = 2;
-        levelBack.borderColor = Color.WHITE;
-        levelBack.backgroundColor = new Color(34, 27, 48);
+        this.level_bg = this.add.sprite("background", MainMenuName.LEVEL_SELECT);
+        this.level_bg.scale.set(5, 5);
+        this.level_bg.position = new Vec2(center.x, center.y);
+
+        const levelBack = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x, center.y + this.viewport.getHalfSize().y - 200), text: "Back"});
+        levelBack.borderColor = Color.TRANSPARENT;
+        levelBack.backgroundColor = Color.TRANSPARENT;
         levelBack.onClickEventId = MainMenuName.MENU;
-        levelBack.textColor = Color.WHITE;
+        levelBack.font = "daydream"
+
+        const levelHeader = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x, center.y - 300), text: "Level Select"});
+        levelHeader.textColor = Color.WHITE;
+        levelHeader.font = "daydream";
 
         // Controls layout
-        const controlsBack = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.CONTROLS, {position: new Vec2(center.x - this.viewport.getHalfSize().x + 130, center.y - this.viewport.getHalfSize().y + 50), text: "Back"});
-        controlsBack.size.set(200, 50);
-        controlsBack.borderWidth = 2;
-        controlsBack.borderColor = Color.WHITE;
-        controlsBack.backgroundColor = new Color(34, 27, 48);
+        this.controls_bg = this.add.sprite("background", MainMenuName.CONTROLS);
+        this.controls_bg.scale.set(5, 5);
+        this.controls_bg.position = new Vec2(center.x, center.y);
+
+        const controlsBack = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.CONTROLS, {position: new Vec2(center.x, center.y + this.viewport.getHalfSize().y - 200), text: "Back"});
+        controlsBack.borderColor = Color.TRANSPARENT;
+        controlsBack.backgroundColor = Color.TRANSPARENT;
         controlsBack.onClickEventId = MainMenuName.MENU;
-        controlsBack.textColor = Color.WHITE;
+        controlsBack.font = "daydream"
 
-        const controlsHeader = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x, center.y - 150), text: "Controls"});
-        controlsHeader.size.set(700, 75);
-        controlsHeader.borderWidth = 2;
-        controlsHeader.borderRadius = 0;
-        controlsHeader.borderColor = Color.WHITE;
+        const controlsHeader = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x, center.y - 300), text: "Controls"});
         controlsHeader.textColor = Color.WHITE;
-        controlsHeader.backgroundColor = new Color(34, 27, 48);
+        controlsHeader.font = "daydream";
 
-        const controlsBox = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x, center.y + 62.5), text: ""});
-        controlsBox.size.set(700, 350);
-        controlsBox.borderWidth = 2;
-        controlsBox.borderRadius = 0;
-        controlsBox.borderColor = Color.WHITE;
-        controlsBox.textColor = Color.WHITE;
-        controlsBox.backgroundColor = new Color(34, 27, 48);
+        const jump = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x - 200, center.y - 200), text: "Jump"});
+        jump.textColor = Color.WHITE;
+        jump.font = "daydream"
+        jump.fontSize = 20;
 
-        const w = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x, center.y - 80), text: "W/Space - Jump"});
+        const w = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x + 200, center.y - 200), text: "W / Space"});
         w.textColor = Color.WHITE;
-        const a = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x, center.y - 40), text: "A - Move Left"});
+        w.font = "daydream"
+        w.fontSize = 20;
+
+        const left = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x - 157, center.y - 160), text: "Move Left"});
+        left.textColor = Color.WHITE;
+        left.font = "daydream"
+        left.fontSize = 20;
+        
+        const a = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x + 135, center.y - 160), text: "A"});
         a.textColor = Color.WHITE;
-        const s = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x, center.y), text: "S - Quick Fall"});
-        s.textColor = Color.WHITE;
-        const d = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x, center.y + 40), text: "D - Move Right"});
+        a.font = "daydream"
+        a.fontSize = 20;
+
+        const right = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x - 145, center.y - 120), text: "Move Right"});
+        right.textColor = Color.WHITE;
+        right.font = "daydream"
+        right.fontSize = 20;
+
+        const d = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x + 135, center.y - 120), text: "D"});
         d.textColor = Color.WHITE;
-        const shift = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x, center.y + 80), text: "Shift - Dash"});
-        shift.textColor = Color.WHITE;
-        const j = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x, center.y + 120), text: "J - Basic Attack"});
+        d.font = "daydream"
+        d.fontSize = 20;
+
+        const melee = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x - 127, center.y - 80), text: "Melee Attack"});
+        melee.textColor = Color.WHITE;
+        melee.font = "daydream"
+        melee.fontSize = 20;
+
+        const j = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x + 133, center.y - 80), text: "J"});
         j.textColor = Color.WHITE;
-        const k = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x, center.y + 160), text: "K - Range Attack"});
+        j.font = "daydream"
+        j.fontSize = 20;
+
+        this.lock0 = this.add.sprite("lock", MainMenuName.CONTROLS);
+        this.lock0.scale.set(0.1, 0.1);
+        this.lock0.position = new Vec2(center.x + 170, center.y - 40);
+
+        const range = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x - 120, center.y - 40), text: "Range Attack"});
+        range.textColor = Color.WHITE;
+        range.font = "daydream"
+        range.fontSize = 20;
+
+        const k = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x + 135, center.y - 40), text: "K"});
         k.textColor = Color.WHITE;
-        const esc = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x, center.y + 200), text: "Esc - Pause Game"});
+        k.font = "daydream"
+        k.fontSize = 20;
+
+        this.lock1 = this.add.sprite("lock", MainMenuName.CONTROLS);
+        this.lock1.scale.set(0.1, 0.1);
+        this.lock1.position = new Vec2(center.x + 240, center.y);
+
+        const dash = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x - 199, center.y), text: "Dash"});
+        dash.textColor = Color.WHITE;
+        dash.font = "daydream"
+        dash.fontSize = 20;
+
+        const shift = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x + 172, center.y), text: "Shift"});
+        shift.textColor = Color.WHITE;
+        shift.font = "daydream"
+        shift.fontSize = 20;
+
+        const pause = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x - 141, center.y + 40), text: "Pause Game"});
+        pause.textColor = Color.WHITE;
+        pause.font = "daydream"
+        pause.fontSize = 20;
+
+        const esc = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x + 157, center.y + 40), text: "Esc"});
         esc.textColor = Color.WHITE;
+        esc.font = "daydream"
+        esc.fontSize = 20;
 
         // Story layout
-        const storyBack = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.STORY, {position: new Vec2(center.x - this.viewport.getHalfSize().x + 130, center.y - this.viewport.getHalfSize().y + 50), text: "Back"});
-        storyBack.size.set(200, 50);
-        storyBack.borderWidth = 2;
-        storyBack.borderColor = Color.WHITE;
-        storyBack.backgroundColor = new Color(34, 27, 48);
+        this.story_bg = this.add.sprite("background", MainMenuName.STORY);
+        this.story_bg.scale.set(5, 5);
+        this.story_bg.position = new Vec2(center.x, center.y);
+
+        const storyBack = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.STORY, {position: new Vec2(center.x, center.y + this.viewport.getHalfSize().y - 200), text: "Back"});
+        storyBack.borderColor = Color.TRANSPARENT;
+        storyBack.backgroundColor = Color.TRANSPARENT;
         storyBack.onClickEventId = MainMenuName.MENU;
-        storyBack.textColor = Color.WHITE;
+        storyBack.font = "daydream"
 
-        const storyLabel = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.STORY, {position: new Vec2(center.x - 350, center.y - 200), text: "Story"});
-        storyLabel.size.set(350, 50);
-        storyLabel.borderWidth = 2;
-        storyLabel.borderRadius = 0;
-        storyLabel.borderColor = Color.WHITE;
-        storyLabel.backgroundColor = new Color(34, 27, 48);
-        storyLabel.textColor = Color.WHITE;
-
-        const storyBG = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.STORY, {position: new Vec2(center.x, center.y + 50), text: ""});
-        storyBG.size.set(350 * 3, 450);
-        storyBG.borderWidth = 2;
-        storyBG.borderRadius = 0;
-        storyBG.borderColor = Color.WHITE;
-        storyBG.backgroundColor = new Color(34, 27, 48);
+        const storyHeader = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.STORY, {position: new Vec2(center.x, center.y - 300), text: "Story"});
+        storyHeader.textColor = Color.WHITE;
+        storyHeader.font = "daydream";
 
         const storyText = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.STORY, {position: new Vec2(center.x, center.y - 50), text: "Story Placeholder Text"});
         storyText.textColor = Color.WHITE;
@@ -187,7 +250,6 @@ export default class MainMenu extends Scene {
             case MainMenuName.START_GAME: {
                 this.emitter.fireEvent(inkooEvents.LEVEL_START);
                 this.sceneManager.changeToScene(IP_Level1);
-                
                 break;
             }
 
