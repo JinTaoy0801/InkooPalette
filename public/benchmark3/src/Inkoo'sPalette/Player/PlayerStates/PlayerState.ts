@@ -8,11 +8,15 @@ import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import { inkooEvents } from "../../inkooEvents";
 import PlayerController from "../PlayerController";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+import { PlayerStates } from "../PlayerController";
+import Hitbox from "../../Hitbox/Hitbox";
+import { Layers } from "../../scenes/IP_Level";
 
 
 //if this code does not work change owner to GameNode and 
 export default abstract class PlayerState extends State{
     owner: AnimatedSprite;
+	attack: AnimatedSprite
     gravity: number=1000;
     parent: PlayerController;
     positionTimer: Timer;
@@ -46,6 +50,13 @@ export default abstract class PlayerState extends State{
 	}
 
 	isAttacking () {
-		return this.owner.animation.isPlaying("ATTACK_RIGHT");
+		const attacks = [
+			"ATTACK_RIGHT",
+			"JUMP_ATTACK",
+			"IDLE_ATTACK_UP",
+			"SPIN_ATTACK",
+			"ATTACK_DOWN",
+		]
+		return attacks.some(attack => this.owner.animation.isPlaying(attack))
 	}
 }

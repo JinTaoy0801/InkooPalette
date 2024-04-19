@@ -87,7 +87,7 @@ export default class IP_Level extends Scene {
 
     protected initLayers(): void {
         this.addUILayer(Layers.UI);
-        this.addLayer(Layers.Main, 1);
+        this.addLayer(Layers.Main, 2);
     }
 
     protected initViewport(): void {
@@ -116,7 +116,6 @@ export default class IP_Level extends Scene {
         this.player = this.add.animatedSprite('player', Layers.Main);
 
         this.player.scale.set(1.5, 1.5);
-        this.player.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(100,100)))
         if(!this.playerSpawn){
             console.warn("Player spawn was never set - setting spawn to (0, 0)");
             this.playerSpawn = Vec2.ZERO;

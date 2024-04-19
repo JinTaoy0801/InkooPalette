@@ -19,7 +19,9 @@ export default class IP_Level1 extends IP_Level {
         this.load.spritesheet("player", "assets/player/inkoo.json");
         this.load.spritesheet("goblin", "assets/enemies/goblin/goblin_movement.json");
         this.load.image("healthBar", "assets/player/heart.png");
-        this.load.spritesheet("arm_right", "assets/player/attack/arm_right.json");
+        this.load.spritesheet("ARM_RIGHT", "assets/player/attack/arm_right.json");
+        this.load.spritesheet("ATTACK_UP", "assets/player/attack/attack_up.json");
+        this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
     }
 
     unloadScene(){
@@ -27,8 +29,9 @@ export default class IP_Level1 extends IP_Level {
     }
 
     startScene(): void {
-        this.playerSpawn = new Vec2(50, 811);
+        this.playerSpawn = new Vec2(50, 750);
         this.add.tilemap("level1", new Vec2(2, 2));
+        
         super.startScene();
 
         this.initGoblin();
