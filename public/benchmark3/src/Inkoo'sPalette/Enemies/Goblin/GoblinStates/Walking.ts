@@ -1,12 +1,14 @@
 import Timer from "../../../../Wolfie2D/Timing/Timer";
 import { GoblinStates } from "../GoblinController";
 import GoblinState from "./GoblinState";
-
+import Vec2 from "../../../../Wolfie2D/DataTypes/Vec2";
 
 export default class Walking extends GoblinState {
+    patrolArea = new Vec2(this.parent.patrolArea.leftBound,this.parent.patrolArea.rightBound);
     onEnter(options: Record<string, any>): void {
         this.owner.animation.playIfNotAlready("TURN_LEFT", false);
         //console.log('went inside goblin walking elft')
+        this.aggro = false;
     }
 
     update(deltaT: number): void {
@@ -15,7 +17,10 @@ export default class Walking extends GoblinState {
         }
         super.update(deltaT);
         // console.log('ownerposition', this.owner.position);
-        if (this.parent.coinFlip()) {
+        if(this.playerInPatrol(this.patrolArea)){
+
+        }
+        else if (this.parent.coinFlip()) {
             //console.log('AVENTURINE')
             this.finished(GoblinStates.IDLE);
         }

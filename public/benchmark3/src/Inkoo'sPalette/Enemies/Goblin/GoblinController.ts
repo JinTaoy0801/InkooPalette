@@ -24,7 +24,6 @@ export default class GoblinController extends StateMachineAI {
     speed: number = 100;
     velocity: Vec2 = Vec2.ZERO;
     tilemap: OrthogonalTilemap;
-    playerPosition: Vec2 = Vec2.ZERO;
     patrolArea = {
         leftBound: 0,
         rightBound: 0
@@ -73,6 +72,7 @@ export default class GoblinController extends StateMachineAI {
 
 	update(deltaT: number): void {
 		super.update(deltaT);
+        
         // console.log('owner', this.owner.position);
 	}
 }
