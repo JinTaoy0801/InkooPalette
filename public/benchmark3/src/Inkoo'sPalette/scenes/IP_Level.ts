@@ -124,7 +124,7 @@ export default class IP_Level extends Scene {
 
         this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(12, 8)));
         this.player.addAI(PlayerController, {playerType: "platformer", tilemap: "ground"});
-        this.player.colliderOffset.set(0, 10);
+        this.player.colliderOffset.set(0, 11);
 
         this.player.setGroup("player");
     }
