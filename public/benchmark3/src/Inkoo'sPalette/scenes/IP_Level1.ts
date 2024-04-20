@@ -31,7 +31,8 @@ export default class IP_Level1 extends IP_Level {
     startScene(): void {
         this.playerSpawn = new Vec2(50, 750);
         this.add.tilemap("level1", new Vec2(2, 2));
-        
+        this.layers.get("foreground").setDepth(10);
+        // this.add.
         super.startScene();
 
         this.initGoblin();
@@ -44,7 +45,7 @@ export default class IP_Level1 extends IP_Level {
     protected initViewport(): void {
         super.initViewport();
         this.viewport.follow(this.player);
-        this.viewport.setBounds(0, 0, 64*30, 64*66);
+        this.viewport.setBounds(0, 0, 64*32, 64*16);
     }
 
     protected initGoblin(): void {
