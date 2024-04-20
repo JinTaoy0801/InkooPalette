@@ -20,7 +20,7 @@ export default abstract class GoblinState extends State {
     constructor(parent: StateMachine, owner: AnimatedSprite) {
 		super(parent);
 		this.owner = owner;
-        this.attackTimer = new Timer(10000);
+        this.attackTimer = new Timer(3000);
 	}
 
     handleInput(event: GameEvent): void {

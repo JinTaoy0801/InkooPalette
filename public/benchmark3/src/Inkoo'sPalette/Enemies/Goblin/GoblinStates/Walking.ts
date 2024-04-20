@@ -18,9 +18,11 @@ export default class Walking extends GoblinState {
         super.update(deltaT);
         // console.log('ownerposition', this.owner.position);
         if(this.playerInPatrol(this.patrolArea)){
-            if(this.inRanged(1) && this.attackTimer.isStopped()){
-                console.log("attackiung");
-                this.owner.animation.playIfNotAlready("LIGHT_ATTACK",false);
+            console.log("inpatrol");
+            this.parent.direction = this.owner.position.dirTo(this.playerPosition);
+            this.owner.move(this.parent.velocity.scaled(deltaT));
+            if(this.inRanged(10) && this.attackTimer.isStopped()){
+                this.finished(GoblinStates.ATTACKING);
             }
             this.attackTimer.start();
         }

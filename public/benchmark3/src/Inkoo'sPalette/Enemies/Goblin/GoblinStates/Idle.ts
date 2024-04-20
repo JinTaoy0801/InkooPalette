@@ -11,7 +11,7 @@ export default class Idle extends GoblinState {
     }
 
     update(deltaT: number): void {
-		    super.update(deltaT);
+		super.update(deltaT);
         
         if (this.parent.coinFlip()) {
           this.finished(GoblinStates.WALKING);
@@ -20,6 +20,6 @@ export default class Idle extends GoblinState {
 
     onExit(): Record<string, any> {
         this.owner.animation.stop();
-		    return {};
+		return {};
     }
 }

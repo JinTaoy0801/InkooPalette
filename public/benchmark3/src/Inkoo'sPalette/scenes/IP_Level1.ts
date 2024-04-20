@@ -51,7 +51,7 @@ export default class IP_Level1 extends IP_Level {
 
     protected initGoblin(): void {
         var i;
-        for (i=0; i<this.goblinSpawns.length; i++) {
+        for (i=0; i<1; i++) {
             const goblinOptions = {
                 owner: this.add.animatedSprite('goblin', Layers.Main),
                 spawn: this.goblinSpawns[i],

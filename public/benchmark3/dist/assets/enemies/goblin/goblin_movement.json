@@ -51,6 +51,11 @@
                       {"index": 16, "duration": 25},
                       {"index": 17, "duration": 25}
           ]
+        },
+        { 
+          "name": "BLANK",
+          "frames": [ {"index": -1, "duration": 10000}
+          ]
         }
     ]
   }
