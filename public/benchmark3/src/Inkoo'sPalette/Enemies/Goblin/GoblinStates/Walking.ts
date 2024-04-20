@@ -8,7 +8,7 @@ export default class Walking extends GoblinState {
     onEnter(options: Record<string, any>): void {
         this.owner.animation.playIfNotAlready("TURN_LEFT", false);
         //console.log('went inside goblin walking elft')
-        this.aggro = false;
+        this.Aggro = false;
     }
 
     update(deltaT: number): void {
@@ -18,7 +18,11 @@ export default class Walking extends GoblinState {
         super.update(deltaT);
         // console.log('ownerposition', this.owner.position);
         if(this.playerInPatrol(this.patrolArea)){
-
+            if(this.inRanged(1) && this.attackTimer.isStopped()){
+                console.log("attackiung");
+                this.owner.animation.playIfNotAlready("LIGHT_ATTACK",false);
+            }
+            this.attackTimer.start();
         }
         else if (this.parent.coinFlip()) {
             //console.log('AVENTURINE')

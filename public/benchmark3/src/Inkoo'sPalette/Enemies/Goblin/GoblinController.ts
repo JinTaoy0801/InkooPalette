@@ -40,17 +40,13 @@ export default class GoblinController extends StateMachineAI {
             this.patrolArea.leftBound = 0;
         this.patrolArea.rightBound = 128+(options.spawn.x);
 
-        // console.log("patrolArea",this.patrolArea);
-        // console.log("this.ownerSpawnPosition",this.options.spawn);
-
-
         this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
 
 		this.receiver.subscribe(inkooEvents.PLAYER_MOVE);
 
         this.addState(GoblinStates.IDLE, new Idle(this, this.owner));
         this.addState(GoblinStates.WALKING, new Walking(this, this.owner));
-
+        
 		this.initialize(GoblinStates.WALKING);
 	}
 
@@ -72,7 +68,5 @@ export default class GoblinController extends StateMachineAI {
 
 	update(deltaT: number): void {
 		super.update(deltaT);
-        
-        // console.log('owner', this.owner.position);
 	}
 }
