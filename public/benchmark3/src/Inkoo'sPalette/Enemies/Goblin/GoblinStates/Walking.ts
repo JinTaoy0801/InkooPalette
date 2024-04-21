@@ -1,10 +1,8 @@
 import Timer from "../../../../Wolfie2D/Timing/Timer";
 import { GoblinStates } from "../GoblinController";
 import GoblinState from "./GoblinState";
-import Vec2 from "../../../../Wolfie2D/DataTypes/Vec2";
 
 export default class Walking extends GoblinState {
-    patrolArea = new Vec2(this.parent.patrolArea.leftBound,this.parent.patrolArea.rightBound);
     onEnter(options: Record<string, any>): void {
         this.owner.animation.playIfNotAlready("TURN_LEFT", false);
     }

@@ -22,7 +22,7 @@ export default class IP_Level1 extends IP_Level {
         this.load.spritesheet("ARM_RIGHT", "assets/player/attack/arm_right.json");
         this.load.spritesheet("ATTACK_UP", "assets/player/attack/attack_up.json");
         this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
-        this.load.spritesheet("LIGHT_ATTACK", "assets/enemies/goblin/goblin_light_attack.json")
+        this.load.spritesheet("GOBLIN_LIGHT_ATTACK", "assets/enemies/goblin/goblin_light_attack.json")
     }
 
     unloadScene(){

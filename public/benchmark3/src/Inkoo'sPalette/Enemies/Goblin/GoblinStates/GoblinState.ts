@@ -22,7 +22,7 @@ export default abstract class GoblinState extends State {
 		this.owner = owner;
         this.attackTimer = new Timer(3000);
 	}
-
+    patrolArea = new Vec2(this.parent.patrolArea.leftBound,this.parent.patrolArea.rightBound);
     handleInput(event: GameEvent): void {
    
     }
