@@ -8,12 +8,14 @@ import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import GameEvent from "../../../Wolfie2D/Events/GameEvent";
 import Walking from "./GoblinStates/Walking";
 import Attacking from "./GoblinStates/Attacking";
+import Alerted from "./GoblinStates/Alerted";
 import Debug from "../../../Wolfie2D/Debug/Debug";
 
 export enum GoblinStates {
     IDLE = "idle",
     WALKING = "walking",
-    ATTACKING = "attacking"
+    ATTACKING = "attacking",
+    ALERTED = "alerted"
 }
 
 export default class GoblinController extends StateMachineAI {
@@ -48,6 +50,7 @@ export default class GoblinController extends StateMachineAI {
         this.addState(GoblinStates.IDLE, new Idle(this, this.owner));
         this.addState(GoblinStates.WALKING, new Walking(this, this.owner));
         this.addState(GoblinStates.ATTACKING, new Attacking(this, this.owner));
+        this.addState(GoblinStates.ALERTED, new Alerted(this, this.owner));
         
 		this.initialize(GoblinStates.WALKING);
 	}
