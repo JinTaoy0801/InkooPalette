@@ -54,7 +54,7 @@
         },
         { 
           "name": "GOBLIN_LIGHT_ATTACK",
-          "frames": [ {"index": 0, "duration": 1000}
+          "frames": [ {"index": -1, "duration": 70}
           ]
         }
     ]

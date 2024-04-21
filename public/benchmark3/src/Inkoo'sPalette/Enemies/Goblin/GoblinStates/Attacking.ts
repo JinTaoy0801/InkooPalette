@@ -9,25 +9,25 @@ export default class Attacking extends GoblinState{
     attack: AnimatedSprite
     onEnter(options: Record<string, any>): void {
         this.attackTimer.start()
-    }
-    update(deltaT: number): void {
-        super.update(deltaT);
-        console.log("attacking?")
         this.owner.animation.playIfNotAlready("GOBLIN_LIGHT_ATTACK", false);
         this.attack = this.owner.getScene().add.animatedSprite("GOBLIN_LIGHT_ATTACK", Layers.Main);
+        this.attack.scale.set(2, 2);
         const HB_options = {
             actor: this.owner,
             sprite: this.attack,
             attack_name: "GOBLIN_LIGHT_ATTACK",
             eventType: "Enemy",
             center: new Vec2(0, 0),
-            halfSize: new Vec2(48,32),
+            halfSize: new Vec2(48,14),
             invertX: this.owner.invertX,
-            offset : new Vec2(52, 8),
+            offset : new Vec2(-15, 0),
             shape: "AABB"
         }
         let hitbox = new Hitbox(HB_options);
-        console.log(this.owner.animation.isPlaying("GOBLIN_LIGHT_ATTACK"))
+    }
+    update(deltaT: number): void {
+        super.update(deltaT);
+
         if (!this.owner.animation.isPlaying("GOBLIN_LIGHT_ATTACK")) {
             if(this.playerInPatrol(this.patrolArea)){
                 this.finished(GoblinStates.ALERTED);
