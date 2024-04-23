@@ -121,6 +121,43 @@ export default class MainMenu extends Scene {
         levelHeader.textColor = Color.WHITE;
         levelHeader.font = "daydream";
 
+        const level_1 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x - 200, center.y - 150), text: "1"});
+        level_1.borderColor = Color.TRANSPARENT;
+        level_1.backgroundColor = Color.TRANSPARENT;
+        level_1.onClickEventId = MainMenuName.START_GAME;
+        level_1.font = "daydream"
+
+        const level_2 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x, center.y - 150), text: "2"});
+        level_2.borderColor = Color.TRANSPARENT;
+        level_2.backgroundColor = Color.TRANSPARENT;
+        level_2.onClickEventId = MainMenuName.MENU;
+        level_2.font = "daydream"
+
+        const level_3 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x + 200, center.y - 150), text: "3"});
+        level_3.borderColor = Color.TRANSPARENT;
+        level_3.backgroundColor = Color.TRANSPARENT;
+        level_3.onClickEventId = MainMenuName.MENU;
+        level_3.font = "daydream"
+
+        const level_4 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x - 200, center.y), text: "4"});
+        level_4.borderColor = Color.TRANSPARENT;
+        level_4.backgroundColor = Color.TRANSPARENT;
+        level_4.onClickEventId = MainMenuName.MENU;
+        level_4.font = "daydream"
+
+        const level_5 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x, center.y), text: "5"});
+        level_5.borderColor = Color.TRANSPARENT;
+        level_5.backgroundColor = Color.TRANSPARENT;
+        level_5.onClickEventId = MainMenuName.MENU;
+        level_5.font = "daydream"
+
+        const level_6 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x + 200, center.y), text: "6"});
+        level_6.borderColor = Color.TRANSPARENT;
+        level_6.backgroundColor = Color.TRANSPARENT;
+        level_6.onClickEventId = MainMenuName.MENU;
+        level_6.font = "daydream"
+        
+
         // Controls layout
         this.controls_bg = this.add.sprite("background", MainMenuName.CONTROLS);
         this.controls_bg.scale.set(5, 5);
@@ -141,10 +178,10 @@ export default class MainMenu extends Scene {
         jump.font = "daydream"
         jump.fontSize = 20;
 
-        const w = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x + 200, center.y - 200), text: "W / Space"});
-        w.textColor = Color.WHITE;
-        w.font = "daydream"
-        w.fontSize = 20;
+        const space = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x + 176, center.y - 200), text: "Space"});
+        space.textColor = Color.WHITE;
+        space.font = "daydream"
+        space.fontSize = 20;
 
         const left = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x - 157, center.y - 160), text: "Move Left"});
         left.textColor = Color.WHITE;
@@ -176,40 +213,60 @@ export default class MainMenu extends Scene {
         j.font = "daydream"
         j.fontSize = 20;
 
+        const upAttack = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x - 109, center.y - 40), text: "Upward Attack"});
+        upAttack.textColor = Color.WHITE;
+        upAttack.font = "daydream"
+        upAttack.fontSize = 20;
+
+        const w_j = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x + 161, center.y - 40), text: "W + J"});
+        w_j.textColor = Color.WHITE;
+        w_j.font = "daydream"
+        w_j.fontSize = 20;
+
+        const spin = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x - 138, center.y), text: "Spin Attack"});
+        spin.textColor = Color.WHITE;
+        spin.font = "daydream"
+        spin.fontSize = 20;
+
+        const inAir = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x + 224, center.y), text: "W + J (In Air)"});
+        inAir.textColor = Color.WHITE;
+        inAir.font = "daydream"
+        inAir.fontSize = 20;
+
         this.lock0 = this.add.sprite("lock", MainMenuName.CONTROLS);
         this.lock0.scale.set(0.1, 0.1);
-        this.lock0.position = new Vec2(center.x + 170, center.y - 40);
+        this.lock0.position = new Vec2(center.x + 170, center.y + 40);
 
-        const range = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x - 120, center.y - 40), text: "Range Attack"});
+        const range = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x - 120, center.y + 40), text: "Range Attack"});
         range.textColor = Color.WHITE;
         range.font = "daydream"
         range.fontSize = 20;
 
-        const k = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x + 135, center.y - 40), text: "K"});
+        const k = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x + 135, center.y + 40), text: "K"});
         k.textColor = Color.WHITE;
         k.font = "daydream"
         k.fontSize = 20;
 
         this.lock1 = this.add.sprite("lock", MainMenuName.CONTROLS);
         this.lock1.scale.set(0.1, 0.1);
-        this.lock1.position = new Vec2(center.x + 240, center.y);
+        this.lock1.position = new Vec2(center.x + 240, center.y + 80);
 
-        const dash = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x - 199, center.y), text: "Dash"});
+        const dash = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x - 199, center.y + 80), text: "Dash"});
         dash.textColor = Color.WHITE;
         dash.font = "daydream"
         dash.fontSize = 20;
 
-        const shift = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x + 172, center.y), text: "Shift"});
+        const shift = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x + 172, center.y + 80), text: "Shift"});
         shift.textColor = Color.WHITE;
         shift.font = "daydream"
         shift.fontSize = 20;
 
-        const pause = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x - 141, center.y + 40), text: "Pause Game"});
+        const pause = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x - 141, center.y + 120), text: "Pause Game"});
         pause.textColor = Color.WHITE;
         pause.font = "daydream"
         pause.fontSize = 20;
 
-        const esc = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x + 157, center.y + 40), text: "Esc"});
+        const esc = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.CONTROLS, {position: new Vec2(center.x + 157, center.y + 120), text: "Esc"});
         esc.textColor = Color.WHITE;
         esc.font = "daydream"
         esc.fontSize = 20;
