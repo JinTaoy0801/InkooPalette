@@ -37,9 +37,10 @@ export default class PlayerController extends StateMachineAI {
 	MIN_SPEED: number = 200;
     MAX_SPEED: number = 300;
     tilemap: OrthogonalTilemap;
-
-    initializeAI(owner: InkooAnimatedSprite, options: Record<string, any>){
+    
+    initializeAI(owner: GameNode, options: Record<string, any>){
         this.owner = owner;
+
         // console.log('owner in playercontroller', owner);
         let idle = new Idle(this, this.owner);
         this.addState(PlayerStates.IDLE, idle);
@@ -88,6 +89,8 @@ export default class PlayerController extends StateMachineAI {
             ],
             reverseOnComplete: true
         });
+        this.owner.setGroup("player");
+        console.log("this.owner", this.owner.group);
 
     }
     

@@ -45,6 +45,9 @@ export default class IP_Level extends Scene {
     protected nextLevel: new (...args: any) => IP_Level;
     protected levelEndTimer: Timer;
     protected levelEndLabel: Label;
+    // Screen fade in/out for level start and end
+    protected levelTransitionTimer: Timer;
+    protected levelTransitionScreen: Rect;
     startScene(): void {
         this.initLayers();
         this.initPlayer();
@@ -53,7 +56,11 @@ export default class IP_Level extends Scene {
         this.addUI();
         this.isPaused = false;
 
-
+        this.levelTransitionTimer = new Timer(500);
+        this.levelEndTimer = new Timer(3000, () => {
+            // After the level end timer ends, fade to black and then go to the next scene
+            this.levelTransitionScreen.tweens.play("fadeIn");
+        });
         Input.enableInput();
     }
     //this never runs yets
@@ -71,17 +78,39 @@ export default class IP_Level extends Scene {
                 this.sceneManager.changeToScene(MainMenu);
                 break;
             }
-            case inkooEvents.LEVEL_START: {
-                Input.enableInput();
+            case inkooEvents.PLAYER_ENTERED_LEVEL_END:{
+                if(!this.levelEndTimer.hasRun() && this.levelEndTimer.isStopped()){
+                    // The player has reached the end of the level
+                    this.levelEndTimer.start();
+                    this.levelEndLabel.tweens.play("slideIn");
+                }
                 break;
             }
             case inkooEvents.LEVEL_END: {
+                {
+                    // Go to the next level
+                    if(this.nextLevel){
+                        let sceneOptions = {
+                            physics: {
+                                groupNames: ["ground", "player"],
+                                collisions:
+                                [
+                                    [0, 1],
+                                    [1, 0]
+                
+                                ]
+                            }
+                        }
+                        this.sceneManager.changeToScene(this.nextLevel, {}, sceneOptions);
+                    }
+                }
                 break;
             }
             case inkooEvents.PLAYER_ATTACK: {
                 break;
             }
             case inkooEvents.PLAYER_KILLED: {
+                this.respawnPlayer();
                 break;
             }
             default: {
@@ -105,9 +134,8 @@ export default class IP_Level extends Scene {
             inkooEvents.PLAYER_ATTACK,
             inkooEvents.LEVEL_START,
             inkooEvents.LEVEL_END,
-           
+            inkooEvents.PLAYER_ENTERED_LEVEL_END,
             inkooEvents.PLAYER_KILLED,
-            "GOBLIN_MOVED"
         ]);
     }
 
@@ -130,12 +158,29 @@ export default class IP_Level extends Scene {
         this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(12, 8)));
         this.player.addAI(PlayerController, {playerType: "platformer", tilemap: "ground"});
         this.player.colliderOffset.set(0, 11);
-
+        console.log("initplayuer");
         this.player.setGroup("player");
+        setTimeout(() => {
+            console.log(this.player.group);
+          }, 10); 
     }
     protected respawnPlayer():void{
         this.sceneManager.changeToScene(MainMenu,{});
         Input.enableInput();
     }
+    addLevelEnd(startingTile: Vec2, size: Vec2): void {
+        console.log(this.player.group);
+        this.levelEndArea = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
+          position: startingTile,
+          size: size,
+        });
+        this.levelEndArea.addPhysics(undefined, undefined, false, true);
+        this.levelEndArea.setTrigger(
+            "player",
+            inkooEvents.PLAYER_ENTERED_LEVEL_END,
+            null,
+        );
+        this.levelEndArea.color = new Color(255, 255, 255, 1);
+      }
 }
 

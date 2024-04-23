@@ -33,13 +33,13 @@ export default class IP_Level1 extends IP_Level {
         this.playerSpawn = new Vec2(2*32, 25*32);
         this.add.tilemap("level1", new Vec2(2, 2));
         this.layers.get("foreground").setDepth(10);
-        // this.add.
         super.startScene();
-
+        this.addLevelEnd(new Vec2(15*32, 25*32), new Vec2(32, 128));
         this.initGoblin();
-        this.addLevelEnd(new Vec2(60, 13), new Vec2(5, 5));
-
-        this.nextLevel = Level2;
+        // this.player.setGroup("player");
+        // console.log("level1", this.player.group)
+        
+        //this.nextLevel = Level2;
     }
 
     updateScene(deltaT: number): void {
