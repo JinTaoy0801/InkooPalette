@@ -4,7 +4,7 @@ import { PlayerStates } from "../PlayerController";
 import OnGround from "./onGround";
 import Input from "../../../Wolfie2D/Input/Input";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
-
+import { setLastPlayerPosition } from "../../Global/lastPlayerPosition";
 export default class Idle extends OnGround{
     owner : AnimatedSprite;
     
@@ -28,7 +28,7 @@ export default class Idle extends OnGround{
 	}
 
 	onExit(): Record<string, any> {
-		// this.owner.animation.stop();
+		setLastPlayerPosition(this.owner.position);
 		return {};
 	}
 }

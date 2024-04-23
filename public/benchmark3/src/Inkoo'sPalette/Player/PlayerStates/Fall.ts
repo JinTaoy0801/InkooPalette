@@ -2,8 +2,7 @@ import InAir from "./InAir";
 import InkooAnimatedSprite from "../../Nodes/InkooAnimatedSprite";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import { PlayerStates } from "../PlayerController";
-import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
-import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+import { setLastPlayerPosition } from "../../Global/lastPlayerPosition";
 
 export default class Fall extends InAir{
     owner: AnimatedSprite
@@ -35,6 +34,7 @@ export default class Fall extends InAir{
             this.owner.animation.stop();
             this.owner.tweens.play("flatten");
         }
+        //setLastPlayerPosition(this.owner.position);
         return {};
     }
 
