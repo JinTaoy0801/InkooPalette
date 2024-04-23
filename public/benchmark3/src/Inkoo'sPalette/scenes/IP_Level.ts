@@ -37,8 +37,13 @@ export default class IP_Level extends Scene {
     player: AnimatedSprite;
     protected goblins = new Array<Goblin>();
 
-    private healthBar: Sprite;
+    private heart1: Sprite;
+    private heart2: Sprite;
+    private heart3: Sprite;
     protected isPaused: Boolean;
+    protected respawnTimer: Timer;
+
+    protected static livesCount: number = 6;
 
     // Stuff to end the level and go to the next level
     protected levelEndArea: Rect;
@@ -52,6 +57,16 @@ export default class IP_Level extends Scene {
         this.subscribeToEvents();
         this.addUI();
         this.isPaused = false;
+
+        this.respawnTimer = new Timer(1000, () => {
+            if(IP_Level.livesCount === 0){
+                this.sceneManager.changeToScene(MainMenu);
+            } else {
+                this.respawnPlayer();
+                this.player.enablePhysics();
+                this.player.unfreeze();
+            }
+        });
 
 
         Input.enableInput();
@@ -112,9 +127,60 @@ export default class IP_Level extends Scene {
     }
 
     protected addUI() {
-        this.healthBar = this.add.sprite('healthBar', Layers.UI)
-        this.healthBar.scale.set(2, 2);
-        this.healthBar.position.copy(new Vec2(30, 30));
+        if (IP_Level.livesCount === 6) {
+            this.heart1 = this.add.sprite('fullheart', Layers.UI)
+            this.heart1.scale.set(2, 2);
+            this.heart1.position.copy(new Vec2(30, 30));
+
+            this.heart2 = this.add.sprite('fullheart', Layers.UI)
+            this.heart2.scale.set(2, 2);
+            this.heart2.position.copy(new Vec2(60, 30));
+
+            this.heart3 = this.add.sprite('fullheart', Layers.UI)
+            this.heart3.scale.set(2, 2);
+            this.heart3.position.copy(new Vec2(90, 30));
+        }
+        else if (IP_Level.livesCount === 5) {
+            this.heart1 = this.add.sprite('fullheart', Layers.UI)
+            this.heart1.scale.set(2, 2);
+            this.heart1.position.copy(new Vec2(30, 30));
+
+            this.heart2 = this.add.sprite('fullheart', Layers.UI)
+            this.heart2.scale.set(2, 2);
+            this.heart2.position.copy(new Vec2(60, 30));
+
+            this.heart3 = this.add.sprite('halfheart', Layers.UI)
+            this.heart3.scale.set(2, 2);
+            this.heart3.position.copy(new Vec2(90, 30));
+        }
+        else if (IP_Level.livesCount === 4) {
+            this.heart1 = this.add.sprite('fullheart', Layers.UI)
+            this.heart1.scale.set(2, 2);
+            this.heart1.position.copy(new Vec2(30, 30));
+
+            this.heart2 = this.add.sprite('fullheart', Layers.UI)
+            this.heart2.scale.set(2, 2);
+            this.heart2.position.copy(new Vec2(60, 30));
+        }
+        else if (IP_Level.livesCount === 3) {
+            this.heart1 = this.add.sprite('fullheart', Layers.UI)
+            this.heart1.scale.set(2, 2);
+            this.heart1.position.copy(new Vec2(30, 30));
+
+            this.heart2 = this.add.sprite('halfheart', Layers.UI)
+            this.heart2.scale.set(2, 2);
+            this.heart2.position.copy(new Vec2(60, 30));
+        }
+        else if (IP_Level.livesCount === 2) {
+            this.heart1 = this.add.sprite('fullheart', Layers.UI)
+            this.heart1.scale.set(2, 2);
+            this.heart1.position.copy(new Vec2(30, 30));
+        }
+        else if (IP_Level.livesCount === 1) {
+            this.heart1 = this.add.sprite('halfheart', Layers.UI)
+            this.heart1.scale.set(2, 2);
+            this.heart1.position.copy(new Vec2(30, 30));
+        }
     }
 
     protected initPlayer(): void {
@@ -133,7 +199,19 @@ export default class IP_Level extends Scene {
 
         this.player.setGroup("player");
     }
+
+    protected incPlayerLife(amt: number): void {
+        IP_Level.livesCount += amt;
+        if (IP_Level.livesCount == 0){
+            Input.disableInput();
+            this.player.disablePhysics();
+            // this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "player_death", loop: false, holdReference: false});
+            // this.player.tweens.play("death");
+        }
+    }
+
     protected respawnPlayer():void{
+        IP_Level.livesCount = 6;
         this.sceneManager.changeToScene(MainMenu,{});
         Input.enableInput();
     }
