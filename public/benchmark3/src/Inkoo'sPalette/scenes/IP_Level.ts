@@ -76,8 +76,8 @@ export default class IP_Level extends Scene {
 
 
     updateScene(deltaT: number){
-        //console.log(this.player.position.y);
-        if(this.player.position.y > 1200){
+        console.log(this.player.position.x, this.player.position.y);
+        if(this.player.position.y > 1200 || this.player.position.x < 0){
             console.log(getLastPlayerPosition());
             this.player.position.copy(getLastPlayerPosition());
         }
