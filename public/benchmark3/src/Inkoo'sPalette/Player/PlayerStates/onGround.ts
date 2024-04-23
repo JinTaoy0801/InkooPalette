@@ -10,13 +10,17 @@ import PlayerState from "./PlayerState";
 import { Layers } from "../../scenes/IP_Level";
 import Hitbox from "../../Hitbox/Hitbox";
 import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
+import { setLastPlayerPosition } from "../../Global/lastPlayerPosition";
 
 export default class OnGround extends PlayerState {
 	owner: AnimatedSprite;
 	attack: AnimatedSprite;
-	onEnter(options: Record<string, any>): void {}
+	onEnter(options: Record<string, any>): void {
+		
+	}
 
 	update(deltaT: number): void {
+		
 		if(this.parent.velocity.y > 0) {
 			this.parent.velocity.y = 0;
 		}
@@ -77,6 +81,8 @@ export default class OnGround extends PlayerState {
 
 	onExit(): Record<string, any> {
 		// this.owner.animation.stop();
+		console.log("hsahld", this.owner.position);
+		setLastPlayerPosition(this.owner.position);
 		return {};
 	}
 }

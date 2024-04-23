@@ -8,9 +8,7 @@ import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import { inkooEvents } from "../../inkooEvents";
 import PlayerController from "../PlayerController";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
-import { PlayerStates } from "../PlayerController";
-import Hitbox from "../../Hitbox/Hitbox";
-import { Layers } from "../../scenes/IP_Level";
+
 
 
 //if this code does not work change owner to GameNode and 
@@ -20,6 +18,7 @@ export default abstract class PlayerState extends State{
     gravity: number=1000;
     parent: PlayerController;
     positionTimer: Timer;
+	lastPlayerPosition:Vec2;
 //this parent to Statemachine
     constructor (parent: StateMachine, owner: GameNode){
         super(parent);
@@ -30,6 +29,9 @@ export default abstract class PlayerState extends State{
 	
 	handleInput(event: GameEvent): void {
 		
+	}
+	getLastPlayerPosition(){
+		return this.lastPlayerPosition;
 	}
 
 	getInputDirection(): Vec2 {

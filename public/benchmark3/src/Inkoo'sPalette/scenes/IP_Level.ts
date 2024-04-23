@@ -1,31 +1,23 @@
 import AABB from "../../Wolfie2D/DataTypes/Shapes/AABB";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
-import GameEvent from "../../Wolfie2D/Events/GameEvent";
-import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import Input from "../../Wolfie2D/Input/Input";
-import GameNode, { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
+import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
 import Rect from "../../Wolfie2D/Nodes/Graphics/Rect";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
-import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
-import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
-import RenderingManager from "../../Wolfie2D/Rendering/RenderingManager";
 import Scene from "../../Wolfie2D/Scene/Scene";
-import SceneManager from "../../Wolfie2D/Scene/SceneManager";
-import Viewport from "../../Wolfie2D/SceneGraph/Viewport";
 import Timer from "../../Wolfie2D/Timing/Timer";
 import PlayerController from "../Player/PlayerController"
 import { inkooEvents } from "../inkooEvents";
 import Color from "../../Wolfie2D/Utils/Color";
-import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import MainMenu from "./MainMenu";
-import InkooAnimatedSprite from "../Nodes/InkooAnimatedSprite";
 import Goblin from "../Enemies/Goblin/Goblin";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
-
+import PlayerState from "../Player/PlayerStates/PlayerState";
+import { getLastPlayerPosition } from "../Global/lastPlayerPosition";
 export enum Layers {
     Main = "main",
     UI = "ui",
@@ -79,11 +71,17 @@ export default class IP_Level extends Scene {
             this.levelTransitionScreen.tweens.play("fadeIn");
         });
         this.levelTransitionScreen.tweens.play("fadeOut");
-        Input.enableInput();
+        Input.disableInput();
     }
 
 
     updateScene(deltaT: number){
+        console.log(this.player.position.y);
+        //console.log("last", getLastPlayerPosition());
+        if(this.player.position.y > 1200){
+            console.log("dskjladsalkj", getLastPlayerPosition());
+            this.player.position.copy(getLastPlayerPosition());
+        }
         while (this.receiver.hasNextEvent()) {
             let event = this.receiver.getNextEvent();
             switch (event.type) {
@@ -189,7 +187,7 @@ export default class IP_Level extends Scene {
             this.heart3.scale.set(2, 2);
             this.heart3.position.copy(new Vec2(90, 30));
         }
-        else if (IP_Level.livesCount === 4) {
+        else if (IP_Level.livesCount === 4) {`~`
             this.heart1 = this.add.sprite('fullheart', Layers.UI)
             this.heart1.scale.set(2, 2);
             this.heart1.position.copy(new Vec2(30, 30));
