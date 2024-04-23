@@ -8,6 +8,7 @@ import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import GameEvent from "../../Wolfie2D/Events/GameEvent";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import IP_Level1 from "./IP_Level1";
+import IP_Level2 from "./IP_Level2";
 import { inkooEvents } from "../inkooEvents";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 
@@ -306,7 +307,17 @@ export default class MainMenu extends Scene {
         switch(event.type) {
             case MainMenuName.START_GAME: {
                 this.emitter.fireEvent(inkooEvents.LEVEL_START);
-                this.sceneManager.changeToScene(IP_Level1);
+                let sceneOptions = {
+                    physics: {
+                        groupNames: ["ground", "player"],
+                        collisions:
+                        [
+                            [0, 1],
+                            [1, 0]
+                        ]
+                    }
+                }
+                this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
                 break;
             }
 

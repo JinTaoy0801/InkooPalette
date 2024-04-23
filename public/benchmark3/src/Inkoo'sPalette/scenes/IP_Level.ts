@@ -24,6 +24,7 @@ import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import MainMenu from "./MainMenu";
 import InkooAnimatedSprite from "../Nodes/InkooAnimatedSprite";
 import Goblin from "../Enemies/Goblin/Goblin";
+import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 
 export enum Layers {
     Main = "main",
@@ -53,6 +54,7 @@ export default class IP_Level extends Scene {
     // Screen fade in/out for level start and end
     protected levelTransitionTimer: Timer;
     protected levelTransitionScreen: Rect;
+    
     startScene(): void {
         this.initLayers();
         this.initPlayer();
@@ -76,62 +78,67 @@ export default class IP_Level extends Scene {
             // After the level end timer ends, fade to black and then go to the next scene
             this.levelTransitionScreen.tweens.play("fadeIn");
         });
+        this.levelTransitionScreen.tweens.play("fadeOut");
         Input.enableInput();
     }
-    //this never runs yets
-    updateScene(deltaT: number): void {
+
+
+    updateScene(deltaT: number){
         while (this.receiver.hasNextEvent()) {
-            console.log("event:",this.receiver.getNextEvent())
-            this.handleEvent(this.receiver.getNextEvent());
+            let event = this.receiver.getNextEvent();
+            switch (event.type) {
+                case inkooEvents.PAUSE_MENU: {
+                    this.sceneManager.changeToScene(MainMenu);
+                    break;
+                }
+                case inkooEvents.PLAYER_ENTERED_LEVEL_END:{
+                    console.log("yepyep");
+                    if(!this.levelEndTimer.hasRun() && this.levelEndTimer.isStopped()){
+                        // The player has reached the end of the level
+                        console.log("eroo");
+                        this.levelEndTimer.start();
+                        this.levelEndLabel.tweens.play("slideIn");
+                    }
+                    break;
+                }
+                case inkooEvents.LEVEL_END: {
+                    {
+                        // Go to the next level
+                        if(this.nextLevel){
+                            let sceneOptions = {
+                                physics: {
+                                    groupNames: ["ground", "player"],
+                                    collisions:
+                                    [
+                                        [0, 1],
+                                        [1, 0]
+                    
+                                    ]
+                                }
+                            }
+                            this.sceneManager.changeToScene(this.nextLevel, {}, sceneOptions);
+                        }
+                    }
+                    break;
+                }
+                case inkooEvents.LEVEL_START:{
+                    console.log("in start");
+                    Input.enableInput();
+                    break;
+                }
+                case inkooEvents.PLAYER_ATTACK: {
+                    break;
+                }
+                case inkooEvents.PLAYER_KILLED: {
+                    this.respawnPlayer();
+                    break;
+                }
+                default: {
+                    throw new Error(`Unhandled event caught in scene with type ${event.type}`)
+                }
+            }
         }
         
-    }
-
-    protected handleEvent(event: GameEvent): void {
-        switch (event.type) {
-            case inkooEvents.PAUSE_MENU: {
-                this.sceneManager.changeToScene(MainMenu);
-                break;
-            }
-            case inkooEvents.PLAYER_ENTERED_LEVEL_END:{
-                if(!this.levelEndTimer.hasRun() && this.levelEndTimer.isStopped()){
-                    // The player has reached the end of the level
-                    this.levelEndTimer.start();
-                    this.levelEndLabel.tweens.play("slideIn");
-                }
-                break;
-            }
-            case inkooEvents.LEVEL_END: {
-                {
-                    // Go to the next level
-                    if(this.nextLevel){
-                        let sceneOptions = {
-                            physics: {
-                                groupNames: ["ground", "player"],
-                                collisions:
-                                [
-                                    [0, 1],
-                                    [1, 0]
-                
-                                ]
-                            }
-                        }
-                        this.sceneManager.changeToScene(this.nextLevel, {}, sceneOptions);
-                    }
-                }
-                break;
-            }
-            case inkooEvents.PLAYER_ATTACK: {
-                break;
-            }
-            case inkooEvents.PLAYER_KILLED: {
-                this.respawnPlayer();
-                break;
-            }
-            default: {
-                throw new Error(`Unhandled event caught in scene with type ${event.type}`)
-            }
-        }
     }
 
     protected initLayers(): void {
@@ -141,7 +148,8 @@ export default class IP_Level extends Scene {
 
     protected initViewport(): void {
         this.viewport.setZoomLevel(1.5);
-        
+        this.viewport.follow(this.player);
+        this.viewport.setBounds(0, 0, 64*32, 64*16);
     }
 
     protected subscribeToEvents() {
@@ -209,10 +217,59 @@ export default class IP_Level extends Scene {
             this.heart1.scale.set(2, 2);
             this.heart1.position.copy(new Vec2(30, 30));
         }
+        this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(-500, 200), text: "Level Complete"});
+        this.levelEndLabel.size.set(1200, 60);
+        this.levelEndLabel.borderRadius = 0;
+        this.levelEndLabel.backgroundColor = new Color(34, 32, 52);
+        this.levelEndLabel.textColor = Color.WHITE;
+        this.levelEndLabel.fontSize = 48;
+        this.levelEndLabel.font = "daydream";
+        this.levelEndLabel.tweens.add("slideIn", {
+            startDelay: 0,
+            duration: 1000,
+            effects: [
+                {
+                    property: TweenableProperties.posX,
+                    start: -300,
+                    end: 400,
+                    ease: EaseFunctionType.OUT_SINE
+                }
+            ]
+        });
+        this.levelTransitionScreen = <Rect>this.add.graphic(GraphicType.RECT, Layers.UI, {position: new Vec2(300, 200), size: new Vec2(64*32, 64*16)});
+        this.levelTransitionScreen.color = new Color(34, 32, 52);
+        this.levelTransitionScreen.alpha = 1;
+        this.levelTransitionScreen.tweens.add("fadeIn", {
+            startDelay: 0,
+            duration: 1000,
+            effects: [
+                {
+                    property: TweenableProperties.alpha,
+                    start: 0,
+                    end: 1,
+                    ease: EaseFunctionType.IN_OUT_QUAD
+                }
+            ],
+            onEnd: inkooEvents.LEVEL_END
+        });
+
+        this.levelTransitionScreen.tweens.add("fadeOut", {
+            startDelay: 0,
+            duration: 1000,
+            effects: [
+                {
+                    property: TweenableProperties.alpha,
+                    start: 1,
+                    end: 0,
+                    ease: EaseFunctionType.IN_OUT_QUAD
+                }
+            ],
+            onEnd: inkooEvents.LEVEL_START
+        });
     }
 
     protected initPlayer(): void {
-        this.player = this.add.animatedSprite('player', Layers.Main);
+        this.player = this.add.animatedSprite("player", Layers.Main);
 
         this.player.scale.set(1.5, 1.5);
         if(!this.playerSpawn){
@@ -225,7 +282,9 @@ export default class IP_Level extends Scene {
         this.player.addAI(PlayerController, {playerType: "platformer", tilemap: "ground"});
         this.player.colliderOffset.set(0, 11);
         console.log("initplayuer");
+        console.log("beforeset", this.player);
         this.player.setGroup("player");
+        console.log("this.plasdyhasdasdas", this.player.group);
     }
 
     protected incPlayerLife(amt: number): void {
@@ -237,6 +296,20 @@ export default class IP_Level extends Scene {
             // this.player.tweens.play("death");
         }
     }
+
+    addLevelEnd(startingTile: Vec2, size: Vec2): void {
+        this.levelEndArea = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
+          position: startingTile,
+          size: size,
+        });
+        this.levelEndArea.addPhysics(undefined, undefined, false, true);
+        this.levelEndArea.setTrigger(
+          "player",
+          inkooEvents.PLAYER_ENTERED_LEVEL_END,
+          null,
+        );
+        this.levelEndArea.color = new Color(255, 255, 255, 1);
+      }
 
     protected respawnPlayer():void{
         IP_Level.livesCount = 6;
