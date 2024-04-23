@@ -168,19 +168,6 @@ export default class IP_Level extends Scene {
         this.sceneManager.changeToScene(MainMenu,{});
         Input.enableInput();
     }
-    addLevelEnd(startingTile: Vec2, size: Vec2): void {
-        console.log(this.player.group);
-        this.levelEndArea = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
-          position: startingTile,
-          size: size,
-        });
-        this.levelEndArea.addPhysics(undefined, undefined, false, true);
-        this.levelEndArea.setTrigger(
-            "player",
-            inkooEvents.PLAYER_ENTERED_LEVEL_END,
-            null,
-        );
-        this.levelEndArea.color = new Color(255, 255, 255, 1);
-      }
+
 }
 
