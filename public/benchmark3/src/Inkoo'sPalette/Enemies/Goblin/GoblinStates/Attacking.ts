@@ -29,6 +29,7 @@ export default class Attacking extends GoblinState{
         super.update(deltaT);
 
         if (!this.owner.animation.isPlaying("GOBLIN_LIGHT_ATTACK")) {
+
             if(this.playerInPatrol(this.patrolArea)){
                 this.finished(GoblinStates.ALERTED);
             } else{

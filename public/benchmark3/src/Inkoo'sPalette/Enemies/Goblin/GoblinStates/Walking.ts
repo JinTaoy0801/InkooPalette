@@ -16,6 +16,10 @@ export default class Walking extends GoblinState {
         if(this.playerInPatrol(this.patrolArea)){
             this.finished(GoblinStates.ALERTED);
         }
+        // else if(this.owner.position.distanceTo(this.playerPosition) < this.lightAttackRange){
+        //     console.log("in walking to attakc");
+        //     this.finished(GoblinStates.ATTACKING);
+        // }
         else if (this.parent.coinFlip()) {
             this.finished(GoblinStates.IDLE);
         } else{

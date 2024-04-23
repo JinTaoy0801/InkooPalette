@@ -15,6 +15,9 @@ export default class Idle extends GoblinState {
     if (this.parent.coinFlip()) {
       this.finished(GoblinStates.WALKING);
     }
+    if(this.playerInPatrol(this.patrolArea)){
+      this.finished(GoblinStates.ALERTED);
+    }
   }
 
   onExit(): Record<string, any> {
