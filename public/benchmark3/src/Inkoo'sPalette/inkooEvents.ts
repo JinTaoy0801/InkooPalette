@@ -5,5 +5,6 @@ export enum inkooEvents {
     PLAYER_ATTACK="PlayerAttack",
     PLAYER_MOVE = "PlayerMove",
     PLAYER_JUMP = "PlayerJump",
-    PAUSE_MENU ="PauseMenu"
+    PAUSE_MENU ="PauseMenu",
+    PLAYER_ENTERED_LEVEL_END = "Player_Entered_Level_End"
 }
