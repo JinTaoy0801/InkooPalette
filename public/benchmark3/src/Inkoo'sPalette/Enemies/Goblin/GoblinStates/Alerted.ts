@@ -13,12 +13,19 @@ export default class Alerted extends GoblinState{
             this.owner.animation.playIfNotAlready("WALKING_LEFT", true);
         }
         super.update(deltaT);
+
         this.playerPosition = (<IP_Level>this.owner.getScene()).player.position;
         this.parent.direction = this.owner.position.dirTo(this.playerPosition);
         if(this.parent.direction.x < 0){
             this.parent.directionPatrol = 'left';
+            this.owner.invertX = false;
         } else{
             this.parent.directionPatrol = 'right';
+            this.owner.invertX = true;
+        }
+        if(this.inRanged(3) && this.attackTimer.isStopped()){
+            this.finished(GoblinStates.ATTACKING);
+            this.attackTimer.start()
         }
         if (this.parent.patrolArea.leftBound > this.owner.position.x) {
             this.finished(GoblinStates.WALKING);

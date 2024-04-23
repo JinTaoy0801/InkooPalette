@@ -22,7 +22,7 @@ export default class IP_Level1 extends IP_Level {
         this.load.spritesheet("ARM_RIGHT", "assets/player/attack/arm_right.json");
         this.load.spritesheet("ATTACK_UP", "assets/player/attack/attack_up.json");
         this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
-        this.load.spritesheet("LIGHT_ATTACK", "assets/enemies/goblin/goblin_light_attack.json")
+        this.load.spritesheet("GOBLIN_LIGHT_ATTACK", "assets/enemies/goblin/goblin_light_attack.json")
     }
 
     unloadScene(){
@@ -30,13 +30,16 @@ export default class IP_Level1 extends IP_Level {
     }
 
     startScene(): void {
-        this.playerSpawn = new Vec2(50, 750);
+        this.playerSpawn = new Vec2(2*32, 25*32);
         this.add.tilemap("level1", new Vec2(2, 2));
         this.layers.get("foreground").setDepth(10);
         // this.add.
         super.startScene();
 
         this.initGoblin();
+        this.addLevelEnd(new Vec2(60, 13), new Vec2(5, 5));
+
+        this.nextLevel = Level2;
     }
 
     updateScene(deltaT: number): void {

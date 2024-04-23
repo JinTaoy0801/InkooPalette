@@ -40,6 +40,11 @@ export default class IP_Level extends Scene {
     private healthBar: Sprite;
     protected isPaused: Boolean;
 
+    // Stuff to end the level and go to the next level
+    protected levelEndArea: Rect;
+    protected nextLevel: new (...args: any) => IP_Level;
+    protected levelEndTimer: Timer;
+    protected levelEndLabel: Label;
     startScene(): void {
         this.initLayers();
         this.initPlayer();

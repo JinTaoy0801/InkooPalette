@@ -14,15 +14,14 @@ export default abstract class GoblinState extends State {
     owner: AnimatedSprite;
     parent: GoblinController;
 	playerPosition: Vec2 = Vec2.ZERO;
-    canAttack:boolean;
-    Aggro:boolean;
     attackTimer:Timer;
+    lightAttackRange = 64;
     constructor(parent: StateMachine, owner: AnimatedSprite) {
 		super(parent);
 		this.owner = owner;
-        this.attackTimer = new Timer(3000);
+        this.attackTimer = new Timer(2000);
 	}
-
+    patrolArea = new Vec2(this.parent.patrolArea.leftBound,this.parent.patrolArea.rightBound);
     handleInput(event: GameEvent): void {
    
     }
@@ -48,6 +47,7 @@ export default abstract class GoblinState extends State {
     update(deltaT: number): void {
         let direction = this.parent.directionPatrol;
         (<Sprite>this.owner).invertX = (direction == "right") ? true : false;
+        this.playerPosition = (<IP_Level>this.owner.getScene()).player.position;
         // console.log('goblin position', this.owner.position);
     }
     

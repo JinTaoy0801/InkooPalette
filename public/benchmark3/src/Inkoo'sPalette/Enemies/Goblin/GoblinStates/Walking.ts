@@ -1,10 +1,8 @@
 import Timer from "../../../../Wolfie2D/Timing/Timer";
 import { GoblinStates } from "../GoblinController";
 import GoblinState from "./GoblinState";
-import Vec2 from "../../../../Wolfie2D/DataTypes/Vec2";
 
 export default class Walking extends GoblinState {
-    patrolArea = new Vec2(this.parent.patrolArea.leftBound,this.parent.patrolArea.rightBound);
     onEnter(options: Record<string, any>): void {
         this.owner.animation.playIfNotAlready("TURN_LEFT", false);
     }
@@ -18,6 +16,10 @@ export default class Walking extends GoblinState {
         if(this.playerInPatrol(this.patrolArea)){
             this.finished(GoblinStates.ALERTED);
         }
+        // else if(this.owner.position.distanceTo(this.playerPosition) < this.lightAttackRange){
+        //     console.log("in walking to attakc");
+        //     this.finished(GoblinStates.ATTACKING);
+        // }
         else if (this.parent.coinFlip()) {
             this.finished(GoblinStates.IDLE);
         } else{
