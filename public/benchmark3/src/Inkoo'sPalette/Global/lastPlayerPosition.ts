@@ -1,9 +1,12 @@
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 
-let lastPlayerPosition: Vec2 = Vec2.ZERO;
+var lastPlayerPosition: Vec2 = Vec2.ZERO;
 
-export const setLastPlayerPosition = (value:Vec2) => {
-    lastPlayerPosition = value;
+export const setLastPlayerPosition = (value: Vec2) => {
+    // Set value.x to 0 if it's less than 0
+    
+    const newX = Math.max(0, value.x);
+    lastPlayerPosition = new Vec2(newX, value.y);
 };
 
 export const getLastPlayerPosition = () => {

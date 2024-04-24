@@ -6,6 +6,7 @@ import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Input from "../../../Wolfie2D/Input/Input";
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
+import { setLastPlayerPosition } from "../../Global/lastPlayerPosition";
 export default class Jump extends InAir{
     owner: AnimatedSprite;
     startingHeight = 0;
@@ -16,6 +17,7 @@ export default class Jump extends InAir{
         this.parent.velocity.y = -215;
         this.owner.setCollisionShape(new AABB(new Vec2(0, 0), new Vec2(12, 16)));
         this.owner.colliderOffset.set(0, 0);
+        setLastPlayerPosition(this.owner.position);
     }
 
     update(deltaT: number): void {

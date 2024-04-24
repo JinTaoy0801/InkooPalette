@@ -8,12 +8,13 @@ import GoblinController from "../Enemies/Goblin/GoblinController";
 import IP_Level from "./IP_Level";
 import IP_Level2 from "./IP_Level2";
 import { Layers } from "./IP_Level";
-
+import { getLastPlayerPosition } from "../Global/lastPlayerPosition";
 export default class IP_Level1 extends IP_Level {
     goblinSpawns = [
         new Vec2(200, 800),
         new Vec2(400, 800)
     ];
+    counter = 0;
     loadScene(): void {
         // Load resources
         this.load.tilemap("level1", "assets/tilemaps/level1.json");
@@ -59,7 +60,7 @@ export default class IP_Level1 extends IP_Level {
             const goblinOptions = {
                 owner: this.add.animatedSprite('goblin', Layers.Main),
                 spawn: this.goblinSpawns[i],
-                tilemap: Layers.Main
+                tilemap: Layers.Main,
             }
             this.goblins.push(new Goblin(goblinOptions));
         }

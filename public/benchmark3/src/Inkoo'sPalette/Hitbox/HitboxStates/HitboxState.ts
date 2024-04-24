@@ -9,9 +9,10 @@ export default abstract class HitboxState extends State {
     parent: HitboxController;
     stateName: string;
 
-    constructor(parent: StateMachine, owner: AnimatedSprite) {
+    constructor(parent: StateMachine, owner: AnimatedSprite,group:string) {
         super(parent);
         this.attack = owner;
+        this.attack.setGroup(group);
     }
 
     update(deltaT: number): void {

@@ -20,7 +20,6 @@ export default class OnGround extends PlayerState {
 	}
 
 	update(deltaT: number): void {
-		
 		if(this.parent.velocity.y > 0) {
 			this.parent.velocity.y = 0;
 		}
@@ -33,14 +32,16 @@ export default class OnGround extends PlayerState {
 		}
 
 		if(Input.isJustPressed("jump")){
-			// console.log('ran');
 			this.finished(PlayerStates.JUMP);
 			if (direction.x && !this.isAttacking()) {
 				this.owner.tweens.play("tilt_right");
 			}
 		}
 		
-		if (!this.owner.onGround) this.finished(PlayerStates.FALL);
+		if (!this.owner.onGround) {
+			setLastPlayerPosition(this.owner.position);
+			this.finished(PlayerStates.FALL);
+		}
 
 		if (Input.isJustPressed("attack") && !this.isAttacking()) {
 			var attack_name;
@@ -80,9 +81,6 @@ export default class OnGround extends PlayerState {
 	}
 
 	onExit(): Record<string, any> {
-		// this.owner.animation.stop();
-		console.log("hsahld", this.owner.position);
-		setLastPlayerPosition(this.owner.position);
 		return {};
 	}
 }

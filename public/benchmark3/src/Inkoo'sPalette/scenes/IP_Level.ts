@@ -76,10 +76,8 @@ export default class IP_Level extends Scene {
 
 
     updateScene(deltaT: number){
-        console.log(this.player.position.y);
-        //console.log("last", getLastPlayerPosition());
-        if(this.player.position.y > 1200){
-            console.log("dskjladsalkj", getLastPlayerPosition());
+        if(this.player.position.y > 1200 || this.player.position.x < 0){
+            console.log(getLastPlayerPosition());
             this.player.position.copy(getLastPlayerPosition());
         }
         while (this.receiver.hasNextEvent()) {
@@ -90,13 +88,12 @@ export default class IP_Level extends Scene {
                     break;
                 }
                 case inkooEvents.PLAYER_ENTERED_LEVEL_END:{
-                    console.log("yepyep");
                     if(!this.levelEndTimer.hasRun() && this.levelEndTimer.isStopped()){
                         // The player has reached the end of the level
-                        console.log("eroo");
                         this.levelEndTimer.start();
                         this.levelEndLabel.tweens.play("slideIn");
                     }
+                    Input.disableInput();
                     break;
                 }
                 case inkooEvents.LEVEL_END: {
@@ -125,6 +122,7 @@ export default class IP_Level extends Scene {
                     break;
                 }
                 case inkooEvents.PLAYER_ATTACK: {
+                    
                     break;
                 }
                 case inkooEvents.PLAYER_KILLED: {

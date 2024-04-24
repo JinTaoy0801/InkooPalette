@@ -18,7 +18,6 @@ export default abstract class PlayerState extends State{
     gravity: number=1000;
     parent: PlayerController;
     positionTimer: Timer;
-	lastPlayerPosition:Vec2;
 //this parent to Statemachine
     constructor (parent: StateMachine, owner: GameNode){
         super(parent);
@@ -29,9 +28,6 @@ export default abstract class PlayerState extends State{
 	
 	handleInput(event: GameEvent): void {
 		
-	}
-	getLastPlayerPosition(){
-		return this.lastPlayerPosition;
 	}
 
 	getInputDirection(): Vec2 {
