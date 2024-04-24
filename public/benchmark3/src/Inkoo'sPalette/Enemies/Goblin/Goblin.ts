@@ -1,6 +1,7 @@
 import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+import { inkooEvents } from "../../inkooEvents";
 import GoblinController from "./GoblinController";
 
 
@@ -21,6 +22,7 @@ export default class Goblin {
         this.owner.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(29, 27)));
         this.owner.colliderOffset.set(0, 1);
         this.owner.setGroup("goblin");
+        this.owner.setTrigger("playerAttack", inkooEvents.PLAYER_ATTACK,null);
         this._health = this._maxHealth;
     }
 

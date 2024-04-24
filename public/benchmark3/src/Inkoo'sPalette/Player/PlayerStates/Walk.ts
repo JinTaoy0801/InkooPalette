@@ -29,8 +29,10 @@ export default class Walk extends OnGround{
     }
 
 	onExit(): Record<string, any> {
+
         setLastPlayerPosition(this.owner.position);
-        console.log("after walk",this.owner.position);
+        
+        //console.log("after walk",this.owner.position);
 		return {};
 	}
 }
