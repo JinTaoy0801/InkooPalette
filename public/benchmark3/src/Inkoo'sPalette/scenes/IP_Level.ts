@@ -29,7 +29,7 @@ export default class IP_Level extends Scene {
     protected playerSpawn: Vec2;
     player: AnimatedSprite;
     protected goblins = new Array<Goblin>();
-    protected trash_Mobs: Map<number,AnimatedSprite>;
+    protected trash_Mobs: Map<number,Goblin>;
     private heart1: Sprite;
     private heart2: Sprite;
     private heart3: Sprite;
@@ -49,13 +49,14 @@ export default class IP_Level extends Scene {
 
     //invinciblity timers
     protected isInvincible:Timer;
+    protected playerAttack:Timer;
     startScene(): void {
         this.initLayers();
         this.initPlayer();
         this.initViewport();
         this.subscribeToEvents();
         this.addUI();
-        this.trash_Mobs = new Map<number,AnimatedSprite>();
+        this.trash_Mobs = new Map<number,Goblin>();
         this.isPaused = false;
 
         this.respawnTimer = new Timer(1000, () => {
@@ -76,6 +77,7 @@ export default class IP_Level extends Scene {
         this.levelTransitionScreen.tweens.play("fadeOut");
 
         this.isInvincible = new Timer(500);
+        this.playerAttack = new Timer(500);
         Input.disableInput();
     }
 
@@ -136,8 +138,14 @@ export default class IP_Level extends Scene {
                     //console.log("goblin", event.data.toString());
                     break;
                 }
+                //in this case Node is the trashMob, other is the attackHitbox
                 case inkooEvents.TRASH_MOB_HIT:{
-                    console.log("trassdsdsdsh_mob",event.data);
+                    if(this.playerAttack.isStopped()){
+                        const trash_mob = this.trash_Mobs.get(event.data.get("node"));
+                        console.log("trashMOb", trash_mob);
+                        this.playerAttack.start();
+                    }
+
                     //const trash_Mobs = this.trash_Mobs.get(event.data.g)
                     break;
                 }
@@ -171,6 +179,7 @@ export default class IP_Level extends Scene {
             inkooEvents.LEVEL_END,
             inkooEvents.PLAYER_ENTERED_LEVEL_END,
             inkooEvents.PLAYER_KILLED,
+            inkooEvents.TRASH_MOB_HIT
         ]);
     }
 
@@ -201,7 +210,7 @@ export default class IP_Level extends Scene {
             this.heart3.scale.set(2, 2);
             this.heart3.position.copy(new Vec2(90, 30));
         }
-        else if (IP_Level.livesCount === 4) {`~`
+        else if (IP_Level.livesCount === 4) {
             this.heart1 = this.add.sprite('fullheart', Layers.UI)
             this.heart1.scale.set(2, 2);
             this.heart1.position.copy(new Vec2(30, 30));
@@ -302,6 +311,7 @@ export default class IP_Level extends Scene {
             this.heart1.destroy();
             Input.disableInput();
             this.player.disablePhysics();
+            // this.emitter.fireEvent(inkooEvents.PLAYER_KILLED);
         }
 
 

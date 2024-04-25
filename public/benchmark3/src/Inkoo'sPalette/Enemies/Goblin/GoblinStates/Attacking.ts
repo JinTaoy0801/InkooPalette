@@ -25,7 +25,7 @@ export default class Attacking extends GoblinState{
             shape: "AABB"
         }
         let hitbox = new Hitbox(HB_options,"enemy");
-        console.log("gobling attack", hitbox);
+        //console.log("gobling attack", hitbox);
     }
     update(deltaT: number): void {
         super.update(deltaT);

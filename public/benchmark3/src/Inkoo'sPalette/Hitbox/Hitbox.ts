@@ -16,12 +16,10 @@ export default class Hitbox {
             this.box.addPhysics(new AABB(settings.center, settings.halfSize), new Vec2(0, 0));
             this.box.addAI(HitboxController, settings);
             this.box.setGroup(group);
-            console.log("this.box", this.box.group);
             if(group === "enemy"){
-                this.box.setTrigger("player",inkooEvents.PLAYER_ATTACK,null);
-            } else if(group ==="player"){
-                this.box.setTrigger("enemy",inkooEvents.TRASH_MOB_HIT,null);
-                console.log("yepeyp",group);
+                this.box.setTrigger("player", inkooEvents.PLAYER_ATTACK,null);
+            } else if(group === "player"){
+                this.box.setTrigger("enemy", inkooEvents.TRASH_MOB_HIT,null);
             }
         }
         else {

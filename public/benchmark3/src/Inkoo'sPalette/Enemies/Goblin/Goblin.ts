@@ -22,7 +22,7 @@ export default class Goblin {
         this.owner.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(29, 27)));
         this.owner.colliderOffset.set(0, 1);
         this.owner.setGroup("enemy");
-        this._health = this._maxHealth;
+        this._health = 10;
     }
 
 }
