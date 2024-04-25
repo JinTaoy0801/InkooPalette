@@ -19,6 +19,7 @@ import Goldlem from "../Enemies/Goldlem/Goldlem";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import PlayerState from "../Player/PlayerStates/PlayerState";
 import { getLastPlayerPosition } from "../Global/lastPlayerPosition";
+import Enemy from "../Enemies/Enemy";
 export enum Layers {
     Main = "main",
     UI = "ui",
@@ -30,7 +31,7 @@ export default class IP_Level extends Scene {
     protected playerSpawn: Vec2;
     player: AnimatedSprite;
     protected goblins = new Array<Goblin>();
-    protected trash_Mobs: Map<number,Goblin>;
+    protected trash_Mobs: Map<number,Enemy>;
     protected goldlems = new Array<Goldlem>();
 
     private heart1: Sprite;
@@ -63,7 +64,7 @@ export default class IP_Level extends Scene {
         this.addUI();
         this.addPausedScreen();
         this.isPaused = false;
-
+        this.trash_Mobs = new Map<number, Enemy>();
         this.respawnTimer = new Timer(1000, () => {
             if(IP_Level.livesCount === 0){
                 this.sceneManager.changeToScene(MainMenu);
