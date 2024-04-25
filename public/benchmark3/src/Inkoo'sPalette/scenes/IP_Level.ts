@@ -303,16 +303,15 @@ export default class IP_Level extends Scene {
     }
 
     protected addPausedScreen(): void {
-        const center = this.viewport.getCenter();
         this.pause_bg = this.add.sprite("background", Layers.Pause);
         this.pause_bg.scale.set(3, 3);
-        this.pause_bg.position = new Vec2(center.x, center.y);
+        this.pause_bg.position = new Vec2(500, 500);
 
-        const pauseHeader = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Pause, {position: new Vec2(center.x - 200, center.y - 300), text: "Pause"});
+        const pauseHeader = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Pause, {position: new Vec2(400, 100), text: "Pause"});
         pauseHeader.textColor = Color.WHITE;
         pauseHeader.font = "daydream";
 
-        const pauseText = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Pause, {position: new Vec2(center.x - 200, center.y - 150), text: "Press Esc To Continue"});
+        const pauseText = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Pause, {position: new Vec2(400, 250), text: "Press Esc To Continue"});
         pauseText.textColor = Color.WHITE;
         pauseText.font = "daydream";
         pauseText.fontSize = 20;
