@@ -399,40 +399,20 @@ export default class IP_Level extends Scene {
             this.heart3.position.copy(new Vec2(90, 30));
         }
         else if (IP_Level.livesCount === 5) {
-            this.heart1.destroy();
-            this.heart2.destroy();
             this.heart3.destroy();
-            this.heart1 = this.add.sprite('fullheart', Layers.UI)
-            this.heart1.scale.set(2, 2);
-            this.heart1.position.copy(new Vec2(30, 30));
-
-            this.heart2 = this.add.sprite('fullheart', Layers.UI)
-            this.heart2.scale.set(2, 2);
-            this.heart2.position.copy(new Vec2(60, 30));
-
             this.heart3 = this.add.sprite('halfheart', Layers.UI)
             this.heart3.scale.set(2, 2);
             this.heart3.position.copy(new Vec2(90, 30));
         }
         else if (IP_Level.livesCount === 4) {
-            this.heart1.destroy();
             this.heart2.destroy();
             this.heart3.destroy();
-            this.heart1 = this.add.sprite('fullheart', Layers.UI)
-            this.heart1.scale.set(2, 2);
-            this.heart1.position.copy(new Vec2(30, 30));
-
             this.heart2 = this.add.sprite('fullheart', Layers.UI)
             this.heart2.scale.set(2, 2);
             this.heart2.position.copy(new Vec2(60, 30));
         }
         else if (IP_Level.livesCount === 3) {
-            this.heart1.destroy();
             this.heart2.destroy();
-            this.heart1 = this.add.sprite('fullheart', Layers.UI)
-            this.heart1.scale.set(2, 2);
-            this.heart1.position.copy(new Vec2(30, 30));
-
             this.heart2 = this.add.sprite('halfheart', Layers.UI)
             this.heart2.scale.set(2, 2);
             this.heart2.position.copy(new Vec2(60, 30));
