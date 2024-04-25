@@ -7,13 +7,11 @@ import GoblinController from "./GoblinController";
 
 
 export default class Goblin extends Enemy{
-    protected _health: number;
-    protected _maxHealth: 10;
     owner: AnimatedSprite;
     speed: number = 100;
 
-    constructor(options: Record<string, any>) {
-        super(options);
+    constructor(options: Record<string, any>,hp:number) {
+        super(hp);
         this.owner = options.owner;
 
         //spawn goblin
@@ -24,7 +22,7 @@ export default class Goblin extends Enemy{
         this.owner.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(29, 27)));
         this.owner.colliderOffset.set(0, 1);
         this.owner.setGroup("enemy");
-        this._health = 10;
+        // super(this);
     }
 
 }

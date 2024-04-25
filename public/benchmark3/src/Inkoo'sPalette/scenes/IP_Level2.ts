@@ -52,6 +52,7 @@ export default class IP_Level2 extends IP_Level {
                 spawn: this.goldlemSpawns[i],
                 tilemap: Layers.Main,
             }
+<<<<<<< HEAD
             this.trash_enemies.push(new Goldlem(goldlemOptions));
         }
         
@@ -66,6 +67,9 @@ export default class IP_Level2 extends IP_Level {
                 tilemap: Layers.Main,
             }
             this.trash_enemies.push(new Big_Goldlem(biggoldlemOptions));
+=======
+            this.goldlems.push(new Goldlem(goldlemOptions,7));
+>>>>>>> jin
         }
         
     }

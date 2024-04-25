@@ -1,6 +1,5 @@
 
 import { PlayerStates } from "../PlayerController";
-import InkooAnimatedSprite from "../../Nodes/InkooAnimatedSprite";
 import InAir from "./InAir";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Input from "../../../Wolfie2D/Input/Input";

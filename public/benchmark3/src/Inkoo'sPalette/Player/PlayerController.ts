@@ -3,7 +3,6 @@ import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import Debug from "../../Wolfie2D/Debug/Debug";
 import Receiver from "../../Wolfie2D/Events/Receiver";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
-import InkooAnimatedSprite from "../Nodes/InkooAnimatedSprite";
 import Fall from "./PlayerStates/Fall";
 import InAir from "./PlayerStates/InAir";
 import Jump from "./PlayerStates/Jump";
