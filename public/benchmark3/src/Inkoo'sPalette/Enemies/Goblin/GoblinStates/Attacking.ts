@@ -19,15 +19,13 @@ export default class Attacking extends GoblinState{
             attack_name: "GOBLIN_LIGHT_ATTACK",
             eventType: "enemy",
             center: new Vec2(0, 0),
-            halfSize: new Vec2(48,14),
+            halfSize: new Vec2(48,20),
             invertX: this.owner.invertX,
             offset : new Vec2(-15, 0),
             shape: "AABB"
         }
-        //HB_options.actor.setGroup("enemy");
-        console.log("hboptions",HB_options.actor);
-        HB_options.actor.setTrigger("player",inkooEvents.PLAYER_ATTACK,null);
-        let hitbox = new Hitbox(HB_options);
+        let hitbox = new Hitbox(HB_options,"enemy");
+        //console.log("gobling attack", hitbox);
     }
     update(deltaT: number): void {
         super.update(deltaT);

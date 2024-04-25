@@ -59,7 +59,7 @@ export default abstract class InAir extends PlayerState {
 				offset: offset,
 				shape: shape
 			}
-			let hitbox = new Hitbox(HB_options);
+			let hitbox = new Hitbox(HB_options,"player");
 
 		}
     }

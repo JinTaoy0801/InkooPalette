@@ -1,7 +1,7 @@
 import AABB from "../../Wolfie2D/DataTypes/Shapes/AABB";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import Input from "../../Wolfie2D/Input/Input";
-import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
+import GameNode, { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
 import Rect from "../../Wolfie2D/Nodes/Graphics/Rect";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
@@ -30,6 +30,7 @@ export default class IP_Level extends Scene {
     protected playerSpawn: Vec2;
     player: AnimatedSprite;
     protected goblins = new Array<Goblin>();
+    protected trash_Mobs: Map<number,Goblin>;
     protected goldlems = new Array<Goldlem>();
 
     private heart1: Sprite;
@@ -53,6 +54,7 @@ export default class IP_Level extends Scene {
 
     //invinciblity timers
     protected isInvincible:Timer;
+    protected playerAttack:Timer;
     startScene(): void {
         this.initLayers();
         this.initPlayer();
@@ -80,13 +82,13 @@ export default class IP_Level extends Scene {
         this.levelTransitionScreen.tweens.play("fadeOut");
 
         this.isInvincible = new Timer(500);
+        this.playerAttack = new Timer(500);
         Input.disableInput();
     }
 
 
     updateScene(deltaT: number){
         if(this.player.position.y > 1200 || this.player.position.x < 0){
-            console.log(getLastPlayerPosition());
             this.player.position.copy(getLastPlayerPosition());
         }
         while (this.receiver.hasNextEvent()) {
@@ -126,21 +128,30 @@ export default class IP_Level extends Scene {
                     break;
                 }
                 case inkooEvents.LEVEL_START:{
-                    console.log("in start");
                     Input.enableInput();
                     break;
                 }
                 case inkooEvents.PLAYER_ATTACK: {
-                    const goblin = event.data.get("enemy");
                     if(this.sceneGraph.getNode(event.data.get("node")) === this.player) {
                         if(this.isInvincible.isStopped()){
-                            IP_Level.livesCount -=1;
+                            this.incPlayerLife(-1);
                             this.isInvincible.start();
                         }
                        
                     }
-                    console.log("playerHp", IP_Level.livesCount);
-                    console.log("goblin", event.data.toString());
+                    //console.log("playerHp", IP_Level.livesCount);
+                    //console.log("goblin", event.data.toString());
+                    break;
+                }
+                //in this case Node is the trashMob, other is the attackHitbox
+                case inkooEvents.TRASH_MOB_HIT:{
+                    if(this.playerAttack.isStopped()){
+                        const trash_mob = this.trash_Mobs.get(event.data.get("node"));
+                        console.log("trashMOb", trash_mob);
+                        this.playerAttack.start();
+                    }
+
+                    //const trash_Mobs = this.trash_Mobs.get(event.data.g)
                     break;
                 }
                 case inkooEvents.PLAYER_KILLED: {
@@ -193,6 +204,7 @@ export default class IP_Level extends Scene {
             inkooEvents.LEVEL_END,
             inkooEvents.PLAYER_ENTERED_LEVEL_END,
             inkooEvents.PLAYER_KILLED,
+            inkooEvents.TRASH_MOB_HIT
         ]);
     }
 
@@ -223,7 +235,7 @@ export default class IP_Level extends Scene {
             this.heart3.scale.set(2, 2);
             this.heart3.position.copy(new Vec2(90, 30));
         }
-        else if (IP_Level.livesCount === 4) {`~`
+        else if (IP_Level.livesCount === 4) {
             this.heart1 = this.add.sprite('fullheart', Layers.UI)
             this.heart1.scale.set(2, 2);
             this.heart1.position.copy(new Vec2(30, 30));
@@ -333,17 +345,84 @@ export default class IP_Level extends Scene {
         console.log("initplayuer");
         console.log("beforeset", this.player);
         this.player.setGroup("player");
-        console.log("this.plasdyhasdasdas", this.player.group);
     }
 
     protected incPlayerLife(amt: number): void {
         IP_Level.livesCount += amt;
         if (IP_Level.livesCount == 0){
+            this.heart1.destroy();
             Input.disableInput();
             this.player.disablePhysics();
-            // this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "player_death", loop: false, holdReference: false});
-            // this.player.tweens.play("death");
+            // this.emitter.fireEvent(inkooEvents.PLAYER_KILLED);
         }
+
+
+        if (IP_Level.livesCount === 6) {
+            this.heart1 = this.add.sprite('fullheart', Layers.UI)
+            this.heart1.scale.set(2, 2);
+            this.heart1.position.copy(new Vec2(30, 30));
+
+            this.heart2 = this.add.sprite('fullheart', Layers.UI)
+            this.heart2.scale.set(2, 2);
+            this.heart2.position.copy(new Vec2(60, 30));
+
+            this.heart3 = this.add.sprite('fullheart', Layers.UI)
+            this.heart3.scale.set(2, 2);
+            this.heart3.position.copy(new Vec2(90, 30));
+        }
+        else if (IP_Level.livesCount === 5) {
+            this.heart1.destroy();
+            this.heart2.destroy();
+            this.heart3.destroy();
+            this.heart1 = this.add.sprite('fullheart', Layers.UI)
+            this.heart1.scale.set(2, 2);
+            this.heart1.position.copy(new Vec2(30, 30));
+
+            this.heart2 = this.add.sprite('fullheart', Layers.UI)
+            this.heart2.scale.set(2, 2);
+            this.heart2.position.copy(new Vec2(60, 30));
+
+            this.heart3 = this.add.sprite('halfheart', Layers.UI)
+            this.heart3.scale.set(2, 2);
+            this.heart3.position.copy(new Vec2(90, 30));
+        }
+        else if (IP_Level.livesCount === 4) {
+            this.heart1.destroy();
+            this.heart2.destroy();
+            this.heart3.destroy();
+            this.heart1 = this.add.sprite('fullheart', Layers.UI)
+            this.heart1.scale.set(2, 2);
+            this.heart1.position.copy(new Vec2(30, 30));
+
+            this.heart2 = this.add.sprite('fullheart', Layers.UI)
+            this.heart2.scale.set(2, 2);
+            this.heart2.position.copy(new Vec2(60, 30));
+        }
+        else if (IP_Level.livesCount === 3) {
+            this.heart1.destroy();
+            this.heart2.destroy();
+            this.heart1 = this.add.sprite('fullheart', Layers.UI)
+            this.heart1.scale.set(2, 2);
+            this.heart1.position.copy(new Vec2(30, 30));
+
+            this.heart2 = this.add.sprite('halfheart', Layers.UI)
+            this.heart2.scale.set(2, 2);
+            this.heart2.position.copy(new Vec2(60, 30));
+        }
+        else if (IP_Level.livesCount === 2) {
+            this.heart1.destroy();
+            this.heart2.destroy();
+            this.heart1 = this.add.sprite('fullheart', Layers.UI)
+            this.heart1.scale.set(2, 2);
+            this.heart1.position.copy(new Vec2(30, 30));
+        }
+        else if (IP_Level.livesCount === 1) {
+            this.heart1.destroy();
+            this.heart1 = this.add.sprite('halfheart', Layers.UI)
+            this.heart1.scale.set(2, 2);
+            this.heart1.position.copy(new Vec2(30, 30));
+        }
+
     }
 
     addLevelEnd(startingTile: Vec2, size: Vec2): void {

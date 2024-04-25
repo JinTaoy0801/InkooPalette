@@ -69,14 +69,15 @@ export default class OnGround extends PlayerState {
 				actor: this.owner,
 				sprite: this.attack,
 				attack_name: attack_name,
-				eventType: "Ally",
+				eventType: "player",
 				center: new Vec2(0, 0),
 				halfSize: halfSize,
 				invertX: this.owner.invertX,
 				offset: offset,	
 				shape: shape
 			}
-			let hitbox = new Hitbox(HB_options);
+			let hitbox = new Hitbox(HB_options,"player");
+			console.log("playergounrdattack", hitbox);
 		}
 	}
 
