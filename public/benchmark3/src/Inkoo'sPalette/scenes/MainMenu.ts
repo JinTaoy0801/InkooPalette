@@ -18,6 +18,7 @@ const MainMenuName = {
     CONTROLS: "CONTROLS",
     STORY: "STORY",
     START_GAME: "START_GAME",
+    LEVEL_2: "LEVEL_2",
     MENU: "MENU"
 } as const
 
@@ -131,7 +132,7 @@ export default class MainMenu extends Scene {
         const level_2 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x, center.y - 150), text: "2"});
         level_2.borderColor = Color.TRANSPARENT;
         level_2.backgroundColor = Color.TRANSPARENT;
-        level_2.onClickEventId = MainMenuName.MENU;
+        level_2.onClickEventId = MainMenuName.LEVEL_2;
         level_2.font = "daydream"
 
         const level_3 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x + 200, center.y - 150), text: "3"});
@@ -295,6 +296,7 @@ export default class MainMenu extends Scene {
         this.receiver.subscribe(MainMenuName.CONTROLS);
         this.receiver.subscribe(MainMenuName.STORY);
         this.receiver.subscribe(MainMenuName.MENU);
+        this.receiver.subscribe(MainMenuName.LEVEL_2);
     }
 
     updateScene() {
@@ -318,6 +320,22 @@ export default class MainMenu extends Scene {
                     }
                 }
                 this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
+                break;
+            }
+
+            case MainMenuName.LEVEL_2: {
+                this.emitter.fireEvent(inkooEvents.LEVEL_START);
+                let sceneOptions = {
+                    physics: {
+                        groupNames: ["ground", "player"],
+                        collisions:
+                        [
+                            [0, 1],
+                            [1, 0]
+                        ]
+                    }
+                }
+                this.sceneManager.changeToScene(IP_Level2, {}, sceneOptions);
                 break;
             }
 

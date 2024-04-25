@@ -54,6 +54,8 @@ export default class IP_Level extends Scene {
     // Screen fade in/out for level start and end
     protected levelTransitionTimer: Timer;
     protected levelTransitionScreen: Rect;
+
+    private pause_bg: Sprite;
     
     startScene(): void {
         this.initLayers();
@@ -61,6 +63,7 @@ export default class IP_Level extends Scene {
         this.initViewport();
         this.subscribeToEvents();
         this.addUI();
+        this.addPausedScreen();
         this.isPaused = false;
 
         this.respawnTimer = new Timer(1000, () => {
@@ -131,7 +134,6 @@ export default class IP_Level extends Scene {
                 }
                 case inkooEvents.PLAYER_KILLED: {
                     this.respawnPlayer();
-                    break;
                 }
                 default: {
                     throw new Error(`Unhandled event caught in scene with type ${event.type}`)
@@ -139,10 +141,31 @@ export default class IP_Level extends Scene {
             }
         }
         
+        if (Input.isJustPressed("pause")) {
+            let pauseLayer = this.getLayer(Layers.Pause);
+            if (pauseLayer.isHidden()) {
+                this.getSceneGraph().getAllNodes().forEach(element => {
+                    if(element instanceof AnimatedSprite){
+                        element.aiActive = false;
+                    }
+                });
+                pauseLayer.setHidden(false);
+            }
+            else {
+                this.getSceneGraph().getAllNodes().forEach(element => {
+                    if(element instanceof AnimatedSprite){
+                        element.aiActive = true;
+                    }
+                });
+                pauseLayer.setHidden(true);
+            }
+        }
     }
 
     protected initLayers(): void {
         this.addUILayer(Layers.UI);
+        this.addUILayer(Layers.Pause);
+        this.getLayer(Layers.Pause).setHidden(true);
         this.addLayer(Layers.Main, 2);
     }
 
@@ -266,6 +289,22 @@ export default class IP_Level extends Scene {
             ],
             onEnd: inkooEvents.LEVEL_START
         });
+    }
+
+    protected addPausedScreen(): void {
+        const center = this.viewport.getCenter();
+        this.pause_bg = this.add.sprite("background", Layers.Pause);
+        this.pause_bg.scale.set(3, 3);
+        this.pause_bg.position = new Vec2(center.x, center.y);
+
+        const pauseHeader = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Pause, {position: new Vec2(center.x - 200, center.y - 300), text: "Pause"});
+        pauseHeader.textColor = Color.WHITE;
+        pauseHeader.font = "daydream";
+
+        const pauseText = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Pause, {position: new Vec2(center.x - 200, center.y - 150), text: "Press Esc To Continue"});
+        pauseText.textColor = Color.WHITE;
+        pauseText.font = "daydream";
+        pauseText.fontSize = 20;
     }
 
     protected initPlayer(): void {
