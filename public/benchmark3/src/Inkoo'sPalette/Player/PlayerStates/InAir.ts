@@ -52,14 +52,15 @@ export default abstract class InAir extends PlayerState {
 				actor: this.owner,
 				sprite: this.attack,
 				attack_name: attack_name,
-				eventType: "Ally",
+				eventType: "player",
 				center: new Vec2(0, 0),
 				halfSize: halfSize,
 				invertX: this.owner.invertX,
 				offset: offset,
-				shape: shape
+				shape: shape,
+				inair:true,
 			}
-			let hitbox = new Hitbox(HB_options,"player");
+			let hitbox = new Hitbox(HB_options, "player");
 
 		}
     }

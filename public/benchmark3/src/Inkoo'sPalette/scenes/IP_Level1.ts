@@ -8,7 +8,9 @@ import GoblinController from "../Enemies/Goblin/GoblinController";
 import IP_Level from "./IP_Level";
 import IP_Level2 from "./IP_Level2";
 import { Layers } from "./IP_Level";
-import { getLastPlayerPosition } from "../Global/lastPlayerPosition";
+import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
+import { inkooEvents } from "../inkooEvents";
+import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 export default class IP_Level1 extends IP_Level {
     goblinSpawns = [
         new Vec2(200, 800),
@@ -65,6 +67,38 @@ export default class IP_Level1 extends IP_Level {
                 tilemap: Layers.Main,
             }
             let temp = new Goblin(goblinOptions,5);
+            temp.owner.tweens.add("DEATH", {
+                startDelay: 0,
+                duration: 500,
+                effects: [
+                    {
+                        property: "rotation",
+                        start: 0,
+                        end: Math.PI,
+                        ease: EaseFunctionType.IN_OUT_QUAD,
+                    },
+                    {
+                        property: TweenableProperties.alpha,
+                        start: 1,
+                        end: 0,
+                        ease: EaseFunctionType.IN_OUT_QUAD,
+                    },
+                ],
+                onEnd: [inkooEvents.TRASH_MOB_KILLED],
+            });
+            temp.owner.tweens.add("take_DMG", {
+                startDelay: 0,
+                duration: 500,
+                effects: [
+                    {
+                        property: "alpha",
+                        start: 0,
+                        end: 1,
+                        ease: EaseFunctionType.LINEAR,
+                        resetOnComplete: true
+                    }
+                ]
+            });
             this.goblins.push(temp);
             this.trash_Mobs.set(goblinOptions.owner.id,temp);
         }

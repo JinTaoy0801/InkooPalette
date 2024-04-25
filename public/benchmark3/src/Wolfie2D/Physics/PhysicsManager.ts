@@ -70,6 +70,10 @@ export default abstract class PhysicsManager implements Updateable {
 	 * @param group The group that the GameNode should be on
 	 */
 	setGroup(node: Physical, group: string): void {
+		//if (!this.groupMap.has(group)) {
+		console.log("groupMap", this.groupMap);
+		//}
+
 		node.group = this.groupMap.get(group);
 	}
 

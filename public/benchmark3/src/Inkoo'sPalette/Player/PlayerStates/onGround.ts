@@ -64,7 +64,6 @@ export default class OnGround extends PlayerState {
 				this.attack = this.owner.getScene().add.animatedSprite(attack_name, Layers.Main);
 				this.attack.scale.set(2, 1.5);
 			}
-
 			const HB_options = {
 				actor: this.owner,
 				sprite: this.attack,
@@ -76,7 +75,8 @@ export default class OnGround extends PlayerState {
 				offset: offset,	
 				shape: shape
 			}
-			let hitbox = new Hitbox(HB_options,"player");
+			let hitbox = new Hitbox(HB_options, "player");
+			hitbox.box.setGroup("player");
 			console.log("playergounrdattack", hitbox);
 		}
 	}

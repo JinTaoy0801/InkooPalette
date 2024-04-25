@@ -323,6 +323,7 @@ export default abstract class GameNode implements Positioned, Unique, Updateable
 	 * @param group The physics group this node should belong to
 	 */
 	setGroup(group: string): void {
+		console.log("this.scene", this.scene.getPhysicsManager());
 		this.scene.getPhysicsManager().setGroup(this, group);
 	}
 

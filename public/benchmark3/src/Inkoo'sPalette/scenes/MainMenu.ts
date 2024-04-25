@@ -321,13 +321,12 @@ export default class MainMenu extends Scene {
                 this.emitter.fireEvent(inkooEvents.LEVEL_START);
                 let sceneOptions = {
                     physics: {
-                        groupNames: ["ground", "player","enemy","playerAttack"],
+                        groupNames: ["ground", "player","enemy"],
                         collisions:
                         [
-                            [0, 1, 1, 0],
-                            [1, 0, 1, 0],
-                            [1, 1, 0, 1],
-                            [0, 0, 1, 0]
+                            [0, 1, 1],
+                            [1, 0, 1],
+                            [1, 1, 0]
                         ]
                     }
                 }
@@ -339,13 +338,12 @@ export default class MainMenu extends Scene {
                 this.emitter.fireEvent(inkooEvents.LEVEL_START);
                 let sceneOptions = {
                     physics: {
-                        groupNames: ["ground", "player","enemy","playerAttack"],
+                        groupNames: ["ground", "player","enemy"],
                         collisions:
                         [
-                            [0, 1, 1, 0],
-                            [1, 0, 1, 0],
-                            [1, 1, 0, 1],
-                            [0, 0, 1, 0]
+                            [0, 1, 1],
+                            [1, 0, 1],
+                            [1, 1, 0]
                         ]
                     }
                 }
