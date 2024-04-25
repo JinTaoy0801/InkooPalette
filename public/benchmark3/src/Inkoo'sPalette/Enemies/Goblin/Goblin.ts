@@ -22,26 +22,6 @@ export default class Goblin extends Enemy{
         this.owner.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(29, 27)));
         this.owner.colliderOffset.set(0, 1);
         this.owner.setGroup("enemy");
-        this.owner.tweens.add("DEATH", {
-            startDelay: 0,
-            duration: 500,
-            effects: [
-                {
-                    property: "rotation",
-                    start: 0,
-                    end: Math.PI,
-                    ease: EaseFunctionType.IN_OUT_QUAD,
-                },
-                {
-                    property: "alpha",
-                    start: 1,
-                    end: 0,
-                    ease: EaseFunctionType.IN_OUT_QUAD,
-                },
-            ],
-            //onEnd: [AAEvents.NPC_KILLED],
-        });
-        // super(this);
     }
 
 }

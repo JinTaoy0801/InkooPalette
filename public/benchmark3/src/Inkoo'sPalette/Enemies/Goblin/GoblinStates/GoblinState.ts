@@ -16,10 +16,13 @@ export default abstract class GoblinState extends State {
 	playerPosition: Vec2 = Vec2.ZERO;
     attackTimer:Timer;
     lightAttackRange = 64;
+
     constructor(parent: StateMachine, owner: AnimatedSprite) {
 		super(parent);
 		this.owner = owner;
         this.attackTimer = new Timer(2000);
+        this.owner.setGroup("enemy");
+        // console.log('whne setting the group', this.owner.group);
 	}
     patrolArea = new Vec2(this.parent.patrolArea.leftBound,this.parent.patrolArea.rightBound);
     handleInput(event: GameEvent): void {

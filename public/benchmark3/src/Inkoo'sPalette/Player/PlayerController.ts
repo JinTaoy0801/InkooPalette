@@ -89,7 +89,6 @@ export default class PlayerController extends StateMachineAI {
             reverseOnComplete: true
         });
         this.owner.setGroup("player");
-        console.log("this.owner", this.owner.group);
 
     }
     
@@ -110,4 +109,5 @@ export default class PlayerController extends StateMachineAI {
         }
        
     }
+    
 }

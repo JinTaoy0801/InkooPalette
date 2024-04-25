@@ -6,12 +6,13 @@ import { GoblinStates } from "../GoblinController";
 
 export default class Idle extends GoblinState {
   onEnter(options: Record<string, any>): void {
-    this.owner.animation.playIfNotAlready("IDLE_LEFT", true);
       //console.log('went inside goblin idle')
+      //console.log('asdhkasdhaskdasd', this.owner);
   }
 
   update(deltaT: number): void {
     super.update(deltaT);
+    this.owner.animation.playIfNotAlready("IDLE_LEFT", true);
     if (this.parent.coinFlip()) {
       this.finished(GoblinStates.WALKING);
     }

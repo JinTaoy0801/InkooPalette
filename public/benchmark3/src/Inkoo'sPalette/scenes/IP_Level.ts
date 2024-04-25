@@ -117,13 +117,12 @@ export default class IP_Level extends Scene {
                         if(this.nextLevel){
                             let sceneOptions = {
                                 physics: {
-                                    groupNames: ["ground", "player","enemy","playerAttack"],
+                                    groupNames: ["ground", "player","enemy"],
                                     collisions:
                                     [
-                                        [0, 1, 1, 0],
-                                        [1, 0, 1, 0],
-                                        [1, 1, 0, 1],
-                                        [0, 0, 1, 0]
+                                        [0, 1, 1],
+                                        [1, 0, 1],
+                                        [1, 1, 0]
                                     ]
                                 }
                             }
@@ -141,6 +140,8 @@ export default class IP_Level extends Scene {
                         if(this.isInvincible.isStopped()){
                             this.incPlayerLife(-1);
                             this.isInvincible.start();
+                            this.player.tweens.play("take_DMG");
+                            console.log("tweenplayed");
                         }
                        
                     }
@@ -156,6 +157,10 @@ export default class IP_Level extends Scene {
                         console.log("trashMob hp", trash_mob.getHp());
                         this.playerAttack.start();
                     }
+                    break;
+                }
+                case inkooEvents.TRASH_MOB_KILLED:{
+                    console.log("trashMob killed", event.data);
                     break;
                 }
                 case inkooEvents.PLAYER_KILLED: {
@@ -191,13 +196,12 @@ export default class IP_Level extends Scene {
         if (Input.isJustPressed("level1")) {
             let sceneOptions = {
                 physics: {
-                    groupNames: ["ground", "player","enemy","playerAttack"],
+                    groupNames: ["ground", "player","enemy"],
                     collisions:
                     [
-                        [0, 1, 1, 0],
-                        [1, 0, 1, 0],
-                        [1, 1, 0, 1],
-                        [0, 0, 1, 0]
+                        [0, 1, 1],
+                        [1, 0, 1],
+                        [1, 1, 0]
                     ]
                 }
             }
@@ -231,7 +235,8 @@ export default class IP_Level extends Scene {
             inkooEvents.LEVEL_END,
             inkooEvents.PLAYER_ENTERED_LEVEL_END,
             inkooEvents.PLAYER_KILLED,
-            inkooEvents.TRASH_MOB_HIT
+            inkooEvents.TRASH_MOB_HIT,
+            inkooEvents.TRASH_MOB_KILLED
         ]);
     }
 
@@ -365,13 +370,22 @@ export default class IP_Level extends Scene {
             this.playerSpawn = Vec2.ZERO;
         }
         this.player.position.copy(this.playerSpawn);
-
+        this.player.tweens.add("take_DMG", {
+            startDelay: 0,
+            duration: 500,
+            effects: [
+                {
+                    property: TweenableProperties.alpha,
+                    start: 0,
+                    end: 1,
+                    ease: EaseFunctionType.LINEAR,
+                    resetOnComplete: true
+                }
+            ]
+        });
         this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(12, 8)));
         this.player.addAI(PlayerController, {playerType: "platformer", tilemap: "ground"});
         this.player.colliderOffset.set(0, 10.5);
-        console.log("initplayuer");
-        console.log("beforeset", this.player);
-        this.player.setGroup("player");
     }
 
     protected incPlayerLife(amt: number): void {
