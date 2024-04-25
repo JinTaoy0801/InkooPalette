@@ -12,6 +12,7 @@ import IP_Level1 from "./IP_Level1";
 import IP_Level2 from "./IP_Level2";
 import { inkooEvents } from "../inkooEvents";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
+import Input from "../../Wolfie2D/Input/Input";
 
 const MainMenuName = {
     MAIN_MENU: "MAIN_MENU",
@@ -306,6 +307,12 @@ export default class MainMenu extends Scene {
         while(this.receiver.hasNextEvent()){
             this.handleEvent(this.receiver.getNextEvent());
         }
+        if (Input.isJustPressed("level1")) {
+            this.emitter.fireEvent(MainMenuName.START_GAME);
+        }
+        if (Input.isJustPressed("level2")) {
+            this.emitter.fireEvent(MainMenuName.LEVEL_2);
+        }
     }
 
     protected handleEvent(event: GameEvent): void {
@@ -332,11 +339,13 @@ export default class MainMenu extends Scene {
                 this.emitter.fireEvent(inkooEvents.LEVEL_START);
                 let sceneOptions = {
                     physics: {
-                        groupNames: ["ground", "player"],
+                        groupNames: ["ground", "player","enemy","playerAttack"],
                         collisions:
                         [
-                            [0, 1],
-                            [1, 0]
+                            [0, 1, 1, 0],
+                            [1, 0, 1, 0],
+                            [1, 1, 0, 1],
+                            [0, 0, 1, 0]
                         ]
                     }
                 }
