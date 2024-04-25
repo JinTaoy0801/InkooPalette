@@ -32,6 +32,7 @@ export default class IP_Level extends Scene {
     player: AnimatedSprite;
     protected goblins = new Array<Goblin>();
     protected trash_Mobs: Map<number,Enemy>;
+    protected trash_enemies= new Array<Enemy>();
     protected goldlems = new Array<Goldlem>();
 
     private heart1: Sprite;
