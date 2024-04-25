@@ -457,7 +457,6 @@ export default class IP_Level extends Scene {
           inkooEvents.PLAYER_ENTERED_LEVEL_END,
           null,
         );
-        this.levelEndArea.color = new Color(255, 255, 255, 1);
       }
 
     protected respawnPlayer():void{
