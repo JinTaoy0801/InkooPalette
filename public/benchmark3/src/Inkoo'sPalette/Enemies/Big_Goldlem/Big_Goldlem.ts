@@ -10,8 +10,8 @@ export default class Big_Goldlem extends Enemy {
     owner: AnimatedSprite;
     speed: number = 100;
 
-    constructor(options: Record<string, any>) {
-        super(options);
+    constructor(options: Record<string, any>,hp:number) {
+        super(hp);
         this.owner = options.owner;
 
         //spawn goblin
