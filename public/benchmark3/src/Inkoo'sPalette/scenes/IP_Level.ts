@@ -39,7 +39,6 @@ export default class IP_Level extends Scene {
     protected respawnTimer: Timer;
 
     protected static livesCount: number = 6;
-
     // Stuff to end the level and go to the next level
     protected levelEndArea: Rect;
     protected nextLevel: new (...args: any) => IP_Level;
@@ -49,6 +48,9 @@ export default class IP_Level extends Scene {
     protected levelTransitionTimer: Timer;
     protected levelTransitionScreen: Rect;
     
+
+    //invinciblity timers
+    protected isInvincible:Timer;
     startScene(): void {
         this.initLayers();
         this.initPlayer();
@@ -73,6 +75,8 @@ export default class IP_Level extends Scene {
             this.levelTransitionScreen.tweens.play("fadeIn");
         });
         this.levelTransitionScreen.tweens.play("fadeOut");
+
+        this.isInvincible = new Timer(500);
         Input.disableInput();
     }
 
@@ -124,7 +128,16 @@ export default class IP_Level extends Scene {
                     break;
                 }
                 case inkooEvents.PLAYER_ATTACK: {
-                    
+                    const goblin = event.data.get("enemy");
+                    if(this.sceneGraph.getNode(event.data.get("node")) === this.player) {
+                        if(this.isInvincible.isStopped()){
+                            IP_Level.livesCount -=1;
+                            this.isInvincible.start();
+                        }
+                       
+                    }
+                    console.log("playerHp", IP_Level.livesCount);
+                    console.log("goblin", event.data.toString());
                     break;
                 }
                 case inkooEvents.PLAYER_KILLED: {

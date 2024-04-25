@@ -24,7 +24,7 @@ export default class Goblin extends Enemy{
         this.owner.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(29, 27)));
         this.owner.colliderOffset.set(0, 1);
         this.owner.setGroup("goblin");
-        this.owner.setTrigger("playerAttack", inkooEvents.PLAYER_ATTACK,null);
+        //this.owner.setTrigger("player", inkooEvents.PLAYER_ATTACK,null);
         this._health = this._maxHealth;
     }
 

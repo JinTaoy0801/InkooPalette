@@ -4,6 +4,7 @@ import Vec2 from "../../../../Wolfie2D/DataTypes/Vec2";
 import Hitbox from "../../../Hitbox/Hitbox";
 import { Layers } from "../../../scenes/IP_Level";
 import AnimatedSprite from "../../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+import { inkooEvents } from "../../../inkooEvents";
 
 export default class Attacking extends GoblinState{
     attack: AnimatedSprite
@@ -16,13 +17,16 @@ export default class Attacking extends GoblinState{
             actor: this.owner,
             sprite: this.attack,
             attack_name: "GOBLIN_LIGHT_ATTACK",
-            eventType: "Enemy",
+            eventType: "enemy",
             center: new Vec2(0, 0),
             halfSize: new Vec2(48,14),
             invertX: this.owner.invertX,
             offset : new Vec2(-15, 0),
             shape: "AABB"
         }
+        //HB_options.actor.setGroup("enemy");
+        console.log("hboptions",HB_options.actor);
+        HB_options.actor.setTrigger("player",inkooEvents.PLAYER_ATTACK,null);
         let hitbox = new Hitbox(HB_options);
     }
     update(deltaT: number): void {

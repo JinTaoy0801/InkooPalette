@@ -12,6 +12,7 @@ export default abstract class HitboxState extends State {
     constructor(parent: StateMachine, owner: AnimatedSprite) {
         super(parent);
         this.attack = owner;
+        //this.attack.setGroup(this.stateName);
     }
 
     update(deltaT: number): void {
