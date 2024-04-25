@@ -1,4 +1,5 @@
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
+import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Layer from "../../Wolfie2D/Scene/Layer";
 import Scene from "../../Wolfie2D/Scene/Scene";
@@ -23,7 +24,7 @@ const MainMenuName = {
 } as const
 
 export default class MainMenu extends Scene {
-
+    animatedSprite: AnimatedSprite;
     private mainMenu: Layer;
     private levelSelector: Layer;
     private controls: Layer;
@@ -46,7 +47,9 @@ export default class MainMenu extends Scene {
     }
 
     startScene(): void {
-        const center = this.viewport.getCenter();
+        let center = this.viewport.getHalfSize();
+        this.viewport.setFocus(center);
+        this.viewport.setZoomLevel(1);
 
         // Create screens
         this.mainMenu = this.addUILayer(MainMenuName.MAIN_MENU);

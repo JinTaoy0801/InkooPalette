@@ -158,6 +158,7 @@ export default class IP_Level extends Scene {
                 }
                 case inkooEvents.PLAYER_KILLED: {
                     this.respawnPlayer();
+                    break;
                 }
                 default: {
                     throw new Error(`Unhandled event caught in scene with type ${event.type}`)
@@ -355,7 +356,7 @@ export default class IP_Level extends Scene {
             this.heart1.destroy();
             Input.disableInput();
             this.player.disablePhysics();
-            // this.emitter.fireEvent(inkooEvents.PLAYER_KILLED);
+            this.emitter.fireEvent(inkooEvents.PLAYER_KILLED);
         }
 
 
