@@ -12,8 +12,8 @@ export default class Goldlem extends Enemy{
     owner: AnimatedSprite;
     speed: number = 100;
 
-    constructor(options: Record<string, any>) {
-        super(options);
+    constructor(options: Record<string, any>,hp:number) {
+        super(hp);
         this.owner = options.owner;
 
         this.owner.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));

@@ -64,7 +64,7 @@ export default class IP_Level1 extends IP_Level {
                 spawn: this.goblinSpawns[i],
                 tilemap: Layers.Main,
             }
-            let temp = new Goblin(goblinOptions);
+            let temp = new Goblin(goblinOptions,5);
             this.goblins.push(temp);
             this.trash_Mobs.set(goblinOptions.owner.id,temp);
         }

@@ -45,7 +45,7 @@ export default class IP_Level2 extends IP_Level {
                 spawn: this.goldlemSpawns[i],
                 tilemap: Layers.Main,
             }
-            this.goldlems.push(new Goldlem(goldlemOptions));
+            this.goldlems.push(new Goldlem(goldlemOptions,7));
         }
         
     }

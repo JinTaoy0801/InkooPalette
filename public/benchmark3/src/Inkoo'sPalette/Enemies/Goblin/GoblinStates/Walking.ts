@@ -12,7 +12,6 @@ export default class Walking extends GoblinState {
             this.owner.animation.playIfNotAlready("WALKING_LEFT", true);
         }
         super.update(deltaT);
-        // console.log('ownerposition', this.owner.position);
         if(this.playerInPatrol(this.patrolArea)){
             this.finished(GoblinStates.ALERTED);
         }

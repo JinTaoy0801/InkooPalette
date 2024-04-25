@@ -82,7 +82,7 @@ export default class IP_Level extends Scene {
         });
         this.levelTransitionScreen.tweens.play("fadeOut");
 
-        this.isInvincible = new Timer(500);
+        this.isInvincible = new Timer(750);
         this.playerAttack = new Timer(500);
         Input.disableInput();
     }
@@ -147,13 +147,11 @@ export default class IP_Level extends Scene {
                 //in this case Node is the trashMob, other is the attackHitbox
                 case inkooEvents.TRASH_MOB_HIT:{
                     if(this.playerAttack.isStopped()){
-                        const trash_mob = <Goblin>this.trash_Mobs.get(event.data.get("node"));
-                        //trash_mob._health = 0;
-                        console.log("trashMOb", trash_mob);
+                        const trash_mob = this.trash_Mobs.get(event.data.get("node"));
+                        trash_mob.setHp(-1);
+                        console.log("trashMob hp", trash_mob.getHp());
                         this.playerAttack.start();
                     }
-
-                    //const trash_Mobs = this.trash_Mobs.get(event.data.g)
                     break;
                 }
                 case inkooEvents.PLAYER_KILLED: {

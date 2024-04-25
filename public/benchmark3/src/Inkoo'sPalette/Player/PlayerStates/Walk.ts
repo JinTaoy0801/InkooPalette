@@ -1,7 +1,6 @@
 
 import { PlayerStates } from "../PlayerController";
 import OnGround from "./onGround";
-import InkooAnimatedSprite from "../../Nodes/InkooAnimatedSprite";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import { setLastPlayerPosition } from "../../Global/lastPlayerPosition";
 export default class Walk extends OnGround{

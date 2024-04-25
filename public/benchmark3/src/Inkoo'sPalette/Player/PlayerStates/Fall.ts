@@ -1,5 +1,4 @@
 import InAir from "./InAir";
-import InkooAnimatedSprite from "../../Nodes/InkooAnimatedSprite";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import { PlayerStates } from "../PlayerController";
 import { setLastPlayerPosition } from "../../Global/lastPlayerPosition";
