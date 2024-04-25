@@ -15,6 +15,7 @@ import Color from "../../Wolfie2D/Utils/Color";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import MainMenu from "./MainMenu";
 import Goblin from "../Enemies/Goblin/Goblin";
+import Goldlem from "../Enemies/Goldlem/Goldlem";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import PlayerState from "../Player/PlayerStates/PlayerState";
 import { getLastPlayerPosition } from "../Global/lastPlayerPosition";
@@ -29,6 +30,7 @@ export default class IP_Level extends Scene {
     protected playerSpawn: Vec2;
     player: AnimatedSprite;
     protected goblins = new Array<Goblin>();
+    protected goldlems = new Array<Goldlem>();
 
     private heart1: Sprite;
     private heart2: Sprite;
@@ -276,7 +278,7 @@ export default class IP_Level extends Scene {
 
         this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(12, 8)));
         this.player.addAI(PlayerController, {playerType: "platformer", tilemap: "ground"});
-        this.player.colliderOffset.set(0, 11);
+        this.player.colliderOffset.set(0, 10.5);
         console.log("initplayuer");
         console.log("beforeset", this.player);
         this.player.setGroup("player");

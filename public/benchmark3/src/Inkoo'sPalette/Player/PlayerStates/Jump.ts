@@ -43,7 +43,7 @@ export default class Jump extends InAir{
 
 	onExit(): Record<string, any> {
 		this.owner.setCollisionShape(new AABB(new Vec2(0, 0), new Vec2(12,8)));
-        this.owner.colliderOffset.set(0, 11);
+        this.owner.colliderOffset.set(0, 10.5);
         if (!this.isAttacking())
             this.owner.animation.stop();
             this.owner.animation.play("STOP_IN_AIR", false);

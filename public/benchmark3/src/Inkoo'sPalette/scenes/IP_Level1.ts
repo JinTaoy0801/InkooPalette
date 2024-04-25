@@ -14,7 +14,7 @@ export default class IP_Level1 extends IP_Level {
         new Vec2(200, 800),
         new Vec2(400, 800)
     ];
-    counter = 0;
+    
     loadScene(): void {
         // Load resources
         this.load.tilemap("level1", "assets/tilemaps/level1.json");
