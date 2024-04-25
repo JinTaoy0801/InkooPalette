@@ -24,7 +24,10 @@ export default class Attacking extends GoblinState{
             offset : new Vec2(-15, 0),
             shape: "AABB"
         }
+       // setTimeout(() => {
         let hitbox = new Hitbox(HB_options,"enemy");
+        //}, 1000);
+        
         //console.log("gobling attack", hitbox);
     }
     update(deltaT: number): void {

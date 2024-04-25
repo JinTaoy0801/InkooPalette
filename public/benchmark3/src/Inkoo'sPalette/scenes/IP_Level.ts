@@ -115,12 +115,13 @@ export default class IP_Level extends Scene {
                         if(this.nextLevel){
                             let sceneOptions = {
                                 physics: {
-                                    groupNames: ["ground", "player"],
+                                    groupNames: ["ground", "player","enemy","playerAttack"],
                                     collisions:
                                     [
-                                        [0, 1],
-                                        [1, 0]
-                    
+                                        [0, 1, 1, 0],
+                                        [1, 0, 1, 0],
+                                        [1, 1, 0, 1],
+                                        [0, 0, 1, 0]
                                     ]
                                 }
                             }

@@ -11,7 +11,7 @@ export default class Active extends HitboxState {
     onEnter(options: Record<string, any>) {
         this.owner = this.attack;
         this.setting = this.parent.settings;
-
+        
         this.owner.animation.play(this.setting.attack_name, false);
     }
 
