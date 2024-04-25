@@ -20,6 +20,8 @@ import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import PlayerState from "../Player/PlayerStates/PlayerState";
 import { getLastPlayerPosition } from "../Global/lastPlayerPosition";
 import Enemy from "../Enemies/Enemy";
+import IP_Level1 from "./IP_Level1";
+import IP_Level2 from "./IP_Level2";
 export enum Layers {
     Main = "main",
     UI = "ui",
@@ -115,12 +117,13 @@ export default class IP_Level extends Scene {
                         if(this.nextLevel){
                             let sceneOptions = {
                                 physics: {
-                                    groupNames: ["ground", "player"],
+                                    groupNames: ["ground", "player","enemy","playerAttack"],
                                     collisions:
                                     [
-                                        [0, 1],
-                                        [1, 0]
-                    
+                                        [0, 1, 1, 0],
+                                        [1, 0, 1, 0],
+                                        [1, 1, 0, 1],
+                                        [0, 0, 1, 0]
                                     ]
                                 }
                             }
@@ -184,6 +187,28 @@ export default class IP_Level extends Scene {
                 });
                 pauseLayer.setHidden(true);
             }
+        }
+
+        if (Input.isJustPressed("level1")) {
+            let sceneOptions = {
+                physics: {
+                    groupNames: ["ground", "player","enemy","playerAttack"],
+                    collisions:
+                    [
+                        [0, 1, 1, 0],
+                        [1, 0, 1, 0],
+                        [1, 1, 0, 1],
+                        [0, 0, 1, 0]
+                    ]
+                }
+            }
+            this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
+        }
+        if (Input.isJustPressed("level2")) {
+            this.emitter.fireEvent(inkooEvents.LEVEL_END)
+        }
+        if (Input.isJustPressed("invincible")) {
+            this.incPlayerLife(1000);
         }
     }
 
