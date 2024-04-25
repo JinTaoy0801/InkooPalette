@@ -24,7 +24,7 @@ export default class Goblin extends Enemy{
         this.owner.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(29, 27)));
         this.owner.colliderOffset.set(0, 1);
         this.owner.setGroup("enemy");
-        this._health = 10;
+        super(this);
     }
 
 }

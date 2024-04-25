@@ -147,7 +147,8 @@ export default class IP_Level extends Scene {
                 //in this case Node is the trashMob, other is the attackHitbox
                 case inkooEvents.TRASH_MOB_HIT:{
                     if(this.playerAttack.isStopped()){
-                        const trash_mob = this.trash_Mobs.get(event.data.get("node"));
+                        const trash_mob = <Goblin>this.trash_Mobs.get(event.data.get("node"));
+                        //trash_mob._health = 0;
                         console.log("trashMOb", trash_mob);
                         this.playerAttack.start();
                     }
