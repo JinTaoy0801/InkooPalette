@@ -23,7 +23,7 @@ export default class Alerted extends GoblinState{
             this.parent.directionPatrol = 'right';
             this.owner.invertX = true;
         }
-        if(this.inRanged(3) && this.attackTimer.isStopped()){
+        if(this.inRanged(2) && this.attackTimer.isStopped()){
             this.finished(GoblinStates.ATTACKING);
             this.attackTimer.start()
         }

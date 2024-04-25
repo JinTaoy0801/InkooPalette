@@ -46,7 +46,7 @@ export default class IP_Level1 extends IP_Level {
         super.startScene();
         this.addLevelEnd(new Vec2(63*32, 18*32), new Vec2(2*32, 10*32));
         this.initGoblin();
-        
+        console.log("trashmobs", this.trash_Mobs);
         this.nextLevel = IP_Level2;
     }
 
@@ -63,6 +63,7 @@ export default class IP_Level1 extends IP_Level {
                 tilemap: Layers.Main,
             }
             this.goblins.push(new Goblin(goblinOptions));
+            this.trash_Mobs.set(goblinOptions.owner.id,goblinOptions.owner);
         }
         
     }
