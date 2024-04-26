@@ -8,7 +8,6 @@ import IP_Level from "../scenes/IP_Level";
 
 export default class Hitbox {
     box: AnimatedSprite
-    circle: AnimatedSprite
 
     constructor(settings: Record<string, any>,group:string) {
         if (settings.shape != "circle") {
@@ -17,8 +16,6 @@ export default class Hitbox {
             this.box.addAI(HitboxController, settings);
             console.log(group);
             this.box.setGroup(group);
-            if(settings.inair)
-                console.log('inAir', this.box);
                
             if(group === "enemy"){
                 this.box.setTrigger("player", inkooEvents.PLAYER_ATTACK,null);
@@ -27,9 +24,9 @@ export default class Hitbox {
             }
         }
         else {
-            this.circle = settings.sprite;
-            this.circle.addPhysics(new Circle(settings.center, settings.halfSize), new Vec2(0, 0));
-            this.circle.addAI(HitboxController, settings);
+            this.box = settings.sprite;
+            this.box.addPhysics(new Circle(settings.center, settings.halfSize), new Vec2(0, 0));
+            this.box.addAI(HitboxController, settings);
         }
     }
 }

@@ -30,7 +30,7 @@ export enum Layers {
   }
 
 export default class IP_Level extends Scene {
-    protected playerSpawn: Vec2;
+    playerSpawn: Vec2;
     player: AnimatedSprite;
     protected goblins = new Array<Goblin>();
     protected trash_Mobs: Map<number,Enemy>;
@@ -45,7 +45,6 @@ export default class IP_Level extends Scene {
 
     protected static livesCount: number = 6;
     // Stuff to end the level and go to the next level
-    protected levelEndArea: Rect;
     protected nextLevel: new (...args: any) => IP_Level;
     protected levelEndTimer: Timer;
     protected levelEndLabel: Label;
@@ -88,6 +87,7 @@ export default class IP_Level extends Scene {
         this.isInvincible = new Timer(750);
         this.playerAttack = new Timer(500);
         Input.disableInput();
+        console.log('outsitede', this.sceneOptions.physics);
     }
 
 
@@ -111,26 +111,26 @@ export default class IP_Level extends Scene {
                     Input.disableInput();
                     break;
                 }
-                case inkooEvents.LEVEL_END: {
-                    {
-                        // Go to the next level
-                        if(this.nextLevel){
-                            let sceneOptions = {
-                                physics: {
-                                    groupNames: ["ground", "player","enemy"],
-                                    collisions:
-                                    [
-                                        [0, 1, 1],
-                                        [1, 0, 1],
-                                        [1, 1, 0]
-                                    ]
-                                }
-                            }
-                            this.sceneManager.changeToScene(this.nextLevel, {}, sceneOptions);
-                        }
-                    }
-                    break;
-                }
+                // case inkooEvents.LEVEL_END: {
+                //     {
+                //         // Go to the next level
+                //         if(this.nextLevel){
+                //             let sceneOptions = {
+                //                 physics: {
+                //                     groupNames: ["ground", "player","enemy"],
+                //                     collisions:
+                //                     [
+                //                         [0, 1, 1],
+                //                         [1, 0, 1],
+                //                         [1, 1, 0]
+                //                     ]
+                //                 }
+                //             }
+                //             this.sceneManager.changeToScene(this.nextLevel, {}, sceneOptions);
+                //         }
+                //     }
+                //     break;
+                // }
                 case inkooEvents.LEVEL_START:{
                     Input.enableInput();
                     break;
@@ -140,10 +140,8 @@ export default class IP_Level extends Scene {
                         if(this.isInvincible.isStopped()){
                             this.incPlayerLife(-1);
                             this.isInvincible.start();
-                            this.player.tweens.play("take_DMG");
-                            console.log("tweenplayed");
-                        }
-                       
+                            this.player.animation.play("HIT", false);
+                        }  
                     }
                     //console.log("playerHp", IP_Level.livesCount);
                     //console.log("goblin", event.data.toString());
@@ -446,19 +444,19 @@ export default class IP_Level extends Scene {
 
     }
 
-    addLevelEnd(startingTile: Vec2, size: Vec2): void {
-        this.levelEndArea = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
-          position: startingTile,
-          size: size,
-        });
-        this.levelEndArea.addPhysics(undefined, undefined, false, true);
-        this.levelEndArea.setTrigger(
-          "player",
-          inkooEvents.PLAYER_ENTERED_LEVEL_END,
-          null,
-        );
-        this.levelEndArea.color = new Color(255, 255, 255, 1);
-      }
+    // addLevelEnd(startingTile: Vec2, size: Vec2): void {
+    //     this.levelEndArea = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
+    //       position: startingTile,
+    //       size: size,
+    //     });
+    //     this.levelEndArea.addPhysics(undefined, undefined, false, true);
+    //     this.levelEndArea.setTrigger(
+    //       "player",
+    //       inkooEvents.PLAYER_ENTERED_LEVEL_END,
+    //       null,
+    //     );
+    //     this.levelEndArea.color = new Color(255, 255, 255, 1);
+    // }
 
     protected respawnPlayer():void{
         IP_Level.livesCount = 6;

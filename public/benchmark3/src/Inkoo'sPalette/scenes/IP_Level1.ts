@@ -11,7 +11,12 @@ import { Layers } from "./IP_Level";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import { inkooEvents } from "../inkooEvents";
 import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
+import Rect from "../../Wolfie2D/Nodes/Graphics/Rect";
+import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
+import Color from "../../Wolfie2D/Utils/Color";
 export default class IP_Level1 extends IP_Level {
+    protected levelWest: Rect;
+    protected levelEast: Rect;
     goblinSpawns = [
         new Vec2(200, 800),
         new Vec2(400, 800)
@@ -48,14 +53,24 @@ export default class IP_Level1 extends IP_Level {
         this.add.tilemap("level1", new Vec2(2, 2));
         this.layers.get("foreground").setDepth(10);
         super.startScene();
-        this.addLevelEnd(new Vec2(63*32, 18*32), new Vec2(2*32, 10*32));
+        this.addEastPath(new Vec2(63*32, 18*32), new Vec2(2*32, 10*32));
         this.initGoblin();
         console.log("trashmobs", this.trash_Mobs);
         this.nextLevel = IP_Level2;
     }
 
+    addEastPath(startingTile: Vec2, size: Vec2) {
+        this.levelEast = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
+                  position: startingTile,
+                  size: size,
+                });
+        this.levelEast.addPhysics(undefined, undefined, false, true);
+        this.levelEast.color = new Color(255, 255, 255, 1);
+    }
+
     updateScene(deltaT: number): void {
         super.updateScene(deltaT);
+        // if (player)
     }
 
     protected initGoblin(): void {

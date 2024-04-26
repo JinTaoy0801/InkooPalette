@@ -7,6 +7,7 @@ import PlayerState from "./PlayerState";
 import { Layers } from "../../scenes/IP_Level";
 import Hitbox from "../../Hitbox/Hitbox";
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+import Timer from "../../../Wolfie2D/Timing/Timer";
 
 export default abstract class InAir extends PlayerState {
     owner: AnimatedSprite;
@@ -58,7 +59,9 @@ export default abstract class InAir extends PlayerState {
 				invertX: this.owner.invertX,
 				offset: offset,
 				shape: shape,
-				inair:true,
+				inair: true,
+				colliderOffset: new Vec2(0, 0),
+            	delay: new Timer(0)
 			}
 			let hitbox = new Hitbox(HB_options, "player");
 

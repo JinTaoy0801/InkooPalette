@@ -5,6 +5,7 @@ import Hitbox from "../../../Hitbox/Hitbox";
 import { Layers } from "../../../scenes/IP_Level";
 import AnimatedSprite from "../../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import { inkooEvents } from "../../../inkooEvents";
+import Timer from "../../../../Wolfie2D/Timing/Timer";
 
 export default class Attacking extends GoblinState{
     attack: AnimatedSprite
@@ -19,16 +20,14 @@ export default class Attacking extends GoblinState{
             attack_name: "GOBLIN_LIGHT_ATTACK",
             eventType: "enemy",
             center: new Vec2(0, 0),
-            halfSize: new Vec2(48,20),
+            halfSize: new Vec2(40, 14),
             invertX: this.owner.invertX,
             offset : new Vec2(-15, 0),
-            shape: "AABB"
+            shape: "AABB",
+            colliderOffset: new Vec2(0, 5),
+            delay: new Timer(300)
         }
-       // setTimeout(() => {
         let hitbox = new Hitbox(HB_options,"enemy");
-        //}, 1000);
-        
-        //console.log("gobling attack", hitbox);
     }
     update(deltaT: number): void {
         super.update(deltaT);
