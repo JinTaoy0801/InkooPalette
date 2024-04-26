@@ -40,7 +40,7 @@ export default class OnGround extends PlayerState {
 		}
 		
 		if (!this.owner.onGround) {
-			setLastPlayerPosition(this.owner.position);
+			setLastPlayerPosition(this.owner.position,this.owner.invertX);
 			this.finished(PlayerStates.FALL);
 		}
 

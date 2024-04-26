@@ -10,9 +10,7 @@ export default class Walk extends OnGround{
         this.parent.speed = this.parent.MIN_SPEED;
         if (!this.isAttacking())
             this.owner.animation.play("MOVE_RIGHT", false);
-        setTimeout(() => {
-			setLastPlayerPosition(this.owner.position);
-		}, 100);
+		setLastPlayerPosition(this.owner.position,this.owner.invertX);
     }
 
     update(deltaT: number): void {
