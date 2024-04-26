@@ -12,7 +12,7 @@ import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 
 
 //if this code does not work change owner to GameNode and 
-export default abstract class PlayerState extends State{
+export default abstract class  PlayerState extends State{
     owner: AnimatedSprite;
 	attack: AnimatedSprite
     gravity: number=1000;
@@ -45,7 +45,6 @@ export default abstract class PlayerState extends State{
 			this.positionTimer.start();
 		}
 		this.parent.velocity.y += this.gravity*deltaT;
-		// console.log(this.owner.position);
 	}
 
 	isAttacking () {
@@ -55,7 +54,6 @@ export default abstract class PlayerState extends State{
 			"IDLE_ATTACK_UP",
 			"SPIN_ATTACK",
 			"ATTACK_DOWN",
-			"HIT"
 		]
 		return attacks.some(attack => this.owner.animation.isPlaying(attack))
 	}

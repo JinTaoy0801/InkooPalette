@@ -21,6 +21,7 @@ import PlayerState from "../Player/PlayerStates/PlayerState";
 import { getLastPlayerPosition } from "../Global/lastPlayerPosition";
 import Enemy from "../Enemies/Enemy";
 import IP_Level1 from "./IP_Level1";
+import { getPlayerSpawn, setPlayerSpawn } from "../Global/playerSpawn";
 
 export enum Layers {
     Main = "main",
@@ -38,7 +39,7 @@ export enum Areas {
 
 }
 
-export var playerSpawn: Vec2;
+
 
 export default class IP_Level extends Scene {
     player: AnimatedSprite;
@@ -357,11 +358,12 @@ export default class IP_Level extends Scene {
         this.player = this.add.animatedSprite("player", Layers.Main);
 
         this.player.scale.set(1.5, 1.5);
-        if(!playerSpawn){
+        if(!getPlayerSpawn()){
             console.log("spawn zero");
-            playerSpawn = new Vec2(5*32, 25*32);
+            setPlayerSpawn(new Vec2(5*32, 25*32));
         }
-        this.player.position.copy(playerSpawn);
+        console.log("tehe");
+        this.player.position.copy(getPlayerSpawn());
         this.player.tweens.add("take_DMG", {
             startDelay: 0,
             duration: 500,

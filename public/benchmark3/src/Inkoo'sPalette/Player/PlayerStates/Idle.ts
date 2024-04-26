@@ -8,6 +8,9 @@ export default class Idle extends OnGround{
     owner : AnimatedSprite;
     
 	onEnter(options: Record<string, any>): void {
+		setTimeout(() => {
+			setLastPlayerPosition(this.owner.position);
+		}, 100);
 		this.parent.speed = this.parent.MIN_SPEED;
 	}
 

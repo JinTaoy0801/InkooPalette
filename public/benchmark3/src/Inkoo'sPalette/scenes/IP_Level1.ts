@@ -5,13 +5,14 @@ import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Goblin from "../Enemies/Goblin/Goblin";
 import GoblinController from "../Enemies/Goblin/GoblinController";
-import IP_Level, { Areas, playerSpawn } from "./IP_Level";
+import IP_Level, { Areas } from "./IP_Level";
 import IP_Level2 from "./IP_Level2";
 import { Layers } from "./IP_Level";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import { inkooEvents } from "../inkooEvents";
 import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import Input from "../../Wolfie2D/Input/Input";
+import { getPlayerSpawn, setPlayerSpawn} from "../Global/playerSpawn";
 export default class IP_Level1 extends IP_Level {
     goblinSpawns = [
         new Vec2(200, 800),
@@ -72,7 +73,7 @@ export default class IP_Level1 extends IP_Level {
             switch (event.type) {
                 case Areas.Mountains: {
                     // Go to the next level    
-                    playerSpawn = new Vec2(32*5, 493.5);
+                    setPlayerSpawn(new Vec2(32*5, 493.5));
                     this.sceneManager.changeToScene(IP_Level2, {}, sceneOptions);
                     break;
                 }

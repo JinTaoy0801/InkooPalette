@@ -1,5 +1,5 @@
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
-import IP_Level, { playerSpawn } from "./IP_Level";
+import IP_Level from "./IP_Level";
 
 export default class IP_Level3 extends IP_Level { 
     loadScene(): void {

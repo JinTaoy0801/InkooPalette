@@ -1,4 +1,4 @@
-import IP_Level, { Areas, playerSpawn } from "./IP_Level";
+import IP_Level, { Areas  } from "./IP_Level";
 import { Layers } from "./IP_Level";
 import Goldlem from "../Enemies/Goldlem/Goldlem";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
@@ -6,6 +6,7 @@ import Big_Goldlem from "../Enemies/Big_Goldlem/Big_Goldlem";
 import Input from "../../Wolfie2D/Input/Input";
 import IP_Level1 from "./IP_Level1";
 import IP_Level3 from "./IP_Level3";
+import { getPlayerSpawn, setPlayerSpawn } from "../Global/playerSpawn";
 
 export default class IP_Level2 extends IP_Level {  
     goldlemSpawns = [
@@ -43,7 +44,7 @@ export default class IP_Level2 extends IP_Level {
         this.initGoldlem();
         this.initBigGoldlem();
         this.nextLevel = IP_Level2;
-        console.log('level2 player spawn', playerSpawn);
+        console.log('level2 player spawn', getPlayerSpawn());
     }
 
     updateScene(deltaT: number): void {
@@ -64,12 +65,12 @@ export default class IP_Level2 extends IP_Level {
             switch (event.type) {
                 case Areas.Mountains_Tutorial: {
                     // Go to the next level  
-                    playerSpawn = new Vec2(1930, 621.5);
+                    setPlayerSpawn(new Vec2(1930, 621.5));
                     this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
                     break;
                 }
                 case Areas.Midas: {
-                    playerSpawn = new Vec2(5*64, 615);
+                    setPlayerSpawn(new Vec2(5*64, 615));
                     this.sceneManager.changeToScene(IP_Level3, {}, sceneOptions);
                     break;
                 }
