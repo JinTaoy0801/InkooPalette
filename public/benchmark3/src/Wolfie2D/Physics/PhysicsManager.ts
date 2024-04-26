@@ -71,7 +71,7 @@ export default abstract class PhysicsManager implements Updateable {
 	 */
 	setGroup(node: Physical, group: string): void {
 		//if (!this.groupMap.has(group)) {
-		console.log("groupMap", this.groupMap);
+		// console.log("groupMap", this.groupMap);
 		//}
 
 		node.group = this.groupMap.get(group);

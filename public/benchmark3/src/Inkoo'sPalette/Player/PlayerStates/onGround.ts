@@ -80,7 +80,7 @@ export default class OnGround extends PlayerState {
 			}
 			let hitbox = new Hitbox(HB_options, "player");
 			hitbox.box.setGroup("player");
-			console.log("playergounrdattack", hitbox);
+			// console.log("playergounrdattack", hitbox);
 		}
 	}
 

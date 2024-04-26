@@ -48,7 +48,7 @@ export default class GoldlemController extends EnemyController {
 	}
 
     changeState(stateName: string): void {
-        console.log("stateNamestateName",stateName);
+        // console.log("stateNamestateName",stateName);
         super.changeState(stateName);
 	}
 

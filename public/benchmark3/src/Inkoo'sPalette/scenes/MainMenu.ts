@@ -10,6 +10,7 @@ import GameEvent from "../../Wolfie2D/Events/GameEvent";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import IP_Level1 from "./IP_Level1";
 import IP_Level2 from "./IP_Level2";
+import IP_Level3 from "./IP_Level3";
 import { inkooEvents } from "../inkooEvents";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import Input from "../../Wolfie2D/Input/Input";
@@ -21,6 +22,7 @@ const MainMenuName = {
     STORY: "STORY",
     START_GAME: "START_GAME",
     LEVEL_2: "LEVEL_2",
+    LEVEL_3: "LEVEL_3",
     MENU: "MENU"
 } as const
 
@@ -313,41 +315,39 @@ export default class MainMenu extends Scene {
         if (Input.isJustPressed("level2")) {
             this.emitter.fireEvent(MainMenuName.LEVEL_2);
         }
+        if (Input.isJustPressed("level3")) {
+            this.emitter.fireEvent(MainMenuName.LEVEL_3);
+        }
     }
 
     protected handleEvent(event: GameEvent): void {
+        var sceneOptions = {
+            physics: {
+                groupNames: ["ground", "player","enemy"],
+                collisions:
+                [
+                    [0, 1, 1],
+                    [1, 0, 1],
+                    [1, 1, 0]
+                ]
+            }
+        }
         switch(event.type) {
             case MainMenuName.START_GAME: {
                 this.emitter.fireEvent(inkooEvents.LEVEL_START);
-                let sceneOptions = {
-                    physics: {
-                        groupNames: ["ground", "player","enemy"],
-                        collisions:
-                        [
-                            [0, 1, 1],
-                            [1, 0, 1],
-                            [1, 1, 0]
-                        ]
-                    }
-                }
                 this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
                 break;
             }
 
             case MainMenuName.LEVEL_2: {
                 this.emitter.fireEvent(inkooEvents.LEVEL_START);
-                let sceneOptions = {
-                    physics: {
-                        groupNames: ["ground", "player","enemy"],
-                        collisions:
-                        [
-                            [0, 1, 1],
-                            [1, 0, 1],
-                            [1, 1, 0]
-                        ]
-                    }
-                }
                 this.sceneManager.changeToScene(IP_Level2, {}, sceneOptions);
+                break;
+            }
+
+            case MainMenuName.LEVEL_3: {
+                this.emitter.fireEvent(inkooEvents.LEVEL_START);
+                this.sceneManager.changeToScene(IP_Level3, {}, sceneOptions);
                 break;
             }
 

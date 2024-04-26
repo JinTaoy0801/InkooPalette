@@ -14,7 +14,7 @@ export default class Hitbox {
             this.box = settings.sprite;
             this.box.addPhysics(new AABB(settings.center, settings.halfSize), new Vec2(0, 0));
             this.box.addAI(HitboxController, settings);
-            console.log(group);
+            // console.log(group);
             this.box.setGroup(group);
                
             if(group === "enemy"){

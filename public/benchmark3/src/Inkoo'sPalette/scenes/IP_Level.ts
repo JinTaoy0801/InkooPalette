@@ -21,16 +21,26 @@ import PlayerState from "../Player/PlayerStates/PlayerState";
 import { getLastPlayerPosition } from "../Global/lastPlayerPosition";
 import Enemy from "../Enemies/Enemy";
 import IP_Level1 from "./IP_Level1";
-import IP_Level2 from "./IP_Level2";
+
 export enum Layers {
     Main = "main",
     UI = "ui",
     Hidden = "hidden",
     Pause = "pause"
-  }
+}
+
+export enum Areas {
+    Tutorial = "Tutorial",
+    Mountains = "Mountains",
+    Midas = "Midas",
+
+    Mountains_Tutorial = "Mountains_Tutorial"
+
+}
+
+export var playerSpawn: Vec2;
 
 export default class IP_Level extends Scene {
-    playerSpawn: Vec2;
     player: AnimatedSprite;
     protected goblins = new Array<Goblin>();
     protected trash_Mobs: Map<number,Enemy>;
@@ -45,6 +55,7 @@ export default class IP_Level extends Scene {
 
     protected static livesCount: number = 6;
     // Stuff to end the level and go to the next level
+    protected levelEndArea: Rect;
     protected nextLevel: new (...args: any) => IP_Level;
     protected levelEndTimer: Timer;
     protected levelEndLabel: Label;
@@ -87,7 +98,7 @@ export default class IP_Level extends Scene {
         this.isInvincible = new Timer(750);
         this.playerAttack = new Timer(500);
         Input.disableInput();
-        console.log('outsitede', this.sceneOptions.physics);
+        // console.log('outsitede', this.sceneOptions.physics);
     }
 
 
@@ -97,6 +108,7 @@ export default class IP_Level extends Scene {
         }
         while (this.receiver.hasNextEvent()) {
             let event = this.receiver.getNextEvent();
+            console.log('eventype', event.type);
             switch (event.type) {
                 case inkooEvents.PAUSE_MENU: {
                     this.sceneManager.changeToScene(MainMenu);
@@ -111,26 +123,6 @@ export default class IP_Level extends Scene {
                     Input.disableInput();
                     break;
                 }
-                // case inkooEvents.LEVEL_END: {
-                //     {
-                //         // Go to the next level
-                //         if(this.nextLevel){
-                //             let sceneOptions = {
-                //                 physics: {
-                //                     groupNames: ["ground", "player","enemy"],
-                //                     collisions:
-                //                     [
-                //                         [0, 1, 1],
-                //                         [1, 0, 1],
-                //                         [1, 1, 0]
-                //                     ]
-                //                 }
-                //             }
-                //             this.sceneManager.changeToScene(this.nextLevel, {}, sceneOptions);
-                //         }
-                //     }
-                //     break;
-                // }
                 case inkooEvents.LEVEL_START:{
                     Input.enableInput();
                     break;
@@ -206,7 +198,10 @@ export default class IP_Level extends Scene {
             this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
         }
         if (Input.isJustPressed("level2")) {
-            this.emitter.fireEvent(inkooEvents.LEVEL_END)
+            this.emitter.fireEvent(Areas.Mountains);
+        }
+        if (Input.isJustPressed("level3")) {
+            this.emitter.fireEvent(Areas.Midas);
         }
         if (Input.isJustPressed("invincible")) {
             this.incPlayerLife(1000);
@@ -230,7 +225,6 @@ export default class IP_Level extends Scene {
         this.receiver.subscribe([
             inkooEvents.PLAYER_ATTACK,
             inkooEvents.LEVEL_START,
-            inkooEvents.LEVEL_END,
             inkooEvents.PLAYER_ENTERED_LEVEL_END,
             inkooEvents.PLAYER_KILLED,
             inkooEvents.TRASH_MOB_HIT,
@@ -363,11 +357,11 @@ export default class IP_Level extends Scene {
         this.player = this.add.animatedSprite("player", Layers.Main);
 
         this.player.scale.set(1.5, 1.5);
-        if(!this.playerSpawn){
-            console.warn("Player spawn was never set - setting spawn to (0, 0)");
-            this.playerSpawn = Vec2.ZERO;
+        if(!playerSpawn){
+            console.log("spawn zero");
+            playerSpawn = new Vec2(5*32, 25*32);
         }
-        this.player.position.copy(this.playerSpawn);
+        this.player.position.copy(playerSpawn);
         this.player.tweens.add("take_DMG", {
             startDelay: 0,
             duration: 500,
@@ -444,19 +438,19 @@ export default class IP_Level extends Scene {
 
     }
 
-    // addLevelEnd(startingTile: Vec2, size: Vec2): void {
-    //     this.levelEndArea = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
-    //       position: startingTile,
-    //       size: size,
-    //     });
-    //     this.levelEndArea.addPhysics(undefined, undefined, false, true);
-    //     this.levelEndArea.setTrigger(
-    //       "player",
-    //       inkooEvents.PLAYER_ENTERED_LEVEL_END,
-    //       null,
-    //     );
-    //     this.levelEndArea.color = new Color(255, 255, 255, 1);
-    // }
+    addLevelEnd(startingTile: Vec2, size: Vec2, where: string): void {
+        this.levelEndArea = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
+          position: startingTile,
+          size: size,
+        });
+        this.levelEndArea.addPhysics(undefined, undefined, false, true);
+        this.levelEndArea.setTrigger(
+          "player",
+          where,
+          null,
+        );
+        this.levelEndArea.color = new Color(255, 255, 255, 1);
+    }
 
     protected respawnPlayer():void{
         IP_Level.livesCount = 6;

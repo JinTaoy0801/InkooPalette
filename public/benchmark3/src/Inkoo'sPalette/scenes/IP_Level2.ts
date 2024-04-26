@@ -1,8 +1,11 @@
-import IP_Level from "./IP_Level";
+import IP_Level, { Areas, playerSpawn } from "./IP_Level";
 import { Layers } from "./IP_Level";
 import Goldlem from "../Enemies/Goldlem/Goldlem";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import Big_Goldlem from "../Enemies/Big_Goldlem/Big_Goldlem";
+import Input from "../../Wolfie2D/Input/Input";
+import IP_Level1 from "./IP_Level1";
+import IP_Level3 from "./IP_Level3";
 
 export default class IP_Level2 extends IP_Level {  
     goldlemSpawns = [
@@ -34,13 +37,46 @@ export default class IP_Level2 extends IP_Level {
     startScene(): void {
         this.add.tilemap("level2", new Vec2(2, 2));
         this.layers.get("foreground").setDepth(10);
-        this.playerSpawn = new Vec2(32, 15*32);
         super.startScene();
+        this.addLevelEnd(new Vec2(63*32, 10*32), new Vec2(2*32, 10*32), Areas.Midas);
+        this.addLevelEnd(new Vec2(32*1, 400), new Vec2(2*32, 10*32), Areas.Mountains_Tutorial);
         this.initGoldlem();
         this.initBigGoldlem();
+        this.nextLevel = IP_Level2;
+        console.log('level2 player spawn', playerSpawn);
     }
 
     updateScene(deltaT: number): void {
+        Input.enableInput();
+        while (this.receiver.hasNextEvent()) {
+            let event = this.receiver.getNextEvent();
+            var sceneOptions = {
+                physics: {
+                    groupNames: ["ground", "player","enemy"],
+                    collisions:
+                    [
+                        [0, 1, 1],
+                        [1, 0, 1],
+                        [1, 1, 0]
+                    ]
+                }
+            }
+            switch (event.type) {
+                case Areas.Mountains_Tutorial: {
+                    // Go to the next level  
+                    playerSpawn = new Vec2(1930, 621.5);
+                    this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
+                    break;
+                }
+                case Areas.Midas: {
+                    playerSpawn = new Vec2(5*64, 615);
+                    this.sceneManager.changeToScene(IP_Level3, {}, sceneOptions);
+                    break;
+                }
+                default: {
+                }
+            }
+        }
         super.updateScene(deltaT);
     }
 
@@ -67,6 +103,13 @@ export default class IP_Level2 extends IP_Level {
             this.trash_enemies.push(new Big_Goldlem(biggoldlemOptions,10));
         }
         
+    }
+
+    protected subscribeToEvents() {
+        this.receiver.subscribe([
+            Areas.Mountains_Tutorial,
+            Areas.Midas
+        ]);
     }
 
     protected addUI() {
