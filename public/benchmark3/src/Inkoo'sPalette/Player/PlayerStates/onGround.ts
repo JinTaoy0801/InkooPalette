@@ -11,6 +11,7 @@ import { Layers } from "../../scenes/IP_Level";
 import Hitbox from "../../Hitbox/Hitbox";
 import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
 import { setLastPlayerPosition } from "../../Global/lastPlayerPosition";
+import Timer from "../../../Wolfie2D/Timing/Timer";
 
 export default class OnGround extends PlayerState {
 	owner: AnimatedSprite;
@@ -73,7 +74,9 @@ export default class OnGround extends PlayerState {
 				halfSize: halfSize,
 				invertX: this.owner.invertX,
 				offset: offset,	
-				shape: shape
+				shape: shape,
+				colliderOffset: new Vec2(0, 0),
+            	delay: new Timer(0)
 			}
 			let hitbox = new Hitbox(HB_options, "player");
 			hitbox.box.setGroup("player");

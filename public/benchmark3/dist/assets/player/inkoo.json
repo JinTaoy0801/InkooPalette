@@ -331,6 +331,33 @@
       "name": "SPIN_ATTACK",
         "frames":[  {"index": 26, "duration": 58}
         ]
+    },
+    {
+      "name": "HIT",
+        "frames":[  {"index": 216, "duration": 4},  
+                    {"index": 217, "duration": 4}, 
+                    {"index": 218, "duration": 4}, 
+                    {"index": 219, "duration": 4}, 
+                    {"index": 220, "duration": 4}, 
+                    {"index": 221, "duration": 4}, 
+                    {"index": 222, "duration": 4},  
+                    {"index": 223, "duration": 4}, 
+                    {"index": 224, "duration": 4}, 
+                    {"index": 225, "duration": 4}, 
+                    {"index": 226, "duration": 4}, 
+                    {"index": 227, "duration": 4}, 
+                    {"index": 228, "duration": 4},  
+                    {"index": 229, "duration": 4}, 
+                    {"index": 230, "duration": 4}, 
+                    {"index": 231, "duration": 4}, 
+                    {"index": 232, "duration": 4}, 
+                    {"index": 233, "duration": 4}, 
+                    {"index": 234, "duration": 4},
+                    {"index": 235, "duration": 4},
+                    {"index": 236, "duration": 4},
+                    {"index": 237, "duration": 4},
+                    {"index": 238, "duration": 4}
+        ]
     }
   ]
 }

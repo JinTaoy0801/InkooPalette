@@ -7,6 +7,7 @@ import GameEvent from "../../../Wolfie2D/Events/GameEvent";
 import Debug from "../../../Wolfie2D/Debug/Debug";
 import Idle from "./GoldlemStates/Idle";
 import EnemyController from "../EnemyController";
+import Alerted from "./GoldlemStates/Alerted";
 
 export enum GoldlemStates {
     IDLE = "idle",
@@ -33,14 +34,15 @@ export default class GoldlemController extends EnemyController {
 
     initializeAI(owner: AnimatedSprite, options: Record<string, any>){
 		super.initializeAI(owner, options);
-        this.patrolArea.leftBound = (options.spawn.x)-128;
+        this.patrolArea.leftBound = (options.spawn.x)-256;
         if (this.patrolArea.leftBound < 0)
             this.patrolArea.leftBound = 0;
-        this.patrolArea.rightBound = 128+(options.spawn.x);
+        this.patrolArea.rightBound = 256+(options.spawn.x);
 
 		this.receiver.subscribe(inkooEvents.PLAYER_MOVE);
 
         this.addState(GoldlemStates.IDLE, new Idle(this, this.owner));
+        this.addState(GoldlemStates.ALERTED, new Alerted(this, this.owner));
         
 		this.initialize(GoldlemStates.IDLE);
 	}
