@@ -22,6 +22,7 @@ import { getLastPlayerPosition } from "../Global/lastPlayerPosition";
 import Enemy from "../Enemies/Enemy";
 import IP_Level1 from "./IP_Level1";
 import { getPlayerSpawn, setPlayerSpawn } from "../Global/playerSpawn";
+import { sceneOptions } from "./MainMenu";
 
 export enum Layers {
     Main = "main",
@@ -187,17 +188,6 @@ export default class IP_Level extends Scene {
         }
 
         if (Input.isJustPressed("level1")) {
-            let sceneOptions = {
-                physics: {
-                    groupNames: ["ground", "player","enemy"],
-                    collisions:
-                    [
-                        [0, 1, 1],
-                        [1, 0, 1],
-                        [1, 1, 0]
-                    ]
-                }
-            }
             this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
         }
         if (Input.isJustPressed("level2")) {

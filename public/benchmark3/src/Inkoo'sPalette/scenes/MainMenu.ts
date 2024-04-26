@@ -26,6 +26,18 @@ const MainMenuName = {
     MENU: "MENU"
 } as const
 
+const sceneOptions = {
+    physics: {
+        groupNames: ["ground", "player", "enemy"],
+        collisions:
+        [
+            [0, 1, 1],
+            [1, 0, 0],
+            [1, 0, 0]
+        ]
+    }
+}
+
 export default class MainMenu extends Scene {
     animatedSprite: AnimatedSprite;
     private mainMenu: Layer;
@@ -321,17 +333,6 @@ export default class MainMenu extends Scene {
     }
 
     protected handleEvent(event: GameEvent): void {
-        var sceneOptions = {
-            physics: {
-                groupNames: ["ground", "player","enemy"],
-                collisions:
-                [
-                    [0, 1, 1],
-                    [1, 0, 1],
-                    [1, 1, 0]
-                ]
-            }
-        }
         switch(event.type) {
             case MainMenuName.START_GAME: {
                 this.emitter.fireEvent(inkooEvents.LEVEL_START);
@@ -385,3 +386,5 @@ export default class MainMenu extends Scene {
         }
     }
 }
+
+export { sceneOptions };

@@ -11,6 +11,7 @@ import Midas from "../Enemies/Midas/Midas";
 import { setPlayerSpawn } from "../Global/playerSpawn";
 import IP_Level, { Areas, Layers } from "./IP_Level";
 import IP_Level2 from "./IP_Level2";
+import { sceneOptions } from "./MainMenu";
 
 export default class IP_Level3 extends IP_Level { 
     protected midasdoor: Sprite;
@@ -68,17 +69,6 @@ export default class IP_Level3 extends IP_Level {
         Input.enableInput();
         while (this.receiver.hasNextEvent()) {
             let event = this.receiver.getNextEvent();
-            var sceneOptions = {
-                physics: {
-                    groupNames: ["ground", "player","enemy"],
-                    collisions:
-                    [
-                        [0, 1, 1],
-                        [1, 0, 1],
-                        [1, 1, 0]
-                    ]
-                }
-            }
             switch (event.type) {
                 case Areas.Midas_Mountains: {
                     // Go to the next level  

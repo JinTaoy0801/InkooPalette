@@ -13,6 +13,8 @@ import { inkooEvents } from "../inkooEvents";
 import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import Input from "../../Wolfie2D/Input/Input";
 import { getPlayerSpawn, setPlayerSpawn} from "../Global/playerSpawn";
+import { sceneOptions } from "./MainMenu";
+
 export default class IP_Level1 extends IP_Level {
     goblinSpawns = [
         new Vec2(200, 800),
@@ -59,17 +61,6 @@ export default class IP_Level1 extends IP_Level {
         Input.enableInput();
         while (this.receiver.hasNextEvent()) {
             let event = this.receiver.getNextEvent();
-            var sceneOptions = {
-                physics: {
-                    groupNames: ["ground", "player","enemy"],
-                    collisions:
-                    [
-                        [0, 1, 1],
-                        [1, 0, 1],
-                        [1, 1, 0]
-                    ]
-                }
-            }
             switch (event.type) {
                 case Areas.Mountains: {
                     // Go to the next level    

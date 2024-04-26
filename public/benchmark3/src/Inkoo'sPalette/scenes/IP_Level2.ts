@@ -7,6 +7,7 @@ import Input from "../../Wolfie2D/Input/Input";
 import IP_Level1 from "./IP_Level1";
 import IP_Level3 from "./IP_Level3";
 import { getPlayerSpawn, setPlayerSpawn } from "../Global/playerSpawn";
+import { sceneOptions } from "./MainMenu";
 
 export default class IP_Level2 extends IP_Level {  
     goldlemSpawns = [
@@ -51,17 +52,6 @@ export default class IP_Level2 extends IP_Level {
         Input.enableInput();
         while (this.receiver.hasNextEvent()) {
             let event = this.receiver.getNextEvent();
-            var sceneOptions = {
-                physics: {
-                    groupNames: ["ground", "player","enemy"],
-                    collisions:
-                    [
-                        [0, 1, 1],
-                        [1, 0, 1],
-                        [1, 1, 0]
-                    ]
-                }
-            }
             switch (event.type) {
                 case Areas.Mountains_Tutorial: {
                     // Go to the next level  
