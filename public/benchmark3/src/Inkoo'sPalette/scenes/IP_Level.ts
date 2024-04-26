@@ -27,7 +27,8 @@ export enum Layers {
     Main = "main",
     UI = "ui",
     Hidden = "hidden",
-    Pause = "pause"
+    Pause = "pause",
+    Bg = "bg"
 }
 
 export enum Areas {
@@ -35,7 +36,8 @@ export enum Areas {
     Mountains = "Mountains",
     Midas = "Midas",
 
-    Mountains_Tutorial = "Mountains_Tutorial"
+    Mountains_Tutorial = "Mountains_Tutorial",
+    Midas_Mountains = "Midas_Mountains"
 
 }
 
@@ -214,6 +216,7 @@ export default class IP_Level extends Scene {
         this.addUILayer(Layers.Pause);
         this.getLayer(Layers.Pause).setHidden(true);
         this.addLayer(Layers.Main, 2);
+        this.addLayer(Layers.Bg, 1);
     }
 
     protected initViewport(): void {

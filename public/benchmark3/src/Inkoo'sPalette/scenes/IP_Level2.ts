@@ -70,7 +70,7 @@ export default class IP_Level2 extends IP_Level {
                     break;
                 }
                 case Areas.Midas: {
-                    setPlayerSpawn(new Vec2(5*64, 615));
+                    setPlayerSpawn(new Vec2(5*64, 589.5));
                     this.sceneManager.changeToScene(IP_Level3, {}, sceneOptions);
                     break;
                 }
@@ -93,6 +93,7 @@ export default class IP_Level2 extends IP_Level {
         }
         
     }
+    
     protected initBigGoldlem(): void {
         var i;
         for (i=0; i<1; i++) {
