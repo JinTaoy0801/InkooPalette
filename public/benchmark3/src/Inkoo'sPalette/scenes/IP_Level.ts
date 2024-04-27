@@ -25,6 +25,7 @@ import { getPlayerSpawn, setPlayerSpawn } from "../Global/playerSpawn";
 import { sceneOptions } from "./MainMenu";
 
 export enum Layers {
+    Player = "player",
     Main = "main",
     UI = "ui",
     Hidden = "hidden",
@@ -99,7 +100,7 @@ export default class IP_Level extends Scene {
         });
         this.levelTransitionScreen.tweens.play("fadeOut");
 
-        this.isInvincible = new Timer(750);
+        this.isInvincible = new Timer(1000);
         this.playerAttack = new Timer(500);
         Input.disableInput();
         // console.log('outsitede', this.sceneOptions.physics);
@@ -136,6 +137,7 @@ export default class IP_Level extends Scene {
                             this.incPlayerLife(-1);
                             this.isInvincible.start();
                             this.player.animation.play("HIT", false);
+                            this.player.tweens.play("take_DMG");
                             console.log("playerHp", IP_Level.livesCount);
                             console.log("goblin", event.data.toString());
                         }  
@@ -206,6 +208,7 @@ export default class IP_Level extends Scene {
         this.addUILayer(Layers.UI);
         this.addUILayer(Layers.Pause);
         this.getLayer(Layers.Pause).setHidden(true);
+        this.addLayer(Layers.Player, 3);
         this.addLayer(Layers.Main, 2);
         this.addLayer(Layers.Bg, 1);
     }
@@ -349,14 +352,13 @@ export default class IP_Level extends Scene {
     }
 
     protected initPlayer(): void {
-        this.player = this.add.animatedSprite("player", Layers.Main);
+        this.player = this.add.animatedSprite("player", Layers.Player);
 
         this.player.scale.set(1.5, 1.5);
         if(!getPlayerSpawn()){
             console.log("spawn zero");
             setPlayerSpawn(new Vec2(5*32, 25*32));
         }
-        console.log("tehe");
         this.player.position.copy(getPlayerSpawn());
         this.player.tweens.add("take_DMG", {
             startDelay: 0,
@@ -373,6 +375,7 @@ export default class IP_Level extends Scene {
         });
         this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(12, 8)));
         this.player.addAI(PlayerController, {playerType: "platformer", tilemap: "ground"});
+        this.player.setTrigger("enemy", inkooEvents.PLAYER_ATTACK, null);
         this.player.colliderOffset.set(0, 10.5);
     }
 

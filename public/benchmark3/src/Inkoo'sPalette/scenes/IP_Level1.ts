@@ -60,20 +60,21 @@ export default class IP_Level1 extends IP_Level {
 
     updateScene(deltaT: number): void {
         Input.enableInput();
-        while (this.receiver.hasNextEvent()) {
-            let event = this.receiver.getNextEvent();
-            switch (event.type) {
-                case Areas.Mountains: {
-                    // Go to the next level    
-                    setPlayerSpawn(new Vec2(32*5, 493.5));
-                    this.sceneManager.changeToScene(IP_Level2, {}, sceneOptions);
-                    break;
-                }
-                default: {
-                    super.updateScene(deltaT);
-                }
-            }
-        }
+        // while (this.receiver.hasNextEvent()) {
+        //     let event = this.receiver.getNextEvent();
+        //     switch (event.type) {
+        //         case Areas.Mountains: {
+        //             // Go to the next level    
+        //             setPlayerSpawn(new Vec2(32*5, 493.5));
+        //             this.sceneManager.changeToScene(IP_Level2, {}, sceneOptions);
+        //             break;
+        //         }
+        //         default: {
+        //             super.updateScene(deltaT);
+        //         }
+        //     }
+        // }
+        super.updateScene(deltaT);
         
     }
 
