@@ -110,8 +110,9 @@ export default class IP_Level extends Scene {
 
 
     updateScene(deltaT: number){
-        if(this.player.position.y > 1200 || this.player.position.x < 0){
+        if(this.player.position.y > 1200 ){
             this.player.position.copy(getLastPlayerPosition());
+            this.incPlayerLife(-1);
         }
         while (this.receiver.hasNextEvent()) {
             let event = this.receiver.getNextEvent();
@@ -137,9 +138,6 @@ export default class IP_Level extends Scene {
                     if(this.sceneGraph.getNode(event.data.get("node")) === this.player) {
                         if(this.isInvincible.isStopped()){
                             this.incPlayerLife(-1);
-                            this.isInvincible.start();
-                            this.player.animation.play("HIT", false);
-                            this.player.tweens.play("take_DMG");
                             console.log("playerHp", IP_Level.livesCount);
                             console.log("goblin", event.data.toString());
                         }  
@@ -151,9 +149,6 @@ export default class IP_Level extends Scene {
                     if(this.sceneGraph.getNode(event.data.get("other")) === this.player) {
                         if(this.isInvincible.isStopped()){
                             this.incPlayerLife(-1);
-                            this.isInvincible.start();
-                            this.player.animation.play("HIT", false);
-                            this.player.tweens.play("take_DMG");
                             console.log("playerHp", IP_Level.livesCount);
                             console.log("goblin", event.data.toString());
                         }  
@@ -399,6 +394,9 @@ export default class IP_Level extends Scene {
 
     protected incPlayerLife(amt: number): void {
         IP_Level.livesCount += amt;
+        this.isInvincible.start();
+        this.player.animation.play("HIT", false);
+        this.player.tweens.play("take_DMG");
         if (IP_Level.livesCount == 0){
             this.heart1.destroy();
             Input.disableInput();
