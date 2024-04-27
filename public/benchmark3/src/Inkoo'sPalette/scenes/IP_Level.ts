@@ -22,7 +22,7 @@ import { getLastPlayerPosition } from "../Global/lastPlayerPosition";
 import Enemy from "../Enemies/Enemy";
 import IP_Level1 from "./IP_Level1";
 import { getPlayerSpawn, setPlayerSpawn } from "../Global/playerSpawn";
-import { sceneOptions } from "./MainMenu";
+import { getSceneOptions } from "../Global/sceneOptions";
 
 export enum Layers {
     Main = "main",
@@ -41,6 +41,8 @@ export enum Areas {
     Midas_Mountains = "Midas_Mountains"
 
 }
+
+const sceneOptions = getSceneOptions();
 
 
 
@@ -189,7 +191,7 @@ export default class IP_Level extends Scene {
         }
 
         if (Input.isJustPressed("level1")) {
-            this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
+            this.sceneManager.changeToScene(IP_Level1, {}, this.sceneOptions);
         }
         if (Input.isJustPressed("level2")) {
             this.emitter.fireEvent(Areas.Mountains);
@@ -446,6 +448,10 @@ export default class IP_Level extends Scene {
           null,
         );
         this.levelEndArea.color = new Color(255, 255, 255, 1);
+    }
+
+    isArea(s: String): boolean {
+        return Object.keys(Areas).some(key => Areas[key as keyof typeof Areas] === s);
     }
 
     protected respawnPlayer():void{

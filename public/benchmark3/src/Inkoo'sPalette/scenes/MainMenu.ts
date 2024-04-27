@@ -14,6 +14,7 @@ import IP_Level3 from "./IP_Level3";
 import { inkooEvents } from "../inkooEvents";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import Input from "../../Wolfie2D/Input/Input";
+import { getSceneOptions } from "../Global/sceneOptions";
 
 const MainMenuName = {
     MAIN_MENU: "MAIN_MENU",
@@ -26,17 +27,7 @@ const MainMenuName = {
     MENU: "MENU"
 } as const
 
-const sceneOptions = {
-    physics: {
-        groupNames: ["ground", "player", "enemy"],
-        collisions:
-        [
-            [0, 1, 1],
-            [1, 0, 0],
-            [1, 0, 0]
-        ]
-    }
-}
+const sceneOptions = getSceneOptions();
 
 export default class MainMenu extends Scene {
     animatedSprite: AnimatedSprite;

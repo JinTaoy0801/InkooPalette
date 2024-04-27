@@ -60,7 +60,8 @@ export default class IP_Level1 extends IP_Level {
 
     updateScene(deltaT: number): void {
         Input.enableInput();
-        while (this.receiver.hasNextEvent()) {
+
+        while (this.receiver.hasNextEvent() && this.isArea(this.receiver.peekNextEvent().type)) {
             let event = this.receiver.getNextEvent();
             switch (event.type) {
                 case Areas.Mountains: {
@@ -70,10 +71,10 @@ export default class IP_Level1 extends IP_Level {
                     break;
                 }
                 default: {
-                    super.updateScene(deltaT);
                 }
             }
         }
+        super.updateScene(deltaT);
         
     }
 
