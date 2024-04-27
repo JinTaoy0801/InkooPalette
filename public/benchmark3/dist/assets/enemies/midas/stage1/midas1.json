@@ -23,16 +23,14 @@
                       {"index": 17, "duration": 10},
                       {"index": 18, "duration": 10},
                       {"index": 19, "duration": 10},
-                      {"index": 20, "duration": 10},
-                      {"index": 21, "duration": 10},
+                      {"index": 20, "duration": 50},
+                      {"index": 21, "duration": 30},
                       {"index": 22, "duration": 10},
                       {"index": 23, "duration": 10},
                       {"index": 24, "duration": 10},
                       {"index": 25, "duration": 10},
                       {"index": 26, "duration": 10},
-                      {"index": 27, "duration": 10},
-                      {"index": 28, "duration": 10},
-                      {"index": 29, "duration": 10}
+                      {"index": 27, "duration": 10}
           ]
         }
     ]

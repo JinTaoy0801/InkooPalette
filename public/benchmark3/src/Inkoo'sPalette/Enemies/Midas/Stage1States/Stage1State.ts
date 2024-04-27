@@ -15,6 +15,8 @@ export default abstract class Stage1State extends State {
     attackTimer:Timer;
     lightAttackRange = 64;
 
+    attackCooldown: Timer;
+
     constructor(parent: StateMachine, owner: AnimatedSprite) {
 		super(parent);
 		this.owner = owner;
@@ -49,6 +51,5 @@ export default abstract class Stage1State extends State {
 
     update(deltaT: number): void {
         this.playerPosition = (<IP_Level>this.owner.getScene()).player.position;
-        // console.log('goblin position', this.owner.position);
     }
 }
