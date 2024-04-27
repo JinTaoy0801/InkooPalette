@@ -5,7 +5,6 @@ import GoblinState from "./GoblinState";
 export default class Walking extends GoblinState {
     onEnter(options: Record<string, any>): void {
         this.owner.animation.playIfNotAlready("TURN_LEFT", false);
-        //console.log('WALKING ASLKJDLAKSDLAKSD', this.owner);
     }
 
     update(deltaT: number): void {

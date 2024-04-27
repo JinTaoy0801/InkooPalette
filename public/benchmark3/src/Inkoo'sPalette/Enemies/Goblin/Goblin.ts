@@ -15,13 +15,15 @@ export default class Goblin extends Enemy{
         this.owner = options.owner;
 
         //spawn goblin
+        this.owner.setGroup("enemy");
+        console.log("set");
         this.owner.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));
         this.owner.addAI(GoblinController, options);
         this.owner.position.copy(options.spawn);
         this.owner.scale.set(2, 2);
         this.owner.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(29, 27)));
         this.owner.colliderOffset.set(0, 1);
-        this.owner.setGroup("enemy");
+
     }
 
 }

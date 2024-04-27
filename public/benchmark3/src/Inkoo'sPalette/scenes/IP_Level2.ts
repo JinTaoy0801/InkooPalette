@@ -75,10 +75,10 @@ export default class IP_Level2 extends IP_Level {
                     break;
                 }
                 default: {
+                    super.updateScene(deltaT);
                 }
             }
         }
-        super.updateScene(deltaT);
     }
 
     protected initGoldlem(): void {

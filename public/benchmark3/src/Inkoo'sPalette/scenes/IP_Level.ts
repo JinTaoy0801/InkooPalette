@@ -119,7 +119,6 @@ export default class IP_Level extends Scene {
                 }
                 case inkooEvents.PLAYER_ENTERED_LEVEL_END:{
                     if(!this.levelEndTimer.hasRun() && this.levelEndTimer.isStopped()){
-                        // The player has reached the end of the level
                         this.levelEndTimer.start();
                         this.levelEndLabel.tweens.play("slideIn");
                     }
@@ -136,10 +135,11 @@ export default class IP_Level extends Scene {
                             this.incPlayerLife(-1);
                             this.isInvincible.start();
                             this.player.animation.play("HIT", false);
+                            console.log("playerHp", IP_Level.livesCount);
+                            console.log("goblin", event.data.toString());
                         }  
                     }
-                    //console.log("playerHp", IP_Level.livesCount);
-                    //console.log("goblin", event.data.toString());
+                   
                     break;
                 }
                 //in this case Node is the trashMob, other is the attackHitbox
@@ -148,6 +148,7 @@ export default class IP_Level extends Scene {
                         const trash_mob = this.trash_Mobs.get(event.data.get("node"));
                         trash_mob.setHp(-1);
                         console.log("trashMob hp", trash_mob.getHp());
+                        //console.log("trashmobs", this.trash_Mobs);
                         this.playerAttack.start();
                     }
                     break;
@@ -443,7 +444,7 @@ export default class IP_Level extends Scene {
 
     }
 
-    addLevelEnd(startingTile: Vec2, size: Vec2, where: string): void {
+    protected addLevelEnd(startingTile: Vec2, size: Vec2, where: string): void {
         this.levelEndArea = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
           position: startingTile,
           size: size,
