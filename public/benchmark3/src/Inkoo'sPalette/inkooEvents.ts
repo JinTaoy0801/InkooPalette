@@ -8,5 +8,6 @@ export enum inkooEvents {
     PAUSE_MENU ="PauseMenu",
     PLAYER_ENTERED_LEVEL_END = "Player_Entered_Level_End",
     TRASH_MOB_HIT = "Trash_Mob_Hit",
-    TRASH_MOB_KILLED = "Trash_Mob_Killed"
+    TRASH_MOB_KILLED = "Trash_Mob_Killed",
+    COLLIDED = "Collided"
 }

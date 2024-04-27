@@ -13,12 +13,12 @@ export default class Idle extends GoblinState {
   update(deltaT: number): void {
     super.update(deltaT);
     this.owner.animation.playIfNotAlready("IDLE_LEFT", true);
-    if (this.parent.coinFlip()) {
-      this.finished(GoblinStates.WALKING);
-    }
-    if(this.playerInPatrol(this.patrolArea)){
-      this.finished(GoblinStates.ALERTED);
-    }
+    // if (this.parent.coinFlip()) {
+    //   this.finished(GoblinStates.WALKING);
+    // }
+    // if(this.playerInPatrol(this.patrolArea)){
+    //   this.finished(GoblinStates.ALERTED);
+    // }
     this.owner.move(Vec2.ZERO);
   }
 

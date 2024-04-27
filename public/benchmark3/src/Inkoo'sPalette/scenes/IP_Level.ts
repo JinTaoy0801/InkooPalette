@@ -147,6 +147,20 @@ export default class IP_Level extends Scene {
                    
                     break;
                 }
+                case inkooEvents.COLLIDED: {
+                    if(this.sceneGraph.getNode(event.data.get("other")) === this.player) {
+                        if(this.isInvincible.isStopped()){
+                            this.incPlayerLife(-1);
+                            this.isInvincible.start();
+                            this.player.animation.play("HIT", false);
+                            this.player.tweens.play("take_DMG");
+                            console.log("playerHp", IP_Level.livesCount);
+                            console.log("goblin", event.data.toString());
+                        }  
+                    }
+                   
+                    break;
+                }
                 //in this case Node is the trashMob, other is the attackHitbox
                 case inkooEvents.TRASH_MOB_HIT:{
                     if(this.playerAttack.isStopped()){
@@ -228,7 +242,8 @@ export default class IP_Level extends Scene {
             inkooEvents.PLAYER_ENTERED_LEVEL_END,
             inkooEvents.PLAYER_KILLED,
             inkooEvents.TRASH_MOB_HIT,
-            inkooEvents.TRASH_MOB_KILLED
+            inkooEvents.TRASH_MOB_KILLED,
+            inkooEvents.COLLIDED
         ]);
     }
 
@@ -377,7 +392,8 @@ export default class IP_Level extends Scene {
         });
         this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(12, 8)));
         this.player.addAI(PlayerController, {playerType: "platformer", tilemap: "ground"});
-        this.player.setTrigger("enemy", inkooEvents.PLAYER_ATTACK, null);
+        this.player.setTrigger("enemy", inkooEvents.COLLIDED, null);
+        console.log("thisplayer,", this.player);
         this.player.colliderOffset.set(0, 10.5);
     }
 
