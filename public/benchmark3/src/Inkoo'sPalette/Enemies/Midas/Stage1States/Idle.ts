@@ -1,9 +1,11 @@
+import Timer from "../../../../Wolfie2D/Timing/Timer";
+import { MidasStates } from "../MidasController";
 import Stage1State from "./Stage1State";
 
 export default class Idle extends Stage1State {
     onEnter(options: Record<string, any>): void {
-        //console.log('went inside goblin idle')
-        //console.log('asdhkasdhaskdasd', this.owner);
+        this.attackCooldown = new Timer(3000);
+        this.attackCooldown.start();
     }
   
     update(deltaT: number): void {
@@ -15,6 +17,9 @@ export default class Idle extends Stage1State {
         // if(this.playerInPatrol(this.patrolArea)){
         //     this.finished(GoblinStates.ALERTED);
         // }
+        if (this.attackCooldown.isStopped()) {
+            this.finished(MidasStates.SNAP);
+        }
     }
   
     onExit(): Record<string, any> {

@@ -20,7 +20,6 @@ export default class EnemyController extends StateMachineAI {
     }
 
     changeState(stateName: string): void {
-        // console.log('goblin statenameadlkjaslkdj',stateName);
         super.changeState(stateName);
 	}
 

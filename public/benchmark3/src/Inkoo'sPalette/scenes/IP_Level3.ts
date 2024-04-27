@@ -5,6 +5,7 @@ import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
 import Rect from "../../Wolfie2D/Nodes/Graphics/Rect";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
+import Timer from "../../Wolfie2D/Timing/Timer";
 import Color from "../../Wolfie2D/Utils/Color";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import Midas from "../Enemies/Midas/Midas";
@@ -15,6 +16,9 @@ import IP_Level2 from "./IP_Level2";
 export default class IP_Level3 extends IP_Level { 
     protected midasdoor: Sprite;
     protected triggerdoor: Rect;
+
+    beams = new Array<Rect>(); 
+    bigbeams = new Array<Rect>(); 
 
     loadScene(): void {
         this.load.tilemap("level3", "assets/tilemaps/kingmidas.json");
@@ -43,7 +47,7 @@ export default class IP_Level3 extends IP_Level {
         this.midasdoor.position.copy(new Vec2(27*32+16, 14*32-16));
         this.midasdoor.addPhysics(new AABB(Vec2.ZERO, new Vec2(16, 64)), Vec2.ZERO, true, true);
         // this.midasdoor.setGroup("ground");
-        console.log(this.midasdoor);
+        // console.log(this.midasdoor);
 
         const midasOptions = {
             owner: this.add.animatedSprite('midas1', Layers.Main),
@@ -62,6 +66,13 @@ export default class IP_Level3 extends IP_Level {
             "CLOSE_DOOR",
             null,
         );
+
+        let walloffthrone = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
+            position: new Vec2(55*32, 320),
+            size: new Vec2(32, 15*32),
+        });
+        walloffthrone.setColor(new Color(0,0,0,0));
+        walloffthrone.addPhysics(undefined, undefined, true, true);
     }
 
     updateScene(deltaT: number): void {
@@ -79,6 +90,15 @@ export default class IP_Level3 extends IP_Level {
                     ]
                 }
             }
+
+            let beamLocation = [
+                new Vec2(30*32, 9*32),
+                new Vec2(35*32, 9*32),
+                new Vec2(40*32, 9*32),
+                new Vec2(45*32, 9*32),
+                new Vec2(50*32, 9*32),
+            ]
+
             switch (event.type) {
                 case Areas.Midas_Mountains: {
                     // Go to the next level  
@@ -87,7 +107,6 @@ export default class IP_Level3 extends IP_Level {
                     break;
                 }
                 case "CLOSE_DOOR": {
-                    console.log("laksdlkasdlkjasdlkjaljksdljka")
                     this.midasdoor.tweens.add("slidedown", {
                         startDelay: 0,
                         duration: 500,
@@ -102,20 +121,58 @@ export default class IP_Level3 extends IP_Level {
                     });
 
                     this.midasdoor.tweens.play("slidedown");
-
                     this.triggerdoor.destroy();
+
+                    this.viewport.setZoomLevel(1);
+                }
+                case "SPAWNBEAM": {
+                    console.log('spawned beem')
+                    
+                    beamLocation.forEach(pos => {
+                        let beam = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
+                            position: pos,
+                            size: new Vec2(4, 20*32),
+                        });
+                        beam.setColor(new Color(245, 216, 54, .7))
+                        beam.tweens.add("beamflash", {
+                            startDelay: 0,
+                            duration: 500,
+                            effects: [
+                                {
+                                    property: "alpha",
+                                    start: 1,
+                                    end: 0,
+                                    ease: EaseFunctionType.OUT_SINE
+                                }
+                            ],
+                            onEnd: function() {
+                                beam.destroy();
+                            }
+                        });
+                        this.beams.push(beam);
+                    });
+                    
+                    console.log('playing beam animaiton');
+                    console.log('the smol beams: ', this.beams);
+                    this.beams.forEach(beam => {
+                        beam.tweens.play("beamflash");
+                    });
+                    this.beams = [];
                 }
                 default: {
                 }
             }
         }
         super.updateScene(deltaT);
+        // console.log('trigger door stuff', this.triggerdoor);
     }
 
     protected subscribeToEvents() {
         this.receiver.subscribe([
             Areas.Midas_Mountains,
-            "CLOSE_DOOR"
+            "CLOSE_DOOR",
+            "SPAWNBEAM",
+            "BIGBEAM"
         ]);
     }
 

@@ -11,7 +11,6 @@ export default class Midas extends Enemy {
         super(hp);
         this.owner = options.owner;
 
-        //spawn goblin
         this.owner.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));
         this.owner.addAI(MidasController, options);
         this.owner.position.copy(options.spawn);

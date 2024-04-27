@@ -4,9 +4,11 @@ import OrthogonalTilemap from "../../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilema
 import { inkooEvents } from "../../inkooEvents";
 import EnemyController from "../EnemyController";
 import Idle from "./Stage1States/Idle";
+import Snap from "./Stage1States/Snap";
 
 export enum MidasStates {
     STAGE1_IDLE = "stage1_idle",
+    SNAP = "snap"
 }
 
 export default class MidasController extends EnemyController {
@@ -36,6 +38,7 @@ export default class MidasController extends EnemyController {
 		this.receiver.subscribe(inkooEvents.PLAYER_MOVE);
 
         this.addState(MidasStates.STAGE1_IDLE, new Idle(this, this.owner));
+        this.addState(MidasStates.SNAP, new Snap(this, this.owner));
         // this.addState(GoblinStates.WALKING, new Walking(this, this.owner));
         // this.addState(GoblinStates.ATTACKING, new Attacking(this, this.owner));
         // this.addState(GoblinStates.ALERTED, new Alerted(this, this.owner));
@@ -44,7 +47,6 @@ export default class MidasController extends EnemyController {
 	}
 
     changeState(stateName: string): void {
-        // console.log('goblin statenameadlkjaslkdj',stateName);
         super.changeState(stateName);
 	}
 
