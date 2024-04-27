@@ -79,7 +79,6 @@ export default class OnGround extends PlayerState {
             	delay: new Timer(0)
 			}
 			let hitbox = new Hitbox(HB_options, "player");
-			console.log("playergounrdattack", hitbox);
 		}
 	}
 

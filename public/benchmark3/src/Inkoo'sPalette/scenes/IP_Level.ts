@@ -159,6 +159,7 @@ export default class IP_Level extends Scene {
                 //in this case Node is the trashMob, other is the attackHitbox
                 case inkooEvents.TRASH_MOB_HIT:{
                     if(this.playerAttack.isStopped()){
+                        console.log("playerhit data", event.data.toString());
                         const trash_mob = this.trash_Mobs.get(event.data.get("node"));
                         trash_mob.setHp(-1);
                         console.log("trashMob hp", trash_mob.getHp());
@@ -167,8 +168,11 @@ export default class IP_Level extends Scene {
                     }
                     break;
                 }
+                //though it has the death key, the id of the trash mob is in node
+                //key => DEATH node =>id of mob
                 case inkooEvents.TRASH_MOB_KILLED:{
-                    console.log("trashMob killed", event.data);
+                    this.sceneGraph.getNode(event.data.get("node")).destroy();
+                    
                     break;
                 }
                 case inkooEvents.PLAYER_KILLED: {
