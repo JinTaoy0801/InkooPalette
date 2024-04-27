@@ -19,6 +19,7 @@ export default class Idle extends GoblinState {
     if(this.playerInPatrol(this.patrolArea)){
       this.finished(GoblinStates.ALERTED);
     }
+    this.owner.move(Vec2.ZERO);
   }
 
   onExit(): Record<string, any> {

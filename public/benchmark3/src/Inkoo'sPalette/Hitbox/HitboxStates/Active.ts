@@ -20,7 +20,7 @@ export default class Active extends HitboxState {
             this.owner.colliderOffset.set(this.setting.colliderOffset.x, this.setting.colliderOffset.y);
         }
 
-        if (this.setting.delay!) {
+        if (this.setting.delay) {
             this.delay = this.setting.delay;
             this.delay.start();
         }

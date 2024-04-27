@@ -49,11 +49,11 @@ export default class GoblinController extends EnemyController {
         this.addState(GoblinStates.ATTACKING, new Attacking(this, this.owner));
         this.addState(GoblinStates.ALERTED, new Alerted(this, this.owner));
         
-		this.initialize(GoblinStates.WALKING);
+		this.initialize(GoblinStates.IDLE);
+        this.owner.setGroup("enemy");
 	}
 
     changeState(stateName: string): void {
-        // console.log('goblin statenameadlkjaslkdj',stateName);
         super.changeState(stateName);
 	}
 

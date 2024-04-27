@@ -55,6 +55,7 @@ export default class IP_Level1 extends IP_Level {
         this.initGoblin();
         // console.log("trashmobs", this.trash_Mobs);
         this.nextLevel = IP_Level2;
+        console.log("enemy array", this.trash_Mobs);
     }
 
     updateScene(deltaT: number): void {
@@ -69,10 +70,11 @@ export default class IP_Level1 extends IP_Level {
                     break;
                 }
                 default: {
+                    super.updateScene(deltaT);
                 }
             }
         }
-        super.updateScene(deltaT);
+        
     }
 
     protected initGoblin(): void {
@@ -116,6 +118,7 @@ export default class IP_Level1 extends IP_Level {
                     }
                 ]
             });
+            temp.owner.setGroup("enemy");
             this.goblins.push(temp);
             this.trash_Mobs.set(goblinOptions.owner.id,temp);
         }
@@ -123,6 +126,7 @@ export default class IP_Level1 extends IP_Level {
     }
 
     protected subscribeToEvents() {
+        super.subscribeToEvents();
         this.receiver.subscribe([
             Areas.Mountains,
             Areas.Mountains_Tutorial

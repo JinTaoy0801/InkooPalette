@@ -56,6 +56,7 @@ export default abstract class  PlayerState extends State{
 			"IDLE_ATTACK_UP",
 			"SPIN_ATTACK",
 			"ATTACK_DOWN",
+			"HIT"
 		]
 		return attacks.some(attack => this.owner.animation.isPlaying(attack))
 	}

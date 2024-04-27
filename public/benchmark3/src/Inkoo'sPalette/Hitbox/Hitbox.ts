@@ -14,19 +14,18 @@ export default class Hitbox {
             this.box = settings.sprite;
             this.box.addPhysics(new AABB(settings.center, settings.halfSize), new Vec2(0, 0));
             this.box.addAI(HitboxController, settings);
-            // console.log(group);
-            this.box.setGroup(group);
-               
-            if(group === "enemy"){
-                this.box.setTrigger("player", inkooEvents.PLAYER_ATTACK,null);
-            } else if(group === "player"){
-                this.box.setTrigger("enemy", inkooEvents.TRASH_MOB_HIT,null);  
-            }
         }
         else {
             this.box = settings.sprite;
             this.box.addPhysics(new Circle(settings.center, settings.halfSize), new Vec2(0, 0));
             this.box.addAI(HitboxController, settings);
+        }
+
+        this.box.setGroup(group); 
+        if(group === "enemy"){
+            this.box.setTrigger("player", inkooEvents.PLAYER_ATTACK,null);
+        } else if(group === "player"){
+            this.box.setTrigger("enemy", inkooEvents.TRASH_MOB_HIT,null);  
         }
     }
 }

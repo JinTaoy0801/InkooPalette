@@ -96,10 +96,10 @@ export default class IP_Level3 extends IP_Level {
                     this.triggerdoor.destroy();
                 }
                 default: {
+                    super.updateScene(deltaT);
                 }
             }
         }
-        super.updateScene(deltaT);
     }
 
     protected subscribeToEvents() {
