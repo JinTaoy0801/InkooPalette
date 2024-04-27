@@ -45,12 +45,12 @@ export default class IP_Level2 extends IP_Level {
         this.initGoldlem();
         this.initBigGoldlem();
         this.nextLevel = IP_Level2;
-        console.log('level2 player spawn', getPlayerSpawn());
+        // console.log('level2 player spawn', getPlayerSpawn());
     }
 
     updateScene(deltaT: number): void {
         Input.enableInput();
-        while (this.receiver.hasNextEvent()) {
+        while (this.receiver.hasNextEvent() && this.isArea(this.receiver.peekNextEvent().type)) {
             let event = this.receiver.getNextEvent();
             switch (event.type) {
                 case Areas.Mountains_Tutorial: {
@@ -60,7 +60,7 @@ export default class IP_Level2 extends IP_Level {
                     break;
                 }
                 case Areas.Midas: {
-                    setPlayerSpawn(new Vec2(5*64, 589.5));
+                    setPlayerSpawn(new Vec2(5*32, 589.5));
                     this.sceneManager.changeToScene(IP_Level3, {}, sceneOptions);
                     break;
                 }
