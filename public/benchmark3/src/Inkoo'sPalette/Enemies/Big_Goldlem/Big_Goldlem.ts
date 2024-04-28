@@ -5,8 +5,6 @@ import Enemy from "../Enemy";
 import Big_GoldlemController from "./Big_GoldlemController";
 
 export default class Big_Goldlem extends Enemy {
-    protected _health: number;
-    protected _maxHealth: 10;
     owner: AnimatedSprite;
     speed: number = 100;
 
@@ -22,6 +20,5 @@ export default class Big_Goldlem extends Enemy {
         this.owner.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(29, 27)));
         this.owner.colliderOffset.set(0, 1);
         this.owner.setGroup("enemy");
-        this._health = 10;
     }
 }

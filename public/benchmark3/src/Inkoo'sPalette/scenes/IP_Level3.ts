@@ -85,6 +85,8 @@ export default class IP_Level3 extends IP_Level {
 
         //make the warning beams:
         this.initBeams();
+
+        console.log("enemy array", this.trash_Mobs);
     }
 
     updateScene(deltaT: number): void {
@@ -93,23 +95,12 @@ export default class IP_Level3 extends IP_Level {
         this.checkEvent(this.receiver.peekNextEvent().type))) {
             let event = this.receiver.getNextEvent();
             console.log('eventasdasdasdasd', event)
-            var sceneOptions = {
-                physics: {
-                    groupNames: ["ground", "player","enemy"],
-                    collisions:
-                    [
-                        [0, 1, 1],
-                        [1, 0, 1],
-                        [1, 1, 0]
-                    ]
-                }
-            }
 
             switch (event.type) {
                 case Areas.Midas_Mountains: {
                     // Go to the next level  
                     setPlayerSpawn(new Vec2(1900, 365.5));
-                    this.sceneManager.changeToScene(IP_Level2, {}, sceneOptions);
+                    this.sceneManager.changeToScene(IP_Level2, {}, this.sceneOptions);
                     break;
                 }
                 case "CLOSE_DOOR": {
@@ -138,6 +129,8 @@ export default class IP_Level3 extends IP_Level {
                 }
             }
         }
+        if (this.receiver.hasNextEvent())
+            console.log('goes into supder', this.receiver.peekNextEvent());
         super.updateScene(deltaT);
         // console.log('trigger door stuff', this.triggerdoor);
     }

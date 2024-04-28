@@ -22,6 +22,7 @@ export default class Hitbox {
         }
 
         this.box.setGroup(group); 
+        // console.log('box', this.box);
         if(group === "enemy"){
             this.box.setTrigger("player", inkooEvents.PLAYER_ATTACK,null);
         } else if(group === "player"){
