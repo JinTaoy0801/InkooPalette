@@ -45,6 +45,7 @@ export default class GoldlemController extends EnemyController {
         this.addState(GoldlemStates.ALERTED, new Alerted(this, this.owner));
         
 		this.initialize(GoldlemStates.IDLE);
+        this.owner.setGroup("enemy");
 	}
 
     changeState(stateName: string): void {

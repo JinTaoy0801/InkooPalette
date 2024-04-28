@@ -7,8 +7,6 @@ import GoldlemController from "./GoldlemController";
 
 
 export default class Goldlem extends Enemy{
-    protected _health: number;
-    protected _maxHealth: 10;
     owner: AnimatedSprite;
     speed: number = 100;
 
@@ -22,9 +20,6 @@ export default class Goldlem extends Enemy{
         this.owner.scale.set(1.5, 1.5);
         this.owner.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(29, 27)));
         this.owner.colliderOffset.set(0, 1);
-        this.owner.setGroup("enemy");
-        this.owner.setTrigger("playerAttack", inkooEvents.PLAYER_ATTACK,null);
-        this._health = this._maxHealth;
     }
 
 }

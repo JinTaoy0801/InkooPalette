@@ -45,6 +45,7 @@ export default class IP_Level2 extends IP_Level {
         this.initGoldlem();
         this.initBigGoldlem();
         this.nextLevel = IP_Level2;
+        console.log("enemy array", this.trash_Mobs);
         // console.log('level2 player spawn', getPlayerSpawn());
     }
 
@@ -52,6 +53,7 @@ export default class IP_Level2 extends IP_Level {
         Input.enableInput();
         while (this.receiver.hasNextEvent() && this.isArea(this.receiver.peekNextEvent().type)) {
             let event = this.receiver.getNextEvent();
+            console.log('event in level 2', event);
             switch (event.type) {
                 case Areas.Mountains_Tutorial: {
                     // Go to the next level  
@@ -63,9 +65,6 @@ export default class IP_Level2 extends IP_Level {
                     setPlayerSpawn(new Vec2(5*32, 589.5));
                     this.sceneManager.changeToScene(IP_Level3, {}, sceneOptions);
                     break;
-                }
-                default: {
-                    
                 }
             }
         }
@@ -80,7 +79,9 @@ export default class IP_Level2 extends IP_Level {
                 spawn: this.goldlemSpawns[i],
                 tilemap: Layers.Main,
             }
-            this.goldlems.push(new Goldlem(goldlemOptions,7));
+            let temp = new Goldlem(goldlemOptions,7);
+            this.trash_Mobs.set(goldlemOptions.owner.id, temp);
+
         }
         
     }
@@ -93,7 +94,8 @@ export default class IP_Level2 extends IP_Level {
                 spawn: this.big_goldlemSpawns[i],
                 tilemap: Layers.Main,
             }
-            this.trash_enemies.push(new Big_Goldlem(biggoldlemOptions,10));
+            let temp = new Big_Goldlem(biggoldlemOptions, 10);
+            this.trash_Mobs.set(biggoldlemOptions.owner.id, temp);
         }
         
     }

@@ -34,6 +34,7 @@ export default class Big_GoldlemController extends EnemyController {
         super.initializeAI(owner, options);
         this.addState(Big_GoldlemStates.INACTIVE_IDLE, new InactiveIdle(this, this.owner));
         this.initialize(Big_GoldlemStates.INACTIVE_IDLE);
+        this.owner.setGroup("enemy");
     }
 
     changeState(stateName: string): void {
