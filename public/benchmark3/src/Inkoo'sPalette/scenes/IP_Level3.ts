@@ -19,7 +19,15 @@ export default class IP_Level3 extends IP_Level {
     protected triggerdoor: Rect;
 
     beams = new Array<Rect>(); 
-    bigbeams = new Array<Rect>(); 
+    bigbeams = new Array<Sprite>(); 
+
+    beamLocation = [
+        new Vec2(30*32, 9*32),
+        new Vec2(35*32, 9*32),
+        new Vec2(40*32, 9*32),
+        new Vec2(45*32, 9*32),
+        new Vec2(50*32, 9*32),
+    ];
 
     loadScene(): void {
         this.load.tilemap("level3", "assets/tilemaps/kingmidas.json");
@@ -33,7 +41,7 @@ export default class IP_Level3 extends IP_Level {
         this.load.spritesheet("ARM_RIGHT", "assets/player/attack/arm_right.json");
         this.load.spritesheet("ATTACK_UP", "assets/player/attack/attack_up.json");
         this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
-        this.load.spritesheet("GOBLIN_LIGHT_ATTACK", "assets/enemies/goblin/goblin_light_attack.json")
+        this.load.spritesheet("gold", "assets/enemies/goldlem/gold.json");
     }
 
     startScene(): void {
@@ -74,12 +82,17 @@ export default class IP_Level3 extends IP_Level {
         });
         walloffthrone.setColor(new Color(0,0,0,0));
         walloffthrone.addPhysics(undefined, undefined, true, true);
+
+        //make the warning beams:
+        this.initBeams();
     }
 
     updateScene(deltaT: number): void {
         Input.enableInput();
-        while (this.receiver.hasNextEvent()) {
+        while (this.receiver.hasNextEvent() && (this.isArea(this.receiver.peekNextEvent().type) ||
+        this.checkEvent(this.receiver.peekNextEvent().type))) {
             let event = this.receiver.getNextEvent();
+            console.log('eventasdasdasdasd', event)
             var sceneOptions = {
                 physics: {
                     groupNames: ["ground", "player","enemy"],
@@ -91,14 +104,6 @@ export default class IP_Level3 extends IP_Level {
                     ]
                 }
             }
-
-            let beamLocation = [
-                new Vec2(30*32, 9*32),
-                new Vec2(35*32, 9*32),
-                new Vec2(40*32, 9*32),
-                new Vec2(45*32, 9*32),
-                new Vec2(50*32, 9*32),
-            ]
 
             switch (event.type) {
                 case Areas.Midas_Mountains: {
@@ -127,41 +132,9 @@ export default class IP_Level3 extends IP_Level {
                     this.viewport.setZoomLevel(1);
                 }
                 case "SPAWNBEAM": {
-                    console.log('spawned beem')
-                    
-                    beamLocation.forEach(pos => {
-                        let beam = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
-                            position: pos,
-                            size: new Vec2(4, 20*32),
-                        });
-                        beam.setColor(new Color(245, 216, 54, .7))
-                        beam.tweens.add("beamflash", {
-                            startDelay: 0,
-                            duration: 500,
-                            effects: [
-                                {
-                                    property: "alpha",
-                                    start: 1,
-                                    end: 0,
-                                    ease: EaseFunctionType.OUT_SINE
-                                }
-                            ],
-                            onEnd: function() {
-                                beam.destroy();
-                            }
-                        });
-                        this.beams.push(beam);
-                    });
-                    
-                    console.log('playing beam animaiton');
-                    console.log('the smol beams: ', this.beams);
                     this.beams.forEach(beam => {
                         beam.tweens.play("beamflash");
                     });
-                    this.beams = [];
-                }
-                default: {
-                    super.updateScene(deltaT);
                 }
             }
         }
@@ -169,12 +142,44 @@ export default class IP_Level3 extends IP_Level {
         // console.log('trigger door stuff', this.triggerdoor);
     }
 
+    checkEvent(s: String) {
+        let checks = [
+            "CLOSE_DOOR",
+            "SPAWNBEAM"
+        ]
+        return checks.some(check => check === s);
+    }
+
+    initBeams() {
+        this.beamLocation.forEach(pos => {
+            let beam = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
+                position: pos,
+                size: new Vec2(4, 20*32),
+            });
+            console.log("beem id", beam.id)
+            beam.setColor(new Color(245, 216, 54, 0))
+            beam.tweens.add("beamflash", {
+                startDelay: 0,
+                duration: 500,
+                effects: [
+                    {
+                        property: "alpha",
+                        start: 0.7,
+                        end: 0,
+                        ease: EaseFunctionType.OUT_SINE
+                    }
+                ],
+            });
+            this.beams.push(beam);
+        });
+    }
+
+
     protected subscribeToEvents() {
         this.receiver.subscribe([
             Areas.Midas_Mountains,
             "CLOSE_DOOR",
             "SPAWNBEAM",
-            "BIGBEAM"
         ]);
     }
 
