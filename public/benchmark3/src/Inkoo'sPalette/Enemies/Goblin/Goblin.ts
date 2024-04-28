@@ -15,7 +15,6 @@ export default class Goblin extends Enemy{
         this.owner = options.owner;
 
         //spawn goblin
-        // this.owner.setGroup("enemy");
         this.owner.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));
         this.owner.addAI(GoblinController, options);
         this.owner.position.copy(options.spawn);

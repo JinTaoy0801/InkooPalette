@@ -44,9 +44,8 @@ export default class IP_Level2 extends IP_Level {
         this.addLevelEnd(new Vec2(32*1, 400), new Vec2(2*32, 10*32), Areas.Mountains_Tutorial);
         this.initGoldlem();
         this.initBigGoldlem();
-        this.nextLevel = IP_Level2;
+        this.nextLevel = IP_Level3;
         console.log("enemy array", this.trash_Mobs);
-        // console.log('level2 player spawn', getPlayerSpawn());
     }
 
     updateScene(deltaT: number): void {
@@ -68,7 +67,9 @@ export default class IP_Level2 extends IP_Level {
                 }
             }
         }
+
         super.updateScene(deltaT);
+       
     }
 
     protected initGoldlem(): void {
@@ -81,7 +82,6 @@ export default class IP_Level2 extends IP_Level {
             }
             let temp = new Goldlem(goldlemOptions,7);
             this.trash_Mobs.set(goldlemOptions.owner.id, temp);
-
         }
         
     }
@@ -101,6 +101,7 @@ export default class IP_Level2 extends IP_Level {
     }
 
     protected subscribeToEvents() {
+        super.subscribeToEvents();
         this.receiver.subscribe([
             Areas.Mountains_Tutorial,
             Areas.Midas

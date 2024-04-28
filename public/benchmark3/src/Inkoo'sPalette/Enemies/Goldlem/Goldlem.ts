@@ -17,7 +17,7 @@ export default class Goldlem extends Enemy{
         this.owner.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));
         this.owner.addAI(GoldlemController, options);
         this.owner.position.copy(options.spawn);
-        this.owner.scale.set(1.5, 1.5);
+        this.owner.scale.set(2, 2);
         this.owner.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(29, 27)));
         this.owner.colliderOffset.set(0, 1);
     }

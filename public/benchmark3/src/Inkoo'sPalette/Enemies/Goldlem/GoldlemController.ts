@@ -49,20 +49,8 @@ export default class GoldlemController extends EnemyController {
 	}
 
     changeState(stateName: string): void {
-        // console.log("stateNamestateName",stateName);
         super.changeState(stateName);
 	}
-
-    coinFlip(): any {
-        const currentTime = Date.now();
-        const coolDown = currentTime - this.lastFlipped >= 2000;
-
-        if (coolDown){
-            this.lastFlipped = currentTime;
-            return Math.random() < 0.5;
-        }
-        return false;
-    }
 
 	update(deltaT: number): void {
 		super.update(deltaT);

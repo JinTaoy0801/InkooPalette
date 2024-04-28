@@ -46,6 +46,6 @@ export default abstract class Big_GoldlemState extends State {
         let direction = this.parent.directionPatrol;
         (<Sprite>this.owner).invertX = (direction == "right") ? true : false;
         this.playerPosition = (<IP_Level>this.owner.getScene()).player.position;
-        // console.log('goblin position', this.owner.position);
+        this.owner.move(Vec2.ZERO);
     }
 }

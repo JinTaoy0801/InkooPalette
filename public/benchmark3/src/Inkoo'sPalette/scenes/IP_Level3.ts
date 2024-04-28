@@ -169,6 +169,7 @@ export default class IP_Level3 extends IP_Level {
 
 
     protected subscribeToEvents() {
+        super.subscribeToEvents();
         this.receiver.subscribe([
             Areas.Midas_Mountains,
             "CLOSE_DOOR",
