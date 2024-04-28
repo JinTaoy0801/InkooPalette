@@ -4,7 +4,7 @@ import Stage1State from "./Stage1State";
 
 export default class Idle extends Stage1State {
     onEnter(options: Record<string, any>): void {
-        this.attackCooldown = new Timer(3000);
+        this.attackCooldown = new Timer(5000);
         this.attackCooldown.start();
     }
   
