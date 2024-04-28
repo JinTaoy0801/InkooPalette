@@ -18,6 +18,7 @@ import MainMenu from "./Inkoo'sPalette/scenes/MainMenu";
             {name: "jump", keys: ["space"]},
             {name: "attack", keys: ["j"]},
             {name: "pause", keys: ["escape"]},
+            {name: "quit", keys: ["q"]},
             {name: "level1", keys: ["1"]},
             {name: "level2", keys: ["2"]},
             {name: "level3", keys: ["3"]},

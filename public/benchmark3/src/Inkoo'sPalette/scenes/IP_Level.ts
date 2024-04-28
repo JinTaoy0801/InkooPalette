@@ -205,6 +205,14 @@ export default class IP_Level extends Scene {
             }
         }
 
+        if (Input.isJustPressed("quit")) {
+            let pauseLayer = this.getLayer(Layers.Pause);
+            if (!pauseLayer.isHidden()) {
+                IP_Level.livesCount = 6;
+                this.sceneManager.changeToScene(MainMenu);
+            }
+        }
+
         if (Input.isJustPressed("level1")) {
             this.sceneManager.changeToScene(IP_Level1, {}, this.sceneOptions);
         }
@@ -361,10 +369,15 @@ export default class IP_Level extends Scene {
         pauseHeader.textColor = Color.WHITE;
         pauseHeader.font = "daydream";
 
-        const pauseText = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Pause, {position: new Vec2(400, 250), text: "Press Esc To Continue"});
-        pauseText.textColor = Color.WHITE;
-        pauseText.font = "daydream";
-        pauseText.fontSize = 20;
+        const resume = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Pause, {position: new Vec2(400, 250), text: "Esc To Continue"});
+        resume.textColor = Color.WHITE;
+        resume.font = "daydream";
+        resume.fontSize = 20;
+
+        const menu = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Pause, {position: new Vec2(400, 300), text: "Q To Main Menu"});
+        menu.textColor = Color.WHITE;
+        menu.font = "daydream";
+        menu.fontSize = 20;
     }
 
     protected initPlayer(): void {
