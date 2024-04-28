@@ -392,7 +392,6 @@ export default class IP_Level extends Scene {
         this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(12, 8)));
         this.player.addAI(PlayerController, {playerType: "platformer", tilemap: "ground"});
         this.player.setTrigger("enemy", inkooEvents.COLLIDED, null);
-        console.log("thisplayer,", this.player);
         this.player.colliderOffset.set(0, 10.5);
     }
 

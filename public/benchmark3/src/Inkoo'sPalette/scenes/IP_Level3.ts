@@ -63,8 +63,8 @@ export default class IP_Level3 extends IP_Level {
             spawn: new Vec2(1740, 572),
             tilemap: Layers.Main,
         }
-        var midas = new Midas(midasOptions, 10);
-
+        let midas = new Midas(midasOptions, 10);
+        this.trash_Mobs.set(midas.owner.id, midas);
         this.triggerdoor = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
             position: new Vec2(1000, 520),
             size: new Vec2(32, 5*32),
@@ -156,7 +156,7 @@ export default class IP_Level3 extends IP_Level {
                 position: pos,
                 size: new Vec2(4, 20*32),
             });
-            console.log("beem id", beam.id)
+            //console.log("beem id", beam.id)
             beam.setColor(new Color(245, 216, 54, 0))
             beam.tweens.add("beamflash", {
                 startDelay: 0,

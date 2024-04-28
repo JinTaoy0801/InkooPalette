@@ -39,11 +39,8 @@ export default class MidasController extends EnemyController {
 
         this.addState(MidasStates.STAGE1_IDLE, new Idle(this, this.owner));
         this.addState(MidasStates.SNAP, new Snap(this, this.owner));
-        // this.addState(GoblinStates.WALKING, new Walking(this, this.owner));
-        // this.addState(GoblinStates.ATTACKING, new Attacking(this, this.owner));
-        // this.addState(GoblinStates.ALERTED, new Alerted(this, this.owner));
-        
 		this.initialize(MidasStates.STAGE1_IDLE);
+        this.owner.setGroup("enemy");
 	}
 
     changeState(stateName: string): void {

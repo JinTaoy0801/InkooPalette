@@ -46,7 +46,7 @@ export default class Snap extends Stage1State {
     }
     update(deltaT: number): void {
         if (!this.owner.animation.isPlaying("SNAP")) {
-            console.log('dude snapping')
+            //console.log('dude snapping')
             this.emitter.fireEvent("SPAWNBEAM");
             this.finished(MidasStates.STAGE1_IDLE);
         }
