@@ -81,6 +81,12 @@ export default class Active extends HitboxState {
                     this.owner.setCollisionShape(new AABB(Vec2.ZERO, newhw));
                     this.owner.scale.x = this.width/2;
                 }
+                if (this.setting.customProperties === "right") {
+                    this.owner.move(new Vec2(6, 0));
+                }
+                if (this.setting.customProperties === "left") {
+                    this.owner.move(new Vec2(-6, 0));
+                }
             }
 
             if (!this.owner.animation.isPlaying(this.setting.attack_name)) {
