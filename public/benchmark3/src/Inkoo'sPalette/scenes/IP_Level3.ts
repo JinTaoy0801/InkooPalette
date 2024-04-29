@@ -146,7 +146,8 @@ export default class IP_Level3 extends IP_Level {
                         halfSize: 60,
                         offset : new Vec2(0, 0)
                     }
-                    let newShield = new Shield(HB_options,"enemy")
+                    let newShield = new Shield(HB_options, "shield")
+                    console.log(newShield);
                     break;
                 }
             }

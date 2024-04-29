@@ -54,6 +54,8 @@ export default class PlayerController extends StateMachineAI {
 
         this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
 
+        this.receiver.subscribe("POGOTIME");
+
         owner.tweens.add("tilt_right", {
             startDelay: 0,
             duration: 200,

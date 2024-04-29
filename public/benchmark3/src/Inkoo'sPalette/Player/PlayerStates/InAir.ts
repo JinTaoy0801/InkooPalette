@@ -8,6 +8,7 @@ import { Layers } from "../../scenes/IP_Level";
 import Hitbox from "../../Hitbox/Hitbox";
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import Timer from "../../../Wolfie2D/Timing/Timer";
+import GameEvent from "../../../Wolfie2D/Events/GameEvent";
 
 export default abstract class InAir extends PlayerState {
     owner: AnimatedSprite;
@@ -33,10 +34,10 @@ export default abstract class InAir extends PlayerState {
 			if (Input.isKeyPressed('w') || Input.isKeyPressed('s')) {
 				this.owner.animation.playIfNotAlready("SPIN_ATTACK", false);
 				attack_name = "SPIN_ATTACK";
-				halfSize = 36;
+				halfSize = 42;
 				offset = Vec2.ZERO;
 				this.attack = this.owner.getScene().add.animatedSprite(attack_name, Layers.Main);
-				this.attack.scale.set(1.5, 1.5);
+				this.attack.scale.set(1.75, 1.75);
 				shape = "circle";
 			}
 			else {
@@ -66,5 +67,15 @@ export default abstract class InAir extends PlayerState {
 			let hitbox = new Hitbox(HB_options, "player");
 
 		}
+
     }
+	 
+	handleInput(event: GameEvent): void {
+		if (event.type == "POGOTIME") {
+			if (Input.isKeyPressed('w') || Input.isKeyPressed('s')) {
+				console.log('inair and hit?');
+				this.parent.velocity.y = -500;
+			}
+		}
+	}
 }
