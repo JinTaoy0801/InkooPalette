@@ -163,7 +163,6 @@ export default class IP_Level extends Scene {
                         const trash_mob = this.trash_Mobs.get(event.data.get("node"));
                         trash_mob.setHp(-1);
                         console.log("trashMob hp", trash_mob.getHp());
-                        //console.log("trashmobs", this.trash_Mobs);
                         this.playerAttack.start();
                     }
                     break;
