@@ -10,6 +10,7 @@ export default class Midas extends Enemy {
     constructor(options: Record<string, any>,hp:number) {
         super(hp);
         this.owner = options.owner;
+        this.name = 'midas';
 
         this.owner.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));
         this.owner.addAI(MidasController, options);
