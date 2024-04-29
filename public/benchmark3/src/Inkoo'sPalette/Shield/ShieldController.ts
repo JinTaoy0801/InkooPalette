@@ -11,6 +11,7 @@ export default class ShieldController extends StateMachineAI {
         this.settings = options;
         this.addState("Idle", new Idle(this, this.sheild));
         this.initialize("Idle");
+        this.sheild.setGroup("shield");
     }
 
     update(deltaT: number): void {

@@ -126,24 +126,28 @@ export default class IP_Level3 extends IP_Level {
                     this.triggerdoor.destroy();
 
                     this.viewport.setZoomLevel(1);
+                    break;
                 }
                 case "SPAWNBEAM": {
                     this.beams.forEach(beam => {
                         beam.tweens.play("beamflash");
                     });
+                    break;
                 }
                 case "SPAWNSHIELD": {
+                    console.log('wow it ranned aslkdalksdlkjasdlkjasldjkalkjsdljk')
                     this.shield = this.add.animatedSprite("shield", Layers.Main);
-                    this.shield.scale.set(1.5, 1.5);
+                    this.shield.scale.set(2, 2);
                     
                     const HB_options = {
                         actor: this.midas,
                         sprite: this.shield,
                         center: new Vec2(0, 0),
-                        halfSize: new Vec2(60, 60),
+                        halfSize: 60,
                         offset : new Vec2(0, 0)
                     }
-                    let hitbox = new Shield(HB_options,"enemy")
+                    let newShield = new Shield(HB_options,"enemy")
+                    break;
                 }
             }
         }

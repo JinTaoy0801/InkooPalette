@@ -4,21 +4,14 @@ import Stage1State from "./Stage1State";
 
 export default class Idle extends Stage1State {
     onEnter(options: Record<string, any>): void {
-        this.attackCooldown = new Timer(3000);
-        this.attackCooldown.start();
     }
   
     update(deltaT: number): void {
         super.update(deltaT);
         this.owner.animation.playIfNotAlready("IDLE_LEFT", true);
-        // if (this.parent.coinFlip()) {
-        //     this.finished(GoblinStates.WALKING);
-        // }
-        // if(this.playerInPatrol(this.patrolArea)){
-        //     this.finished(GoblinStates.ALERTED);
-        // }
-        if (this.attackCooldown.isStopped()) {
+        if (this.playerInPatrol(this.patrolArea) && this.attackCooldown.isStopped()) {
             this.finished(MidasStates.SNAP);
+            this.attackCooldown.start();
         }
     }
   

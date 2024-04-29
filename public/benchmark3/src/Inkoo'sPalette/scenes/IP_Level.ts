@@ -164,6 +164,7 @@ export default class IP_Level extends Scene {
                         trash_mob.setHp(-1);
                         console.log("trashMob hp", trash_mob.getHp());
                         if (trash_mob.getName() === 'midas' && trash_mob.getHp() === 5) {
+                            console.log("trashMob hp", trash_mob.getHp());
                             this.emitter.fireEvent("SPAWNSHIELD");
                         }
 

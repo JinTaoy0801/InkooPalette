@@ -52,7 +52,6 @@ export default class IP_Level2 extends IP_Level {
         Input.enableInput();
         while (this.receiver.hasNextEvent() && this.isArea(this.receiver.peekNextEvent().type)) {
             let event = this.receiver.getNextEvent();
-            console.log('event in level 2', event);
             switch (event.type) {
                 case Areas.Mountains_Tutorial: {
                     // Go to the next level  
