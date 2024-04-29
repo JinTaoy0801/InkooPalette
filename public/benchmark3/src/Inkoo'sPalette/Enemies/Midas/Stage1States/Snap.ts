@@ -18,7 +18,6 @@ export default class Snap extends Stage1State {
     ];
 
     onEnter(options: Record<string, any>): void {
-        this.attackTimer.start()
         this.owner.animation.play("SNAP", false);
 
         this.beamLocation.forEach(pos => {

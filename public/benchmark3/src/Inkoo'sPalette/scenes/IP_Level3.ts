@@ -4,12 +4,14 @@ import Input from "../../Wolfie2D/Input/Input";
 import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
 import Rect from "../../Wolfie2D/Nodes/Graphics/Rect";
+import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import Timer from "../../Wolfie2D/Timing/Timer";
 import Color from "../../Wolfie2D/Utils/Color";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import Midas from "../Enemies/Midas/Midas";
 import { setPlayerSpawn } from "../Global/playerSpawn";
+import Shield from "../Shield/Shield";
 import IP_Level, { Areas, Layers } from "./IP_Level";
 import IP_Level2 from "./IP_Level2";
 import { sceneOptions } from "./MainMenu";
@@ -20,6 +22,9 @@ export default class IP_Level3 extends IP_Level {
 
     beams = new Array<Rect>(); 
     bigbeams = new Array<Sprite>(); 
+
+    midas: AnimatedSprite;
+    shield: AnimatedSprite;
 
     beamLocation = [
         new Vec2(30*32, 9*32),
@@ -42,6 +47,7 @@ export default class IP_Level3 extends IP_Level {
         this.load.spritesheet("ATTACK_UP", "assets/player/attack/attack_up.json");
         this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
         this.load.spritesheet("gold", "assets/enemies/goldlem/gold.json");
+        this.load.spritesheet("shield", "assets/enemies/midas/shield.json");
     }
 
     startScene(): void {
@@ -64,6 +70,8 @@ export default class IP_Level3 extends IP_Level {
             tilemap: Layers.Main,
         }
         let midas = new Midas(midasOptions, 10);
+        this.midas = midas.owner;
+
         this.trash_Mobs.set(midas.owner.id, midas);
         this.triggerdoor = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
             position: new Vec2(1000, 520),
@@ -77,7 +85,7 @@ export default class IP_Level3 extends IP_Level {
         );
 
         let walloffthrone = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
-            position: new Vec2(55*32, 320),
+            position: new Vec2(55*32, 350),
             size: new Vec2(32, 15*32),
         });
         walloffthrone.setColor(new Color(0,0,0,0));
@@ -85,8 +93,6 @@ export default class IP_Level3 extends IP_Level {
 
         //make the warning beams:
         this.initBeams();
-
-        console.log("enemy array", this.trash_Mobs);
     }
 
     updateScene(deltaT: number): void {
@@ -94,7 +100,6 @@ export default class IP_Level3 extends IP_Level {
         while (this.receiver.hasNextEvent() && (this.isArea(this.receiver.peekNextEvent().type) ||
         this.checkEvent(this.receiver.peekNextEvent().type))) {
             let event = this.receiver.getNextEvent();
-            console.log('eventasdasdasdasd', event)
 
             switch (event.type) {
                 case Areas.Midas_Mountains: {
@@ -121,11 +126,28 @@ export default class IP_Level3 extends IP_Level {
                     this.triggerdoor.destroy();
 
                     this.viewport.setZoomLevel(1);
+                    break;
                 }
                 case "SPAWNBEAM": {
                     this.beams.forEach(beam => {
                         beam.tweens.play("beamflash");
                     });
+                    break;
+                }
+                case "SPAWNSHIELD": {
+                    console.log('wow it ranned aslkdalksdlkjasdlkjasldjkalkjsdljk')
+                    this.shield = this.add.animatedSprite("shield", Layers.Main);
+                    this.shield.scale.set(2, 2);
+                    
+                    const HB_options = {
+                        actor: this.midas,
+                        sprite: this.shield,
+                        center: new Vec2(0, 0),
+                        halfSize: 60,
+                        offset : new Vec2(0, 0)
+                    }
+                    let newShield = new Shield(HB_options,"enemy")
+                    break;
                 }
             }
         }
@@ -135,7 +157,8 @@ export default class IP_Level3 extends IP_Level {
     checkEvent(s: String) {
         let checks = [
             "CLOSE_DOOR",
-            "SPAWNBEAM"
+            "SPAWNBEAM",
+            "SPAWNSHIELD"
         ]
         return checks.some(check => check === s);
     }
@@ -171,6 +194,7 @@ export default class IP_Level3 extends IP_Level {
             Areas.Midas_Mountains,
             "CLOSE_DOOR",
             "SPAWNBEAM",
+            "SPAWNSHIELD"
         ]);
     }
 

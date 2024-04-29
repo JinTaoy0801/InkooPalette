@@ -13,7 +13,8 @@ export default class Shield {
         this.box = settings.sprite;
         this.box.addPhysics(new Circle(settings.center, settings.halfSize), new Vec2(0, 0));
         this.box.addAI(ShieldController, settings);
-
+        console.log('the box collison', this.box.collisionShape);
+        this.box.position = settings.actor.position;
 
         this.box.setGroup(group); 
         this.hp = 3;
@@ -23,6 +24,7 @@ export default class Shield {
         // } else if(group === "player"){
         //     this.box.setTrigger("enemy", inkooEvents.TRASH_MOB_HIT,null);  
         // }
+        this.box.setTrigger("player", inkooEvents.PLAYER_ATTACK,null);
     }
 
     setHp(dmg:number){

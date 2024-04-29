@@ -30,10 +30,10 @@ export default class MidasController extends EnemyController {
 
     initializeAI(owner: AnimatedSprite, options: Record<string, any>){
 		super.initializeAI(owner, options);
-        this.patrolArea.leftBound = (options.spawn.x)-128;
+        this.patrolArea.leftBound = (options.spawn.x)-32*26;
         if (this.patrolArea.leftBound < 0)
             this.patrolArea.leftBound = 0;
-        this.patrolArea.rightBound = 128+(options.spawn.x);
+        this.patrolArea.rightBound = 20+(options.spawn.x);
 
 		this.receiver.subscribe(inkooEvents.PLAYER_MOVE);
 

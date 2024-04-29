@@ -12,15 +12,12 @@ export default abstract class Stage1State extends State {
     owner: AnimatedSprite;
     parent: MidasController;
 	playerPosition: Vec2 = Vec2.ZERO;
-    attackTimer:Timer;
-    lightAttackRange = 64;
 
-    attackCooldown: Timer;
+    attackCooldown = new Timer(3000);
 
     constructor(parent: StateMachine, owner: AnimatedSprite) {
 		super(parent);
 		this.owner = owner;
-        this.attackTimer = new Timer(2000);
         this.owner.setGroup("enemy");
         // console.log('whne setting the group', this.owner.group);
 	}
@@ -52,5 +49,6 @@ export default abstract class Stage1State extends State {
     update(deltaT: number): void {
         this.owner.move(Vec2.ZERO);
         this.playerPosition = (<IP_Level>this.owner.getScene()).player.position;
+        this.owner.move(Vec2.ZERO);
     }
 }

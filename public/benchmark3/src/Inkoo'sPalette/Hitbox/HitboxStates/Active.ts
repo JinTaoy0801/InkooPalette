@@ -75,7 +75,7 @@ export default class Active extends HitboxState {
             if (this.setting.customProperties!) {
                 if (this.setting.customProperties === "shorten") {
                     const currShape = this.owner.collisionShape;
-                    this.width-=0.5;
+                    this.width-=0.75;
                     if (this.width < 0) this.width = 0;
                     let newhw = new Vec2(this.width, currShape.hh)
                     this.owner.setCollisionShape(new AABB(Vec2.ZERO, newhw));
