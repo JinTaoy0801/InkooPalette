@@ -4,7 +4,7 @@ export default abstract class Enemy {
     protected _health: number;
     protected _maxHealth = 10;
     protected emitter = new Emitter;
-    protected name = "";
+    name = " ";
 
     constructor(hp:number) {
         this._health = hp;

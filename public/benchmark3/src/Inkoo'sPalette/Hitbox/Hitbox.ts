@@ -7,7 +7,7 @@ import HitboxController from "./HitboxController";
 import IP_Level from "../scenes/IP_Level";
 
 export default class Hitbox {
-    box: AnimatedSprite
+    box: AnimatedSprite;
 
     constructor(settings: Record<string, any>,group:string) {
         if (settings.shape != "circle") {
