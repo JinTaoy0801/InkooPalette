@@ -23,6 +23,7 @@ import Enemy from "../Enemies/Enemy";
 import IP_Level1 from "./IP_Level1";
 import { getPlayerSpawn, setPlayerSpawn } from "../Global/playerSpawn";
 import { getSceneOptions } from "../Global/sceneOptions";
+import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 
 export enum Layers {
     Player = "player",
@@ -46,7 +47,6 @@ export enum Areas {
 const sceneOptions = getSceneOptions();
 
 
-
 export default class IP_Level extends Scene {
     player: AnimatedSprite;
     protected goblins = new Array<Goblin>();
@@ -57,7 +57,6 @@ export default class IP_Level extends Scene {
     private heart1: Sprite;
     private heart2: Sprite;
     private heart3: Sprite;
-    protected isPaused: Boolean;
     protected respawnTimer: Timer;
 
     protected static livesCount: number = 6;
@@ -79,11 +78,10 @@ export default class IP_Level extends Scene {
     startScene(): void {
         this.initLayers();
         this.initPlayer();
+        this.addPausedScreen();
         this.initViewport();
         this.subscribeToEvents();
         this.addUI();
-        this.addPausedScreen();
-        this.isPaused = false;
         this.trash_Mobs = new Map<number, Enemy>();
         this.respawnTimer = new Timer(1000, () => {
             if(IP_Level.livesCount === 0){
@@ -178,6 +176,17 @@ export default class IP_Level extends Scene {
                     this.respawnPlayer();
                     break;
                 }
+                case inkooEvents.RESUME: {
+                    let pauseLayer = this.getLayer(Layers.Pause);
+                    this.initViewport();
+                    this.getSceneGraph().getAllNodes().forEach(element => {
+                        if(element instanceof AnimatedSprite){
+                            element.aiActive = true;
+                        }
+                    });
+                    pauseLayer.setHidden(true);
+                    break;
+                }
                 default: {
                     throw new Error(`Unhandled event caught in scene with type ${event.type}`)
                 }
@@ -187,6 +196,7 @@ export default class IP_Level extends Scene {
         if (Input.isJustPressed("pause")) {
             let pauseLayer = this.getLayer(Layers.Pause);
             if (pauseLayer.isHidden()) {
+                this.pauseViewport();
                 this.getSceneGraph().getAllNodes().forEach(element => {
                     if(element instanceof AnimatedSprite){
                         element.aiActive = false;
@@ -195,20 +205,13 @@ export default class IP_Level extends Scene {
                 pauseLayer.setHidden(false);
             }
             else {
+                this.initViewport();
                 this.getSceneGraph().getAllNodes().forEach(element => {
                     if(element instanceof AnimatedSprite){
                         element.aiActive = true;
                     }
                 });
                 pauseLayer.setHidden(true);
-            }
-        }
-
-        if (Input.isJustPressed("quit")) {
-            let pauseLayer = this.getLayer(Layers.Pause);
-            if (!pauseLayer.isHidden()) {
-                IP_Level.livesCount = 6;
-                this.sceneManager.changeToScene(MainMenu);
             }
         }
 
@@ -241,6 +244,12 @@ export default class IP_Level extends Scene {
         this.viewport.setBounds(0, 0, 64*32, 64*16);
     }
 
+    protected pauseViewport(): void {
+        let center = this.viewport.getHalfSize();
+        this.viewport.setFocus(center);
+        this.viewport.setZoomLevel(1);
+    }
+
     protected subscribeToEvents() {
         this.receiver.subscribe([
             inkooEvents.PLAYER_ATTACK,
@@ -249,7 +258,8 @@ export default class IP_Level extends Scene {
             inkooEvents.PLAYER_KILLED,
             inkooEvents.TRASH_MOB_HIT,
             inkooEvents.TRASH_MOB_KILLED,
-            inkooEvents.COLLIDED
+            inkooEvents.COLLIDED,
+            inkooEvents.RESUME
         ]);
     }
 
@@ -360,23 +370,32 @@ export default class IP_Level extends Scene {
     }
 
     protected addPausedScreen(): void {
+        let center = this.viewport.getHalfSize();
+        this.viewport.setFocus(center);
+        this.viewport.setZoomLevel(1);
         this.pause_bg = this.add.sprite("background", Layers.Pause);
-        this.pause_bg.scale.set(3, 3);
-        this.pause_bg.position = new Vec2(500, 500);
+        this.pause_bg.scale.set(5, 5);
+        this.pause_bg.position = new Vec2(center.x, center.y);
 
-        const pauseHeader = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Pause, {position: new Vec2(400, 100), text: "Pause"});
+        const pauseHeader = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Pause, {position: new Vec2(center.x, center.y - 300), text: "Pause"});
         pauseHeader.textColor = Color.WHITE;
         pauseHeader.font = "daydream";
 
-        const resume = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Pause, {position: new Vec2(400, 250), text: "Esc To Continue"});
+        const resume = <Button>this.add.uiElement(UIElementType.BUTTON, Layers.Pause, {position: new Vec2(center.x, center.y - 50), text: "Resume"});
         resume.textColor = Color.WHITE;
+        resume.size.set(170, 30)
+        resume.backgroundColor = Color.TRANSPARENT
         resume.font = "daydream";
         resume.fontSize = 20;
+        resume.onClickEventId = inkooEvents.RESUME;
 
-        const menu = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Pause, {position: new Vec2(400, 300), text: "Q To Main Menu"});
+        const menu = <Button>this.add.uiElement(UIElementType.BUTTON, Layers.Pause, {position: new Vec2(center.x, center.y + 50), text: "Main Menu"});
         menu.textColor = Color.WHITE;
+        menu.backgroundColor = Color.TRANSPARENT;
+        menu.size.set(225, 30)
         menu.font = "daydream";
         menu.fontSize = 20;
+        menu.onClickEventId = inkooEvents.PLAYER_KILLED;
     }
 
     protected initPlayer(): void {
