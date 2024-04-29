@@ -11,6 +11,6 @@ export default abstract class Enemy {
         return this._health;
     }
     setHp(dmg:number){
-        console.log("AHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+        this._health += dmg;
     }
 }

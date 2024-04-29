@@ -129,10 +129,7 @@ export default class IP_Level3 extends IP_Level {
                 }
             }
         }
-        if (this.receiver.hasNextEvent())
-            console.log('goes into supder', this.receiver.peekNextEvent());
         super.updateScene(deltaT);
-        // console.log('trigger door stuff', this.triggerdoor);
     }
 
     checkEvent(s: String) {
