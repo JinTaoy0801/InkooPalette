@@ -157,6 +157,9 @@ export default abstract class GameNode implements Positioned, Unique, Updateable
 		this.moving = true;
 		this._velocity = velocity;
 	};
+	moveProjectile(target:Vec2,){
+
+	};
 
 	moveOnPath(speed: number, path: NavigationPath): void {
 		if(this.frozen) return;

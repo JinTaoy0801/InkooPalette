@@ -83,12 +83,24 @@ export default class Active extends HitboxState {
                     this.owner.setCollisionShape(new AABB(Vec2.ZERO, newhw));
                     this.owner.scale.x = this.width/2;
                 }
-                if (this.setting.customProperties === "right") {
+                else if (this.setting.customProperties === "right") {
                     this.owner.move(new Vec2(6, 0));
                 }
-                if (this.setting.customProperties === "left") {
+                else if (this.setting.customProperties === "left") {
                     this.owner.move(new Vec2(-6, 0));
                 }
+                else if(this.setting.customProperties === "projectile"){
+                    const direction = this.setting.targetPosition.sub(this.owner.position).normalize();
+                    const initialSpeed = 5; 
+                
+                    const velocityX = direction.x * initialSpeed;
+                    const velocityY = direction.y * initialSpeed;
+                
+                    const combinedVector = new Vec2(velocityX, velocityY).add(new Vec2(0, 9));
+                
+                    this.owner.move(combinedVector);
+                }
+
             }
 
             if (!this.owner.animation.isPlaying(this.setting.attack_name)) {
