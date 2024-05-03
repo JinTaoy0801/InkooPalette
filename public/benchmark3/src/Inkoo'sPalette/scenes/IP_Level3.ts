@@ -187,8 +187,6 @@ export default class IP_Level3 extends IP_Level {
                         this.rock.addPhysics(new AABB(Vec2.ZERO, new Vec2(10*2,10*2)), Vec2.ZERO);
                         this.rock.position.set(40*32, 18*32+8);
                         this.rock.setGroup("env");
-                        // this.rock.tweens.add('filler', () => {});
-                        // console.log('rock gets spawnasndalsdlkasd:', this.rock);
                     }
                     break;
                 }
@@ -201,21 +199,26 @@ export default class IP_Level3 extends IP_Level {
                         // console.log('this.rock', this.rock);
                     }, 350);
 
-                    this.rockvelocity = new Vec2(20, 0);
-                    if (this.shield! && this.shielddmgbuffer.isStopped()) {
-                        this.shielddmgbuffer.start();
-                        this.shield.setHp(-1);
-                        if (this.shield.getHp() === 0) {
-                            this.shield.box.animation.play("BROKEN", false, "BROKENSHIELD");
-                            this.midas.toggleInvincible();
-                        }
-                        else this.shield.box.animation.play("BREAKING");
+                    if (this.player.invertX) {
+                        this.rockvelocity = new Vec2(-20, 0);
                     }
                     else {
-                        if (this.dmgcooldown.isStopped() && !this.midas.isInvincible) {
-                            this.dmgcooldown.start();
-                            this.midas.setHp(-1);
-                            console.log('midas hp:', this.midas.getHp());
+                        this.rockvelocity = new Vec2(20, 0);
+                        if (this.shield! && this.shielddmgbuffer.isStopped()) {
+                            this.shielddmgbuffer.start();
+                            this.shield.setHp(-1);
+                            if (this.shield.getHp() === 0) {
+                                this.shield.box.animation.play("BROKEN", false, "BROKENSHIELD");
+                                this.midas.toggleInvincible();
+                            }
+                            else this.shield.box.animation.play("BREAKING");
+                        }
+                        else {
+                            if (this.dmgcooldown.isStopped() && !this.midas.isInvincible) {
+                                this.dmgcooldown.start();
+                                this.midas.setHp(-1);
+                                // console.log('midas hp:', this.midas.getHp());
+                            }
                         }
                     }
                     break;
