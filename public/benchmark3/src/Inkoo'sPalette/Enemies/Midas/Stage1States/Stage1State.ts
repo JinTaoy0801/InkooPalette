@@ -47,7 +47,6 @@ export default abstract class Stage1State extends State {
     
 
     update(deltaT: number): void {
-        this.owner.move(Vec2.ZERO);
         this.playerPosition = (<IP_Level>this.owner.getScene()).player.position;
         this.owner.move(Vec2.ZERO);
     }

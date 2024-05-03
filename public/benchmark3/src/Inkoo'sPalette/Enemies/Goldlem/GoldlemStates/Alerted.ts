@@ -12,10 +12,10 @@ export default class Alerted extends GoldlemState {
     update(deltaT: number): void {
         super.update(deltaT);
 
-        // if (this.parent.patrolArea.leftBound > this.owner.position.x || this.parent.patrolArea.rightBound < this.owner.position.x) {
-        //     this.finished(GoldlemStates.IDLE);
-        // }
-        this.owner.move(Vec2.ZERO);
+        if (this.parent.patrolArea.leftBound > this.owner.position.x || this.parent.patrolArea.rightBound < this.owner.position.x) {
+            this.finished(GoldlemStates.IDLE);
+        }
+       
     }
 
     onExit(): Record<string, any> {
