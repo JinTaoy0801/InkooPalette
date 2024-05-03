@@ -10,5 +10,6 @@ export enum inkooEvents {
     TRASH_MOB_HIT = "Trash_Mob_Hit",
     TRASH_MOB_KILLED = "Trash_Mob_Killed",
     COLLIDED = "Collided",
-    RESUME = "RESUME"
+    RESUME = "RESUME",
+    PLAY_SOUND = "play_sound"
 }

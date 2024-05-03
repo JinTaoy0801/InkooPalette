@@ -111,6 +111,7 @@ export default class IP_Level extends Scene {
     updateScene(deltaT: number){
         if(this.player.position.y > 1200 ){
             this.player.position.copy(getLastPlayerPosition());
+            this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "took_damage", loop: false, holdReference: false });
             this.incPlayerLife(-1);
         }
         while (this.receiver.hasNextEvent()) {
@@ -136,6 +137,7 @@ export default class IP_Level extends Scene {
                 case inkooEvents.PLAYER_ATTACK: {
                     if(this.sceneGraph.getNode(event.data.get("node")) === this.player) {
                         if(this.isInvincible.isStopped()){
+                            this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "took_damage", loop: false, holdReference: false });
                             this.incPlayerLife(-1);
                             console.log("playerHp", IP_Level.livesCount);
                             console.log("goblin", event.data.toString());
@@ -147,6 +149,7 @@ export default class IP_Level extends Scene {
                 case inkooEvents.COLLIDED: {
                     if(this.sceneGraph.getNode(event.data.get("other")) === this.player) {
                         if(this.isInvincible.isStopped()){
+                            this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "took_damage", loop: false, holdReference: false });
                             this.incPlayerLife(-1);
                             console.log("playerHp", IP_Level.livesCount);
                             console.log("goblin", event.data.toString());
@@ -161,6 +164,7 @@ export default class IP_Level extends Scene {
                         console.log("playerhit data", event.data.toString());
                         if (this.trash_Mobs.get(event.data.get("node"))!) {
                             const trash_mob = this.trash_Mobs.get(event.data.get("node"));
+                            this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "hit_enemy", loop: false, holdReference: false });
                             trash_mob.setHp(-1);
                             console.log("trashMob hp", trash_mob.getHp());
                             if (trash_mob.getName() == 'midas' && trash_mob.getHp() === 5) {
@@ -201,6 +205,10 @@ export default class IP_Level extends Scene {
                 }
             }
         }
+
+        // if (Input.isJustPressed("attack")) {
+        //     this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "attack", loop: false, holdReference: false });
+        // }
         
         if (Input.isJustPressed("pause")) {
             let pauseLayer = this.getLayer(Layers.Pause);
@@ -444,7 +452,8 @@ export default class IP_Level extends Scene {
             this.heart1.destroy();
             Input.disableInput();
             this.player.disablePhysics();
-            this.emitter.fireEvent(inkooEvents.PLAYER_KILLED);
+            this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "dead", loop: false, holdReference: false });
+            this.player.tweens.play("death");
         }
 
 
