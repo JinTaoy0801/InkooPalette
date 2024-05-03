@@ -22,7 +22,16 @@ export default class Midas extends Enemy {
     }
 
     setHp(dmg: number): void {
-        super.setHp(dmg);
-        this.owner.animation.play("DAMAGED");
+        if (!this.isInvincible) {
+            super.setHp(dmg);
+            this.owner.animation.play("DAMAGED");
+            if (this.getHp() === 5) {
+                this.emitter.fireEvent("SPAWNSHIELD");
+            }
+            if (this.getHp() === 0) {
+                console.log("this code ran when mdias dasdkjajklsdlkjhasdlalsdljkas")
+                this.owner.animation.play("DEAD", false, "DEADMIDAS");
+            }
+        }
     }
 }

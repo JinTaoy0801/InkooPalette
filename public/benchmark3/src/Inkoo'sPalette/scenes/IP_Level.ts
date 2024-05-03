@@ -161,11 +161,10 @@ export default class IP_Level extends Scene {
                         console.log("playerhit data", event.data.toString());
                         if (this.trash_Mobs.get(event.data.get("node"))!) {
                             const trash_mob = this.trash_Mobs.get(event.data.get("node"));
-                            trash_mob.setHp(-1);
-                            console.log("trashMob hp", trash_mob.getHp());
-                            if (trash_mob.getName() == 'midas' && trash_mob.getHp() === 5) {
-                                this.emitter.fireEvent("SPAWNSHIELD");
+                            if (!trash_mob.isInvincible) {
+                                trash_mob.setHp(-1);
                             }
+                            console.log("trashMob hp", trash_mob.getHp());
                         }
                         
                         this.emitter.fireEvent("POGOTIME");

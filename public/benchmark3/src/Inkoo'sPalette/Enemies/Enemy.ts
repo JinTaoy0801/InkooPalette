@@ -7,6 +7,7 @@ export default abstract class Enemy {
     protected emitter = new Emitter;
     owner: AnimatedSprite;
     name = " ";
+    isInvincible = false;
 
     constructor(hp:number) {
         this._health = hp;
@@ -21,5 +22,9 @@ export default abstract class Enemy {
 
     getName() {
         return this.name;
+    }
+
+    toggleInvincible() {
+        this.isInvincible = !this.isInvincible;
     }
 }
