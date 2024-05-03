@@ -12,10 +12,9 @@ export default class Idle extends GoldlemState {
 
   update(deltaT: number): void {
     super.update(deltaT);
-    // if(this.playerInPatrol(this.patrolArea)){
-    //   this.finished(GoldlemStates.ALERTED);
-    // }
-    this.owner.move(Vec2.ZERO);
+    if(this.playerInPatrol(this.patrolArea)){
+      this.finished(GoldlemStates.ALERTED);
+    }
   }
 
   onExit(): Record<string, any> {
