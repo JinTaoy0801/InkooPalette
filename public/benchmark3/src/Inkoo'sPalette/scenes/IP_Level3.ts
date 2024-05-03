@@ -23,8 +23,10 @@ export default class IP_Level3 extends IP_Level {
     beams = new Array<Rect>(); 
     bigbeams = new Array<Sprite>(); 
 
-    midas: AnimatedSprite;
-    shield: AnimatedSprite;
+    midas: Midas;
+    shield: Shield;
+    rock: AnimatedSprite;
+    rockvelocity = Vec2.ZERO;
 
     beamLocation = [
         new Vec2(30*32, 9*32),
@@ -70,10 +72,10 @@ export default class IP_Level3 extends IP_Level {
             spawn: new Vec2(1740, 572),
             tilemap: Layers.Main,
         }
-        let midas = new Midas(midasOptions, 10);
-        this.midas = midas.owner;
+        this.midas = new Midas(midasOptions, 10);
+        // this.midas = midas.owner;
 
-        this.trash_Mobs.set(midas.owner.id, midas);
+        this.trash_Mobs.set(this.midas.owner.id, this.midas);
         this.triggerdoor = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
             position: new Vec2(1000, 520),
             size: new Vec2(32, 5*32),
@@ -101,7 +103,7 @@ export default class IP_Level3 extends IP_Level {
         while (this.receiver.hasNextEvent() && (this.isArea(this.receiver.peekNextEvent().type) ||
         this.checkEvent(this.receiver.peekNextEvent().type))) {
             let event = this.receiver.getNextEvent();
-
+            console.log('event: ', event.type);
             switch (event.type) {
                 case Areas.Midas_Mountains: {
                     // Go to the next level  
@@ -136,22 +138,22 @@ export default class IP_Level3 extends IP_Level {
                     break;
                 }
                 case "SPAWNSHIELD": {
-                    this.shield = this.add.animatedSprite("shield", Layers.Main);
-                    this.shield.scale.set(2, 2);
-                    
+                    let newShield = this.add.animatedSprite("shield", Layers.Main);
+                    newShield.scale.set(2, 2);
+
                     const HB_options = {
                         actor: this.midas,
-                        sprite: this.shield,
+                        sprite: newShield,
                         center: new Vec2(0, 0),
                         halfSize: 60,
                         offset : new Vec2(0, 0)
                     }
-                    let newShield = new Shield(HB_options, "shield")
+                    this.shield = new Shield(HB_options, "shield")
+                    
                     console.log(newShield);
                     break;
                 }
                 case "GROUNDSHAKE": {
-                    console.log('wow it ranned aslkdalksdlkjasdlkjasldjkalkjsdljk')
                     let shake1 = this.add.animatedSprite("rock", Layers.Main);
                     shake1.scale.set(2, 2);
                     
@@ -172,9 +174,41 @@ export default class IP_Level3 extends IP_Level {
                     }, 500)
                     break;
                 }
+                case "SPAWNROCK": {
+                    if (this.rock == undefined) {
+                        this.rock = this.add.animatedSprite('gold', Layers.Main);
+                        this.rock.scale.set(10, 10);
+                        this.rock.addPhysics(new AABB(Vec2.ZERO, new Vec2(10*2,10*2)), Vec2.ZERO);
+                        this.rock.position.set(40*32, 18*32+8);
+                        this.rock.setGroup("env");
+                    }
+                    break;
+                }
+                case "BREAKSHIELD": {
+                    this.rockvelocity = new Vec2(20, 0);
+                    if (this.shield!) {
+                        this.shield.setHp(1);
+                        if (this.shield.getHp() === 0) {
+                            this.shield.box.animation.play("BROKEN");
+                            setTimeout(()=> {
+                                this.shield.box.destroy();
+                                this.shield = undefined;
+                            }, 250);
+                        }
+                        else this.shield.box.animation.play("BREAKING");
+                    }
+                    else {
+                        this.midas.setHp(1);
+                    }
+                    break;
+                }
             }
         }
+
         super.updateScene(deltaT);
+        if (this.rock!) {
+            this.rock.move(this.rockvelocity);
+        }
     }
 
     checkEvent(s: String) {
@@ -182,7 +216,9 @@ export default class IP_Level3 extends IP_Level {
             "CLOSE_DOOR",
             "SPAWNBEAM",
             "SPAWNSHIELD",
-            "GROUNDSHAKE"
+            "GROUNDSHAKE",
+            "SPAWNROCK",
+            "BREAKSHIELD"
         ]
         return checks.some(check => check === s);
     }
@@ -219,7 +255,9 @@ export default class IP_Level3 extends IP_Level {
             "CLOSE_DOOR",
             "SPAWNBEAM",
             "SPAWNSHIELD",
-            "GROUNDSHAKE"
+            "GROUNDSHAKE",
+            "SPAWNROCK",
+            "BREAKSHIELD"
         ]);
     }
 

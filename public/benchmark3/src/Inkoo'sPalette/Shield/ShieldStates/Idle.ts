@@ -12,7 +12,6 @@ export default class Idle extends SheildState {
     }
 
     handleInput(event: GameEvent): void {
-        
     }
 
     onExit(): Record<string, any> {

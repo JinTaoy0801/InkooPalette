@@ -54,7 +54,7 @@ export default abstract class InAir extends PlayerState {
 				actor: this.owner,
 				sprite: this.attack,
 				attack_name: attack_name,
-				eventType: "player",
+				eventType: "playerattack",
 				center: new Vec2(0, 0),
 				halfSize: halfSize,
 				invertX: this.owner.invertX,
@@ -64,7 +64,7 @@ export default abstract class InAir extends PlayerState {
 				colliderOffset: new Vec2(0, 0),
             	delay: new Timer(0)
 			}
-			let hitbox = new Hitbox(HB_options, "player");
+			let hitbox = new Hitbox(HB_options, "playerattack");
 
 		}
 

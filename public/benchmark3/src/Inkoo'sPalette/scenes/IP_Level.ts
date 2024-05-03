@@ -114,7 +114,7 @@ export default class IP_Level extends Scene {
         }
         while (this.receiver.hasNextEvent()) {
             let event = this.receiver.getNextEvent();
-            console.log('eventype', event.type);
+            // console.log('eventype', event.type);
             switch (event.type) {
                 case inkooEvents.PAUSE_MENU: {
                     this.sceneManager.changeToScene(MainMenu);

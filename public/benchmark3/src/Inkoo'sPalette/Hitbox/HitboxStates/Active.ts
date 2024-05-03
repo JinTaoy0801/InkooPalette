@@ -56,16 +56,18 @@ export default class Active extends HitboxState {
                 this.owner.position = this.setting.customLocation;
             }
             else {
-                const player = this.setting.actor;
+                if (this.setting.actor!) {
+                    const player = this.setting.actor;
             
-                let boxX = player.position.x + this.setting.offset.x;
-                let boxY = player.position.y + this.setting.offset.y;
-                if (this.setting.invertX) {
-                    boxX = player.position.x - this.setting.offset.x;
-                }
-                this.owner.invertX = this.setting.invertX
+                    let boxX = player.position.x + this.setting.offset.x;
+                    let boxY = player.position.y + this.setting.offset.y;
+                    if (this.setting.invertX) {
+                        boxX = player.position.x - this.setting.offset.x;
+                    }
+                    this.owner.invertX = this.setting.invertX
 
-                this.owner.position = new Vec2(boxX, boxY);
+                    this.owner.position = new Vec2(boxX, boxY);
+                }
             }
 
             if (this.setting.attack_name == "ATTACK_UP") {
@@ -90,6 +92,10 @@ export default class Active extends HitboxState {
             }
 
             if (!this.owner.animation.isPlaying(this.setting.attack_name)) {
+                console.log('this.setting.asdasdasd', this.setting.attack_name)
+                if (this.setting.attack_name == "ROCK_ATTACK") {
+                    this.emitter.fireEvent("SPAWNROCK");
+                }
                 this.owner.destroy();
             }  
         }
