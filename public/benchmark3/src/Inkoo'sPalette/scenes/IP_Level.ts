@@ -165,7 +165,9 @@ export default class IP_Level extends Scene {
                         if (this.trash_Mobs.get(event.data.get("node"))!) {
                             const trash_mob = this.trash_Mobs.get(event.data.get("node"));
                             this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "hit_enemy", loop: false, holdReference: false });
-                            trash_mob.setHp(-1);
+                            if (!trash_mob.isInvincible) {
+                                trash_mob.setHp(-1);
+                            }
                             console.log("trashMob hp", trash_mob.getHp());
                         }
                         
