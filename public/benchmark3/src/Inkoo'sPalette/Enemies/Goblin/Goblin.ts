@@ -53,10 +53,12 @@ export default class Goblin extends Enemy{
     }
     setHp(dmg:number){
         super.setHp(dmg);
-        this.owner.tweens.play("take_DMG");
-        if(this._health <= 0){
+        if(this._health <= 0)
             this.owner.tweens.play("DEATH");
-        }
+        
+        else
+            this.owner.tweens.play("take_DMG");
+
     }
     
 }

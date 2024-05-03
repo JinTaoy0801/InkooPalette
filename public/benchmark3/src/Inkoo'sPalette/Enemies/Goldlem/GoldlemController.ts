@@ -35,10 +35,10 @@ export default class GoldlemController extends EnemyController {
 
     initializeAI(owner: AnimatedSprite, options: Record<string, any>){
 		super.initializeAI(owner, options);
-        this.patrolArea.leftBound = (options.spawn.x)-256;
+        this.patrolArea.leftBound = (options.spawn.x)-(32*10);
         if (this.patrolArea.leftBound < 0)
             this.patrolArea.leftBound = 0;
-        this.patrolArea.rightBound = 256+(options.spawn.x);
+        this.patrolArea.rightBound = (32*10)+(options.spawn.x);
 
 		this.receiver.subscribe(inkooEvents.PLAYER_MOVE);
 

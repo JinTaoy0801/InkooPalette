@@ -87,19 +87,6 @@ export default class IP_Level1 extends IP_Level {
                 tilemap: Layers.Main,
             }
             let temp = new Goblin(goblinOptions,5);
-            temp.owner.tweens.add("take_DMG", {
-                startDelay: 0,
-                duration: 500,
-                effects: [
-                    {
-                        property: "alpha",
-                        start: 0,
-                        end: 1,
-                        ease: EaseFunctionType.LINEAR,
-                        resetOnComplete: true
-                    }
-                ]
-            });
             this.trash_Mobs.set(goblinOptions.owner.id,temp);
         }
         

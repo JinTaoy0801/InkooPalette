@@ -9,7 +9,16 @@ export default class Alerted extends GoldlemState {
 
     update(deltaT: number): void {
         super.update(deltaT);
-        if(this.inRanged(10) && this.attackTimer.isStopped()){
+        this.parent.direction = this.owner.position.dirTo(this.playerPosition);
+        if(this.parent.direction.x < 0){
+            this.parent.directionPatrol = 'left';
+            this.owner.invertX = false;
+        } else{
+            this.parent.directionPatrol = 'right';
+            this.owner.invertX = true;
+        }
+        if(this.attackTimer.isStopped()){
+            console.log("go into attack");
             this.finished(GoldlemStates.ATTACKING);
             this.attackTimer.start()
         }

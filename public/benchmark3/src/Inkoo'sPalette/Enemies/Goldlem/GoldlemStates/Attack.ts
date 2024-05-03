@@ -10,23 +10,24 @@ export default class Attack extends GoldlemState{
     attack: AnimatedSprite;
     onEnter(options: Record<string, any>): void {
         this.playerPosition = (<IP_Level>this.owner.getScene()).player.position;
-        this.owner.animation.playIfNotAlready("ATTACK", false);
-        this.attack = this.owner.getScene().add.animatedSprite("rock", Layers.Main);
-        this.attack.scale.set(2, 2);
+        this.owner.animation.play("ATTACK", false);
+        this.attack = this.owner.getScene().add.animatedSprite("gold", Layers.Main);
+        this.attack.scale.set(3, 3);
         const projectile = {
             actor: this.owner,
             sprite: this.attack,
-            attack_name: "ROCK_ATTACK",
+            attack_name: "ATTACK",
             eventType: "enemy",
             center: new Vec2(0, 0),
-            halfSize: new Vec2(36, 36),
+            halfSize: 6,
             invertX: this.owner.invertX,
-            offset : new Vec2(-15, 0),
+            offset : new Vec2(0, 0),
             targetPosition: new Vec2(this.playerPosition.x, this.playerPosition.y),
-            shape: "AABB",
-            colliderOffset: new Vec2(0, 5),
-            customLocation: new Vec2(this.owner.position.x,this.owner.position.y-128),
+            shape: "circle",
+            colliderOffset: new Vec2(0, 0),
+            customLocation: new Vec2(this.owner.position.x,this.owner.position.y-40),
             delay: new Timer(0),
+            //wait: new Timer(0),
             customProperties: "projectile"
         }
         let hitbox2 = new Hitbox(projectile, "enemy");
@@ -35,7 +36,6 @@ export default class Attack extends GoldlemState{
     update(deltaT: number): void {
         super.update(deltaT);
         if (!this.owner.animation.isPlaying("ATTACK")) {
-
             if(this.playerInPatrol(this.patrolArea)){
                 this.finished(GoldlemStates.ALERTED);
             } else{

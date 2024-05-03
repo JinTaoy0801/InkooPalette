@@ -11,7 +11,7 @@ export default class Active extends HitboxState {
     owner: AnimatedSprite;
     setting: Record<string, any>;
     delay: Timer;
-
+    positionTimer = new Timer(250);
     wait = new Timer(0);
     width: number
     onEnter(options: Record<string, any>) {
@@ -89,21 +89,34 @@ export default class Active extends HitboxState {
                 else if (this.setting.customProperties === "left") {
                     this.owner.move(new Vec2(-6, 0));
                 }
-                else if(this.setting.customProperties === "projectile"){
-                    const direction = this.setting.targetPosition.sub(this.owner.position).normalize();
-                    const initialSpeed = 5; 
-                
+                else if (this.setting.customProperties === "projectile") {
+                    // Determine the direction vector from the owner's position to the target position
+                    const direction = this.setting.targetPosition.clone().sub(this.owner.position).normalize();
+                    const distance = this.owner.position.distanceTo(this.setting.targetPosition);
+                    const maxDistance = 300;
+                    const minSpeed = 40;
+                    const maxSpeed = 80;
+                    const initialSpeed = Math.max(minSpeed, maxSpeed - (maxSpeed - minSpeed) * (distance / maxDistance));
+    
                     const velocityX = direction.x * initialSpeed;
-                    const velocityY = direction.y * initialSpeed;
+                    const velocityY = Math.sqrt(initialSpeed * initialSpeed - velocityX * velocityX);
                 
-                    const combinedVector = new Vec2(velocityX, velocityY).add(new Vec2(0, 9));
+                    // Set the initial velocity
+                    let velocity = new Vec2(velocityX, velocityY);
+                    this.owner.position.x += velocity.x * deltaT;
+                    this.owner.position.y += velocity.y * deltaT;
+                    velocity.y -= 1000 * deltaT;
                 
-                    this.owner.move(combinedVector);
+                    this.owner.move(velocity.scaled(deltaT));
+                
+                    if (this.owner.onGround) {
+                        this.owner.destroy();
+                    }
                 }
 
             }
 
-            if (!this.owner.animation.isPlaying(this.setting.attack_name)) {
+            if (!this.owner.animation.isPlaying(this.setting.attack_name) && this.setting.customProperties !== "projectile") {
                 console.log('this.setting.asdasdasd', this.setting.attack_name)
                 if (this.setting.attack_name == "ROCK_ATTACK") {
                     this.emitter.fireEvent("SPAWNROCK");

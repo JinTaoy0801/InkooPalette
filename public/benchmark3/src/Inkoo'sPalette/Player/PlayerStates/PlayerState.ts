@@ -40,13 +40,11 @@ export default abstract class  PlayerState extends State{
 
 	update(deltaT: number): void {
 		// Do gravity
-		if (this.positionTimer.isStopped()){
-			this.emitter.fireEvent(inkooEvents.PLAYER_MOVE, {position: this.owner.position.clone()});
-			this.positionTimer.start();
-		}
+		// if (this.positionTimer.isStopped()){
+		// 	this.emitter.fireEvent(inkooEvents.PLAYER_MOVE, {position: this.owner.position.clone()});
+		// 	this.positionTimer.start();
+		// }
 		this.parent.velocity.y += this.gravity*deltaT;
-
-		// console.log(this.owner.position);
 	}
 
 	isAttacking () {
