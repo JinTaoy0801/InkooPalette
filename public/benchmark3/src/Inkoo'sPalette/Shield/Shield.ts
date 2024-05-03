@@ -25,7 +25,6 @@ export default class Shield {
         //     this.box.setTrigger("enemy", inkooEvents.TRASH_MOB_HIT,null);  
         // }
         this.box.setTrigger("player", inkooEvents.PLAYER_ATTACK,null);
-        this.box.setTrigger("env", "SHIELDHIT", null);
     }
 
     setHp(dmg:number){

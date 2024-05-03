@@ -60,7 +60,7 @@ export default class Snap extends Stage1State {
                 actor: this.owner,
                 sprite: this.attack,
                 attack_name: "ROCK_ATTACK",
-                eventType: "enemy",
+                eventType: "MIDAS",
                 center: new Vec2(0, 0),
                 halfSize: new Vec2(36, 36),
                 invertX: this.owner.invertX,

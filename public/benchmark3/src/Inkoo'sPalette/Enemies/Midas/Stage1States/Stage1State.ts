@@ -13,7 +13,7 @@ export default abstract class Stage1State extends State {
     parent: MidasController;
 	playerPosition: Vec2 = Vec2.ZERO;
 
-    attackCooldown = new Timer(3000);
+    attackCooldown = new Timer(4000);
 
     constructor(parent: StateMachine, owner: AnimatedSprite) {
 		super(parent);
@@ -50,5 +50,12 @@ export default abstract class Stage1State extends State {
         this.owner.move(Vec2.ZERO);
         this.playerPosition = (<IP_Level>this.owner.getScene()).player.position;
         this.owner.move(Vec2.ZERO);
+    }
+
+    checkPriorityAnimations() {
+        const anis = [
+			"DAMAGED"
+		]
+		return anis.some(ani => this.owner.animation.isPlaying(ani));
     }
 }

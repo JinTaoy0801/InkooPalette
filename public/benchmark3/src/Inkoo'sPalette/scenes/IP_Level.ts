@@ -24,6 +24,7 @@ import IP_Level1 from "./IP_Level1";
 import { getPlayerSpawn, setPlayerSpawn } from "../Global/playerSpawn";
 import { getSceneOptions } from "../Global/sceneOptions";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
+import Midas from "../Enemies/Midas/Midas";
 
 export enum Layers {
     Player = "player",
@@ -158,13 +159,15 @@ export default class IP_Level extends Scene {
                 case inkooEvents.TRASH_MOB_HIT:{
                     if(this.playerAttack.isStopped()){
                         console.log("playerhit data", event.data.toString());
-                        const trash_mob = this.trash_Mobs.get(event.data.get("node"));
-                        trash_mob.setHp(-1);
-                        console.log("trashMob hp", trash_mob.getHp());
-                        if (trash_mob.getName() == 'midas' && trash_mob.getHp() === 5) {
-                            this.emitter.fireEvent("SPAWNSHIELD");
+                        if (this.trash_Mobs.get(event.data.get("node"))!) {
+                            const trash_mob = this.trash_Mobs.get(event.data.get("node"));
+                            trash_mob.setHp(-1);
+                            console.log("trashMob hp", trash_mob.getHp());
+                            if (trash_mob.getName() == 'midas' && trash_mob.getHp() === 5) {
+                                this.emitter.fireEvent("SPAWNSHIELD");
+                            }
                         }
-
+                        
                         this.emitter.fireEvent("POGOTIME");
 
                         this.playerAttack.start();
