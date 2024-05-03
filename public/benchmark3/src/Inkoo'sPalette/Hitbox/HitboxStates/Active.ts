@@ -90,18 +90,16 @@ export default class Active extends HitboxState {
                     this.owner.move(new Vec2(-6, 0));
                 }
                 else if (this.setting.customProperties === "projectile") {
-                    // Determine the direction vector from the owner's position to the target position
                     const direction = this.setting.targetPosition.clone().sub(this.owner.position).normalize();
                     const distance = this.owner.position.distanceTo(this.setting.targetPosition);
                     const maxDistance = 300;
-                    const minSpeed = 40;
-                    const maxSpeed = 80;
+                    const minSpeed = 55;
+                    const maxSpeed = 110;
                     const initialSpeed = Math.max(minSpeed, maxSpeed - (maxSpeed - minSpeed) * (distance / maxDistance));
     
                     const velocityX = direction.x * initialSpeed;
                     const velocityY = Math.sqrt(initialSpeed * initialSpeed - velocityX * velocityX);
-                
-                    // Set the initial velocity
+
                     let velocity = new Vec2(velocityX, velocityY);
                     this.owner.position.x += velocity.x * deltaT;
                     this.owner.position.y += velocity.y * deltaT;
@@ -109,7 +107,9 @@ export default class Active extends HitboxState {
                 
                     this.owner.move(velocity.scaled(deltaT));
                 
-                    if (this.owner.onGround) {
+                    if (distance < 1) {
+                        this.owner.destroy();
+                    } else if (distance > 1000){
                         this.owner.destroy();
                     }
                 }
