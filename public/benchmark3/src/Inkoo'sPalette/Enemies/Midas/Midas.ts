@@ -20,4 +20,9 @@ export default class Midas extends Enemy {
         this.owner.colliderOffset.set(2, 1);
         this.owner.setGroup("enemy");
     }
+
+    setHp(dmg: number): void {
+        super.setHp(dmg);
+        this.owner.animation.play("DAMAGED");
+    }
 }

@@ -17,22 +17,22 @@
         },
         { 
           "name": "BREAKING",
-          "frames": [ {"index": 6, "duration": 50},
-                      {"index": 7, "duration": 50},
-                      {"index": 8, "duration": 50},
-                      {"index": 9, "duration": 50},
-                      {"index": 10, "duration": 50},
-                      {"index": 11, "duration": 50}
+          "frames": [ {"index": 6, "duration": 25},
+                      {"index": 7, "duration": 25},
+                      {"index": 8, "duration": 25},
+                      {"index": 9, "duration": 25},
+                      {"index": 10, "duration": 25},
+                      {"index": 11, "duration": 25}
           ]
         },
         { 
           "name": "BROKEN",
-          "frames": [ {"index": 12, "duration": 50},
-                      {"index": 13, "duration": 50},
-                      {"index": 14, "duration": 50},
-                      {"index": 15, "duration": 50},
-                      {"index": 16, "duration": 50},
-                      {"index": 17, "duration": 50}
+          "frames": [ {"index": 12, "duration": 25},
+                      {"index": 13, "duration": 20},
+                      {"index": 14, "duration": 15},
+                      {"index": 15, "duration": 15},
+                      {"index": 16, "duration": 15},
+                      {"index": 17, "duration": 15}
           ]
         }
     ]

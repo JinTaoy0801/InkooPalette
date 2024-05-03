@@ -8,10 +8,12 @@ export default class Idle extends Stage1State {
   
     update(deltaT: number): void {
         super.update(deltaT);
-        this.owner.animation.playIfNotAlready("IDLE_LEFT", true);
-        if (this.playerInPatrol(this.patrolArea) && this.attackCooldown.isStopped()) {
-            this.finished(MidasStates.SNAP);
-            this.attackCooldown.start();
+        if (!this.checkPriorityAnimations()) {
+            this.owner.animation.playIfNotAlready("IDLE_LEFT", true);
+            if (this.playerInPatrol(this.patrolArea) && this.attackCooldown.isStopped()) {
+                this.finished(MidasStates.SNAP);
+                this.attackCooldown.start();
+            }
         }
     }
   

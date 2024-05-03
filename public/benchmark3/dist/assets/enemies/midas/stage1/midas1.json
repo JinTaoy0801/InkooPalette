@@ -32,6 +32,14 @@
                       {"index": 26, "duration": 10},
                       {"index": 27, "duration": 10}
           ]
+        },
+        { 
+          "name": "DAMAGED",
+          "frames": [ {"index": 30, "duration": 10},
+                      {"index": 31, "duration": 10},
+                      {"index": 32, "duration": 10},
+                      {"index": 31, "duration": 10}
+          ]
         }
     ]
 }

@@ -58,6 +58,6 @@ export default abstract class  PlayerState extends State{
 			"ATTACK_DOWN",
 			"HIT"
 		]
-		return attacks.some(attack => this.owner.animation.isPlaying(attack))
+		return attacks.some(attack => this.owner.animation.isPlaying(attack));
 	}
 }

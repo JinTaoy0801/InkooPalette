@@ -14,6 +14,13 @@ export default abstract class SheildState extends State {
     }
 
     update(deltaT: number): void {
-        
+
+    }
+    checkPriorityAnimations() {
+        const anis = [
+			"BREAKING",
+            "BROKEN"
+		]
+		return anis.some(ani => this.shield.animation.isPlaying(ani));
     }
 }

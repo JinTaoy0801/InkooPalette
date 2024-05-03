@@ -8,8 +8,10 @@ import IP_Level from "../scenes/IP_Level";
 
 export default class Hitbox {
     box: AnimatedSprite;
+    settings: Record<string, any>;
 
     constructor(settings: Record<string, any>,group:string) {
+        this.settings = settings;
         if (settings.shape != "circle") {
             this.box = settings.sprite;
             this.box.addPhysics(new AABB(settings.center, settings.halfSize), new Vec2(0, 0));

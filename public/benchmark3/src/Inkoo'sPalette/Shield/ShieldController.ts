@@ -12,21 +12,9 @@ export default class ShieldController extends StateMachineAI {
         this.addState("Idle", new Idle(this, this.sheild));
         this.initialize("Idle");
         this.sheild.setGroup("shield");
-
-        this.receiver.subscribe("SHIELDHIT");
     }
 
     update(deltaT: number): void {
         super.update(deltaT);
-        while (this.receiver.hasNextEvent()) {
-            let event = this.receiver.getNextEvent();
-            console.log('event: ', event.type);
-            switch (event.type) {
-                case "SHIELDHIT": {
-                    console.log("event");
-                    break;
-                }
-            }
-        }
     }
 }
