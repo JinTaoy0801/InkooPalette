@@ -33,8 +33,6 @@ export default class GoblinController extends EnemyController {
     };
     directionPatrol = "left";
 
-    lastFlipped = 0;
-
     initializeAI(owner: AnimatedSprite, options: Record<string, any>){
 		super.initializeAI(owner, options);
         this.patrolArea.leftBound = (options.spawn.x)-128;
@@ -56,17 +54,6 @@ export default class GoblinController extends EnemyController {
     changeState(stateName: string): void {
         super.changeState(stateName);
 	}
-
-    coinFlip(): any {
-        const currentTime = Date.now();
-        const coolDown = currentTime - this.lastFlipped >= 2000;
-
-        if (coolDown){
-            this.lastFlipped = currentTime;
-            return Math.random() < 0.5;
-        }
-        return false;
-    }
 
 	update(deltaT: number): void {
 		super.update(deltaT);

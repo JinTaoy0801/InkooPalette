@@ -13,6 +13,8 @@ export default class EnemyController extends StateMachineAI {
     velocity: Vec2 = Vec2.ZERO;
     tilemap: OrthogonalTilemap;
 
+    lastFlipped = 0;
+
     initializeAI(owner: AnimatedSprite, options: Record<string, any>) { 
         this.owner = owner;
         this.options = options;
@@ -22,6 +24,17 @@ export default class EnemyController extends StateMachineAI {
     changeState(stateName: string): void {
         super.changeState(stateName);
 	}
+
+    coinFlip(): any {
+        const currentTime = Date.now();
+        const coolDown = currentTime - this.lastFlipped >= 2000;
+
+        if (coolDown){
+            this.lastFlipped = currentTime;
+            return Math.random() < 0.5;
+        }
+        return false;
+    }
 
     update(deltaT: number): void {
 		super.update(deltaT);

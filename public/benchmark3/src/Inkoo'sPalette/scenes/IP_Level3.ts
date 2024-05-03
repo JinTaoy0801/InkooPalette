@@ -48,6 +48,7 @@ export default class IP_Level3 extends IP_Level {
         this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
         this.load.spritesheet("gold", "assets/enemies/goldlem/gold.json");
         this.load.spritesheet("shield", "assets/enemies/midas/shield.json");
+        this.load.spritesheet("rock", "assets/enemies/midas/rock.json");
     }
 
     startScene(): void {
@@ -135,7 +136,6 @@ export default class IP_Level3 extends IP_Level {
                     break;
                 }
                 case "SPAWNSHIELD": {
-                    console.log('wow it ranned aslkdalksdlkjasdlkjasldjkalkjsdljk')
                     this.shield = this.add.animatedSprite("shield", Layers.Main);
                     this.shield.scale.set(2, 2);
                     
@@ -150,6 +150,28 @@ export default class IP_Level3 extends IP_Level {
                     console.log(newShield);
                     break;
                 }
+                case "GROUNDSHAKE": {
+                    console.log('wow it ranned aslkdalksdlkjasdlkjasldjkalkjsdljk')
+                    let shake1 = this.add.animatedSprite("rock", Layers.Main);
+                    shake1.scale.set(2, 2);
+                    
+                    shake1.position = new Vec2(30*32, 18*32-16);
+                    shake1.animation.play("SPAWNING", true);
+
+                    let shake2 = this.add.animatedSprite("rock", Layers.Main);
+                    shake2.scale.set(2, 2);
+                    
+                    shake2.position = new Vec2(50*32, 18*32-16);
+                    shake2.animation.play("SPAWNING", true);
+
+                    setTimeout(() => {
+                        shake1.animation.stop();
+                        shake1.destroy();
+                        shake2.animation.stop();
+                        shake2.destroy();
+                    }, 500)
+                    break;
+                }
             }
         }
         super.updateScene(deltaT);
@@ -159,7 +181,8 @@ export default class IP_Level3 extends IP_Level {
         let checks = [
             "CLOSE_DOOR",
             "SPAWNBEAM",
-            "SPAWNSHIELD"
+            "SPAWNSHIELD",
+            "GROUNDSHAKE"
         ]
         return checks.some(check => check === s);
     }
@@ -195,7 +218,8 @@ export default class IP_Level3 extends IP_Level {
             Areas.Midas_Mountains,
             "CLOSE_DOOR",
             "SPAWNBEAM",
-            "SPAWNSHIELD"
+            "SPAWNSHIELD",
+            "GROUNDSHAKE"
         ]);
     }
 
