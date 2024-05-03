@@ -10,6 +10,7 @@ export default class Attack extends GoldlemState{
     attack: AnimatedSprite;
     onEnter(options: Record<string, any>): void {
         this.playerPosition = (<IP_Level>this.owner.getScene()).player.position;
+
         this.owner.animation.play("ATTACK", false);
         this.attack = this.owner.getScene().add.animatedSprite("gold", Layers.Main);
         this.attack.scale.set(3, 3);
@@ -19,7 +20,7 @@ export default class Attack extends GoldlemState{
             attack_name: "ATTACK",
             eventType: "enemy",
             center: new Vec2(0, 0),
-            halfSize: 6,
+            halfSize: 8,
             invertX: this.owner.invertX,
             offset : new Vec2(0, 0),
             targetPosition: new Vec2(this.playerPosition.x, this.playerPosition.y),
@@ -27,7 +28,7 @@ export default class Attack extends GoldlemState{
             colliderOffset: new Vec2(0, 0),
             customLocation: new Vec2(this.owner.position.x,this.owner.position.y-40),
             delay: new Timer(0),
-            //wait: new Timer(0),
+            wait: 375,
             customProperties: "projectile"
         }
         let hitbox2 = new Hitbox(projectile, "enemy");

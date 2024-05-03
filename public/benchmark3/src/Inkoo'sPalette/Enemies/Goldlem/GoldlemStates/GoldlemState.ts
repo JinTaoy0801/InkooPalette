@@ -19,7 +19,7 @@ export default abstract class GoldlemState extends State {
     constructor(parent: StateMachine, owner: AnimatedSprite) {
 		super(parent);
 		this.owner = owner;
-        this.attackTimer = new Timer(5000);
+        this.attackTimer = new Timer(2000);
 	}
     patrolArea = new Vec2(this.parent.patrolArea.leftBound,this.parent.patrolArea.rightBound);
     handleInput(event: GameEvent): void {
