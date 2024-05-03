@@ -17,7 +17,7 @@ export default class Shield {
         this.box.position = settings.actor.position;
 
         this.box.setGroup(group); 
-        this.hp = 3;
+        this.hp = 4;
         // // console.log('box', this.box);
         // if(group === "enemy"){
         //     this.box.setTrigger("player", inkooEvents.PLAYER_ATTACK,null);

@@ -167,9 +167,6 @@ export default class IP_Level extends Scene {
                             this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "hit_enemy", loop: false, holdReference: false });
                             trash_mob.setHp(-1);
                             console.log("trashMob hp", trash_mob.getHp());
-                            if (trash_mob.getName() == 'midas' && trash_mob.getHp() === 5) {
-                                this.emitter.fireEvent("SPAWNSHIELD");
-                            }
                         }
                         
                         this.emitter.fireEvent("POGOTIME");

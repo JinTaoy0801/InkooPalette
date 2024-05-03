@@ -19,6 +19,7 @@ import { sceneOptions } from "./MainMenu";
 export default class IP_Level3 extends IP_Level { 
     protected midasdoor: Sprite;
     protected triggerdoor: Rect;
+    walloffthrone: Rect;
 
     beams = new Array<Rect>(); 
     bigbeams = new Array<Sprite>(); 
@@ -90,12 +91,12 @@ export default class IP_Level3 extends IP_Level {
             null,
         );
 
-        let walloffthrone = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
+        this.walloffthrone = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
             position: new Vec2(55*32, 350),
             size: new Vec2(32, 15*32),
         });
-        walloffthrone.setColor(new Color(0,0,0,0));
-        walloffthrone.addPhysics(undefined, undefined, true, true);
+        this.walloffthrone.setColor(new Color(0,0,0,0));
+        this.walloffthrone.addPhysics(undefined, undefined, true, true);
 
         //make the warning beams:
         this.initBeams();
@@ -154,6 +155,8 @@ export default class IP_Level3 extends IP_Level {
                     this.shield = new Shield(HB_options, "shield")
                     
                     console.log(newShield);
+                    this.midas.toggleInvincible();
+                    console.log("midas is invincible?: ", this.midas.isInvincible);
                     break;
                 }
                 case "GROUNDSHAKE": {
@@ -190,25 +193,6 @@ export default class IP_Level3 extends IP_Level {
                     break;
                 }
                 case "BREAKSHIELD": {
-                    this.rockvelocity = new Vec2(20, 0);
-                    if (this.shield! && this.shielddmgbuffer.isStopped()) {
-                        this.shielddmgbuffer.start();
-                        this.shield.setHp(-1);
-                        if (this.shield.getHp() === 0) {
-                            this.shield.box.animation.play("BROKEN", false, "BROKENSHIELD");
-                        }
-                        else this.shield.box.animation.play("BREAKING");
-                    }
-                    else {
-                        if (this.dmgcooldown.isStopped()) {
-                            this.dmgcooldown.start();
-                            this.midas.setHp(-1);
-                            if (this.midas.getHp() === 5) {
-                                this.emitter.fireEvent("SPAWNSHIELD");
-                            }
-                            console.log('midas hp:', this.midas.getHp());
-                        }
-                    }
                     setTimeout(()=> {
                         // this.rock.destroy();
                         this.remove(this.rock);
@@ -216,12 +200,43 @@ export default class IP_Level3 extends IP_Level {
                         this.rockvelocity = Vec2.ZERO;
                         // console.log('this.rock', this.rock);
                     }, 350);
+
+                    this.rockvelocity = new Vec2(20, 0);
+                    if (this.shield! && this.shielddmgbuffer.isStopped()) {
+                        this.shielddmgbuffer.start();
+                        this.shield.setHp(-1);
+                        if (this.shield.getHp() === 0) {
+                            this.shield.box.animation.play("BROKEN", false, "BROKENSHIELD");
+                            this.midas.toggleInvincible();
+                        }
+                        else this.shield.box.animation.play("BREAKING");
+                    }
+                    else {
+                        if (this.dmgcooldown.isStopped() && !this.midas.isInvincible) {
+                            this.dmgcooldown.start();
+                            this.midas.setHp(-1);
+                            console.log('midas hp:', this.midas.getHp());
+                        }
+                    }
                     break;
                 }
                 case "BROKENSHIELD": {
+                    this.shield.box.destroy();
                     this.remove(this.shield.box);
                     this.shield.box = undefined;
-                    console.log('this,.shieldbox',this.shield.box);
+                    this.shield = undefined;
+                    break;
+                }
+                case "DEADMIDAS": {
+                    if (this.rock!) {
+                        this.remove(this.rock);
+                        this.rock = undefined;
+                    }
+                    this.walloffthrone.removePhysics();
+
+                    this.midas.owner.destroy();
+                    this.midas = undefined;
+                    break;
                 }
             }
         }
@@ -241,7 +256,8 @@ export default class IP_Level3 extends IP_Level {
             "GROUNDSHAKE",
             "SPAWNROCK",
             "BREAKSHIELD",
-            "BROKENSHIELD"
+            "BROKENSHIELD",
+            "DEADMIDAS"
         ]
         return checks.some(check => check === s);
     }
@@ -281,7 +297,8 @@ export default class IP_Level3 extends IP_Level {
             "GROUNDSHAKE",
             "SPAWNROCK",
             "BREAKSHIELD",
-            "BROKENSHIELD"
+            "BROKENSHIELD",
+            "DEADMIDAS"
         ]);
     }
 
