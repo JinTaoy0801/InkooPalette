@@ -8,6 +8,7 @@ import Debug from "../../../Wolfie2D/Debug/Debug";
 import Idle from "./GoldlemStates/Idle";
 import EnemyController from "../EnemyController";
 import Alerted from "./GoldlemStates/Alerted";
+import Attack from "./GoldlemStates/Attack";
 
 export enum GoldlemStates {
     IDLE = "idle",
@@ -43,6 +44,7 @@ export default class GoldlemController extends EnemyController {
 
         this.addState(GoldlemStates.IDLE, new Idle(this, this.owner));
         this.addState(GoldlemStates.ALERTED, new Alerted(this, this.owner));
+        this.addState(GoldlemStates.ATTACKING, new Attack(this, this.owner));
         
 		this.initialize(GoldlemStates.IDLE);
         this.owner.setGroup("enemy");
