@@ -32,7 +32,12 @@ export default class IP_Level1 extends IP_Level {
         this.load.spritesheet("ARM_RIGHT", "assets/player/attack/arm_right.json");
         this.load.spritesheet("ATTACK_UP", "assets/player/attack/attack_up.json");
         this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
-        this.load.spritesheet("GOBLIN_LIGHT_ATTACK", "assets/enemies/goblin/goblin_light_attack.json")
+        this.load.spritesheet("GOBLIN_LIGHT_ATTACK", "assets/enemies/goblin/goblin_light_attack.json");
+        this.load.audio("attack", "assets/sounds/attack.wav");
+        this.load.audio("dead", "assets/sounds/dead.wav");
+        this.load.audio("hit_enemy", "assets/sounds/hit_enemy.wav");
+        this.load.audio("jump", "assets/sounds/jump.wav");
+        this.load.audio("took_damage", "assets/sounds/took_damage.wav");
     }
 
     unloadScene(){
@@ -45,6 +50,11 @@ export default class IP_Level1 extends IP_Level {
         this.load.spritesheet("ATTACK_UP", "assets/player/attack/attack_up.json");
         this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
         this.load.spritesheet("GOBLIN_LIGHT_ATTACK", "assets/enemies/goblin/goblin_light_attack.json")
+        this.load.audio("attack", "assets/sounds/attack.wav");
+        this.load.audio("dead", "assets/sounds/dead.wav");
+        this.load.audio("hit_enemy", "assets/sounds/hit_enemy.wav");
+        this.load.audio("jump", "assets/sounds/jump.wav");
+        this.load.audio("took_damage", "assets/sounds/took_damage.wav");
     }
 
     startScene(): void {

@@ -9,6 +9,7 @@ import Hitbox from "../../Hitbox/Hitbox";
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import Timer from "../../../Wolfie2D/Timing/Timer";
 import GameEvent from "../../../Wolfie2D/Events/GameEvent";
+import { inkooEvents } from "../../inkooEvents";
 
 export default abstract class InAir extends PlayerState {
     owner: AnimatedSprite;
@@ -27,6 +28,7 @@ export default abstract class InAir extends PlayerState {
 		this.owner.move(this.parent.velocity.scaled(deltaT));
 
         if (Input.isJustPressed("attack") && !this.isAttacking()) {
+			this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "attack", loop: false, holdReference: false });
 			var attack_name;
 			var halfSize;
 			var offset;

@@ -12,6 +12,7 @@ import GameNode from "../../Wolfie2D/Nodes/GameNode";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import State from "../../Wolfie2D/DataTypes/State/State";
 import OnGround from "./PlayerStates/onGround";
+import { inkooEvents } from "../inkooEvents";
 
 
 export enum PlayerType {
@@ -89,6 +90,26 @@ export default class PlayerController extends StateMachineAI {
 
             ],
             reverseOnComplete: true
+        });
+
+        owner.tweens.add("death", {
+            startDelay: 0,
+            duration: 1000,
+            effects: [
+                {
+                    property: "alpha",
+                    start: 1,
+                    end: 0,
+                    ease: EaseFunctionType.IN_OUT_QUAD
+                },
+                {
+                    property: "positionY",
+                    start: this.owner.position.y,
+                    end: this.owner.position.y + 300,
+                    ease: EaseFunctionType.IN_OUT_QUAD
+                }
+            ],
+            onEnd: inkooEvents.PLAYER_KILLED
         });
         this.owner.setGroup("player");
 
