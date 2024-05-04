@@ -11,10 +11,12 @@ import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import IP_Level1 from "./IP_Level1";
 import IP_Level2 from "./IP_Level2";
 import IP_Level3 from "./IP_Level3";
+import IP_Level5 from "./IP_Level5";
 import { inkooEvents } from "../inkooEvents";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import Input from "../../Wolfie2D/Input/Input";
 import { getSceneOptions } from "../Global/sceneOptions";
+import { getPlayerSpawn, setPlayerSpawn } from "../Global/playerSpawn";
 
 const MainMenuName = {
     MAIN_MENU: "MAIN_MENU",
@@ -24,6 +26,7 @@ const MainMenuName = {
     START_GAME: "START_GAME",
     LEVEL_2: "LEVEL_2",
     LEVEL_3: "LEVEL_3",
+    LEVEL_5: "LEVEL_5",
     MENU: "MENU"
 } as const
 
@@ -147,7 +150,7 @@ export default class MainMenu extends Scene {
         const level_3 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x + 200, center.y - 150), text: "3"});
         level_3.borderColor = Color.TRANSPARENT;
         level_3.backgroundColor = Color.TRANSPARENT;
-        level_3.onClickEventId = MainMenuName.MENU;
+        level_3.onClickEventId = MainMenuName.LEVEL_3;
         level_3.font = "daydream"
 
         const level_4 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x - 200, center.y), text: "4"});
@@ -159,7 +162,7 @@ export default class MainMenu extends Scene {
         const level_5 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x, center.y), text: "5"});
         level_5.borderColor = Color.TRANSPARENT;
         level_5.backgroundColor = Color.TRANSPARENT;
-        level_5.onClickEventId = MainMenuName.MENU;
+        level_5.onClickEventId = MainMenuName.LEVEL_5;
         level_5.font = "daydream"
 
         const level_6 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x + 200, center.y), text: "6"});
@@ -306,6 +309,8 @@ export default class MainMenu extends Scene {
         this.receiver.subscribe(MainMenuName.STORY);
         this.receiver.subscribe(MainMenuName.MENU);
         this.receiver.subscribe(MainMenuName.LEVEL_2);
+        this.receiver.subscribe(MainMenuName.LEVEL_3);
+        this.receiver.subscribe(MainMenuName.LEVEL_5);
     }
 
     updateScene() {
@@ -321,25 +326,38 @@ export default class MainMenu extends Scene {
         if (Input.isJustPressed("level3")) {
             this.emitter.fireEvent(MainMenuName.LEVEL_3);
         }
+        if (Input.isJustPressed("level5")) {
+            this.emitter.fireEvent(MainMenuName.LEVEL_5);
+        }
     }
 
     protected handleEvent(event: GameEvent): void {
         switch(event.type) {
             case MainMenuName.START_GAME: {
                 this.emitter.fireEvent(inkooEvents.LEVEL_START);
+                setPlayerSpawn(new Vec2(5*32, 25*32));
                 this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
                 break;
             }
 
             case MainMenuName.LEVEL_2: {
                 this.emitter.fireEvent(inkooEvents.LEVEL_START);
+                setPlayerSpawn(new Vec2(32*5, 493.5));
                 this.sceneManager.changeToScene(IP_Level2, {}, sceneOptions);
                 break;
             }
 
             case MainMenuName.LEVEL_3: {
                 this.emitter.fireEvent(inkooEvents.LEVEL_START);
+                setPlayerSpawn(new Vec2(4*32, 18*32));
                 this.sceneManager.changeToScene(IP_Level3, {}, sceneOptions);
+                break;
+            }
+
+            case MainMenuName.LEVEL_5: {
+                this.emitter.fireEvent(inkooEvents.LEVEL_START);
+                setPlayerSpawn(new Vec2(32, 53*32));
+                this.sceneManager.changeToScene(IP_Level5, {}, sceneOptions);
                 break;
             }
 

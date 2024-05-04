@@ -62,7 +62,7 @@ export default class IP_Level2 extends IP_Level {
                     break;
                 }
                 case Areas.Midas: {
-                    setPlayerSpawn(new Vec2(5*32, 589.5));
+                    setPlayerSpawn(new Vec2(100, 100));
                     this.sceneManager.changeToScene(IP_Level3, {}, sceneOptions);
                     break;
                 }
