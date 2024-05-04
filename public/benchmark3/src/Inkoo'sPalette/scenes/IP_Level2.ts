@@ -5,7 +5,7 @@ import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import Big_Goldlem from "../Enemies/Big_Goldlem/Big_Goldlem";
 import Input from "../../Wolfie2D/Input/Input";
 import IP_Level1 from "./IP_Level1";
-import IP_Level3 from "./IP_Level3";
+import IP_Level3 from "./IP_Level6";
 import { getPlayerSpawn, setPlayerSpawn } from "../Global/playerSpawn";
 import { sceneOptions } from "./MainMenu";
 

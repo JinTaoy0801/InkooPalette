@@ -21,7 +21,9 @@ import MainMenu from "./Inkoo'sPalette/scenes/MainMenu";
             {name: "level1", keys: ["1"]},
             {name: "level2", keys: ["2"]},
             {name: "level3", keys: ["3"]},
+            {name: "level4", keys: ["4"]},
             {name: "level5", keys: ["5"]},
+            {name: "level6", keys: ["6"]},
             {name: "invincible", keys: ["i"]},
             {name: "dash", keys: ["shift"]}
         ],

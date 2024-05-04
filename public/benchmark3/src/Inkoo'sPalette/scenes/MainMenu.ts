@@ -11,7 +11,9 @@ import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import IP_Level1 from "./IP_Level1";
 import IP_Level2 from "./IP_Level2";
 import IP_Level3 from "./IP_Level3";
+import IP_Level4 from "./IP_Level4";
 import IP_Level5 from "./IP_Level5";
+import IP_Level6 from "./IP_Level6";
 import { inkooEvents } from "../inkooEvents";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import Input from "../../Wolfie2D/Input/Input";
@@ -26,7 +28,9 @@ const MainMenuName = {
     START_GAME: "START_GAME",
     LEVEL_2: "LEVEL_2",
     LEVEL_3: "LEVEL_3",
+    LEVEL_4: "LEVEL_4",
     LEVEL_5: "LEVEL_5",
+    LEVEL_6: "LEVEL_6",
     MENU: "MENU"
 } as const
 
@@ -310,7 +314,9 @@ export default class MainMenu extends Scene {
         this.receiver.subscribe(MainMenuName.MENU);
         this.receiver.subscribe(MainMenuName.LEVEL_2);
         this.receiver.subscribe(MainMenuName.LEVEL_3);
+        this.receiver.subscribe(MainMenuName.LEVEL_4);
         this.receiver.subscribe(MainMenuName.LEVEL_5);
+        this.receiver.subscribe(MainMenuName.LEVEL_6);
     }
 
     updateScene() {
@@ -326,8 +332,14 @@ export default class MainMenu extends Scene {
         if (Input.isJustPressed("level3")) {
             this.emitter.fireEvent(MainMenuName.LEVEL_3);
         }
+        if (Input.isJustPressed("level4")) {
+            this.emitter.fireEvent(MainMenuName.LEVEL_4);
+        }
         if (Input.isJustPressed("level5")) {
             this.emitter.fireEvent(MainMenuName.LEVEL_5);
+        }
+        if (Input.isJustPressed("level6")) {
+            this.emitter.fireEvent(MainMenuName.LEVEL_6);
         }
     }
 
@@ -353,11 +365,23 @@ export default class MainMenu extends Scene {
                 this.sceneManager.changeToScene(IP_Level3, {}, sceneOptions);
                 break;
             }
+            case MainMenuName.LEVEL_4: {
+                this.emitter.fireEvent(inkooEvents.LEVEL_START);
+                setPlayerSpawn(new Vec2(4*32, 18*32));
+                this.sceneManager.changeToScene(IP_Level4, {}, sceneOptions);
+                break;
+            }
 
             case MainMenuName.LEVEL_5: {
                 this.emitter.fireEvent(inkooEvents.LEVEL_START);
                 setPlayerSpawn(new Vec2(32, 53*32));
                 this.sceneManager.changeToScene(IP_Level5, {}, sceneOptions);
+                break;
+            }
+            case MainMenuName.LEVEL_6: {
+                this.emitter.fireEvent(inkooEvents.LEVEL_START);
+                setPlayerSpawn(new Vec2(4*32, 18*32));
+                this.sceneManager.changeToScene(IP_Level6, {}, sceneOptions);
                 break;
             }
 

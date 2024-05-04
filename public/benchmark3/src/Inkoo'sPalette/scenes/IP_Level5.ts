@@ -15,7 +15,7 @@ import Input from "../../Wolfie2D/Input/Input";
 import { getPlayerSpawn, setPlayerSpawn} from "../Global/playerSpawn";
 import { sceneOptions } from "./MainMenu";
 
-export default class IP_Level1 extends IP_Level {
+export default class IP_Level5 extends IP_Level {
     goblinSpawns = [
         new Vec2(200, 800),
         new Vec2(400, 800)
