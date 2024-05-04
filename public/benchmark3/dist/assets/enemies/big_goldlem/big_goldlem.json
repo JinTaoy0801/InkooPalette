@@ -16,21 +16,6 @@
           ]
         },
         { 
-          "name": "SLAM",
-          "frames": [ {"index": 150, "duration": 15},
-                      {"index": 151, "duration": 15},
-                      {"index": 152, "duration": 15},
-                      {"index": 153, "duration": 15},
-                      {"index": 154, "duration": 15},
-                      {"index": 155, "duration": 15},
-                      {"index": 156, "duration": 15},
-                      {"index": 157, "duration": 15},
-                      {"index": 158, "duration": 15},
-                      {"index": 159, "duration": 150}
-
-          ]
-        },
-        { 
           "name": "AWAKEN",   
           "frames": [ {"index": 30, "duration": 10},
                       {"index": 31, "duration": 10},
@@ -75,10 +60,10 @@
         },
         {
           "name":"TURN_LEFT",
-          "frames": [ {"index": 90, "duration": 10},
-                      {"index": 91, "duration": 10},
-                      {"index": 92, "duration": 10},
-                      {"index": 93, "duration": 10}
+          "frames": [ {"index": 90, "duration": 15},
+                      {"index": 91, "duration": 15},
+                      {"index": 92, "duration": 15},
+                      {"index": 93, "duration": 15}
           ]
         },
         {
@@ -97,23 +82,41 @@
                       {"index": 134, "duration": 25}
           ]
         },
+        { 
+          "name": "SLAM",
+          "frames": [ {"index": 150, "duration": 15},
+                      {"index": 151, "duration": 15},
+                      {"index": 152, "duration": 15},
+                      {"index": 153, "duration": 15},
+                      {"index": 154, "duration": 15},
+                      {"index": 155, "duration": 15},
+                      {"index": 156, "duration": 15},
+                      {"index": 157, "duration": 15},
+                      {"index": 158, "duration": 15},
+                      {"index": 159, "duration": 15}
+
+          ]
+        },
         {
           "name":"REFORM",
           "frames":[
+                    {"index": 159, "duration": 100},
                     {"index": 180, "duration": 10},
                     {"index": 181, "duration": 10},
                     {"index": 182, "duration": 10},
-                    {"index": 183, "duration": 15},
+                    {"index": 183, "duration": 10},
                     {"index": 184, "duration": 10},
-                    {"index": 185, "duration": 15},
-                    {"index": 186, "duration": 15},
-                    {"index": 187, "duration": 15},
+                    {"index": 185, "duration": 10},
+                    {"index": 186, "duration": 10},
+                    {"index": 187, "duration": 10},
                     {"index": 188, "duration": 10},
                     {"index": 189, "duration": 10},
                     {"index": 190, "duration": 10},
                     {"index": 123, "duration": 10},
-                    {"index": 122, "duration": 15},
-                    {"index": 121, "duration": 15}
+                    {"index": 122, "duration": 10},
+                    {"index": 121, "duration": 10},
+                    {"index": 120, "duration": 10}    
+                    
           ]
         }
     ]

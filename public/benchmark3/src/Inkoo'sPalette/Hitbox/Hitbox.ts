@@ -4,7 +4,6 @@ import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import { inkooEvents } from "../inkooEvents";
 import HitboxController from "./HitboxController";
-import IP_Level from "../scenes/IP_Level";
 
 export default class Hitbox {
     box: AnimatedSprite;

@@ -4,19 +4,18 @@ import Big_GoldlemState from "./Big_GoldlemState";
 
 export default class Idle extends Big_GoldlemState {
   onEnter(options: Record<string, any>): void {
-    this.owner.animation.playIfNotAlready("IDLE", true);
+    
   }
 
   update(deltaT: number): void {
     super.update(deltaT);
-    
+    this.owner.animation.playIfNotAlready("IDLE", true);
     if (this.parent.coinFlip()) {
       this.finished(Big_GoldlemStates.WALKING);
     }
-    // if(this.playerInPatrol(this.patrolArea)){
-    //   this.finished(Big_GoldlemStates.ALERTED);
-    // }
-    this.owner.move(Vec2.ZERO);
+    else if(this.playerInPatrol(this.patrolArea)){
+      this.finished(Big_GoldlemStates.SLAM);
+    }
   }
 
   onExit(): Record<string, any> {

@@ -34,6 +34,7 @@ export default class IP_Level2 extends IP_Level {
         this.load.spritesheet("rock", "assets/enemies/midas/rock.json");
         this.load.spritesheet("gold", "assets/enemies/goldlem/gold.json");
         this.load.spritesheet("big_goldlem", "assets/enemies/big_goldlem/big_goldlem.json");
+        this.load.spritesheet("goldlem_wave","assets/enemies/big_goldlem/goldlem_wave.json");
     }
     unloadScene(): void {
         

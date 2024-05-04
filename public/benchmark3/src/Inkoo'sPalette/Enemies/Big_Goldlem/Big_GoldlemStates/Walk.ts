@@ -16,6 +16,8 @@ export default class Walking extends Big_GoldlemState {
             this.finished(Big_GoldlemStates.SLAM);
             this.attackTimer.start();
         }
+        else if (this.parent.coinFlip())
+            this.finished(Big_GoldlemStates.IDLE);
 
         let dir = 0;
         if (this.parent.directionPatrol == "right")
