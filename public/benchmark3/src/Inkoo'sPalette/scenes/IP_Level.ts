@@ -25,6 +25,7 @@ import { getPlayerSpawn, setPlayerSpawn } from "../Global/playerSpawn";
 import { getSceneOptions } from "../Global/sceneOptions";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import Midas from "../Enemies/Midas/Midas";
+import IP_Level5 from "./IP_Level5";
 
 export enum Layers {
     Player = "player",
@@ -55,9 +56,9 @@ export default class IP_Level extends Scene {
     protected trash_Mobs: Map<number,Enemy>;
     protected trash_enemies= new Array<Enemy>();
     protected goldlems = new Array<Goldlem>();
-    protected boss_name: string;
     protected bossHealthBar: Label;
     protected bossHealthBarBg: Label;
+    protected bossHealthBarName: Label;
 
     private heart1: Sprite;
     private heart2: Sprite;
@@ -75,6 +76,8 @@ export default class IP_Level extends Scene {
     protected levelTransitionScreen: Rect;
 
     private pause_bg: Sprite;
+    protected viewport_size: number;
+    protected viewport_center: Vec2;
     
 
     //invinciblity timers
@@ -87,9 +90,6 @@ export default class IP_Level extends Scene {
         this.initViewport();
         this.subscribeToEvents();
         this.addUI();
-        if (this.boss_name != undefined) {
-            // this.initBossHealthBar(this.boss_name);
-        }
         this.trash_Mobs = new Map<number, Enemy>();
         this.respawnTimer = new Timer(1000, () => {
             if(IP_Level.livesCount === 0){
@@ -204,7 +204,9 @@ export default class IP_Level extends Scene {
                 }
                 case inkooEvents.RESUME: {
                     let pauseLayer = this.getLayer(Layers.Pause);
-                    this.initViewport();
+                    this.viewport.setZoomLevel(this.viewport_size);
+                    this.viewport.setCenter(this.viewport_center);
+                    this.viewport.follow(this.player);
                     this.getSceneGraph().getAllNodes().forEach(element => {
                         if(element instanceof AnimatedSprite){
                             element.aiActive = true;
@@ -226,6 +228,9 @@ export default class IP_Level extends Scene {
         if (Input.isJustPressed("pause")) {
             let pauseLayer = this.getLayer(Layers.Pause);
             if (pauseLayer.isHidden()) {
+                this.viewport_center = this.viewport.getCenter();
+                this.viewport_size = this.viewport.getZoomLevel()
+                console.log(this.viewport_size)
                 this.pauseViewport();
                 this.getSceneGraph().getAllNodes().forEach(element => {
                     if(element instanceof AnimatedSprite){
@@ -235,7 +240,9 @@ export default class IP_Level extends Scene {
                 pauseLayer.setHidden(false);
             }
             else {
-                this.initViewport();
+                this.viewport.setZoomLevel(this.viewport_size);
+                this.viewport.setCenter(this.viewport_center);
+                this.viewport.follow(this.player);
                 this.getSceneGraph().getAllNodes().forEach(element => {
                     if(element instanceof AnimatedSprite){
                         element.aiActive = true;
@@ -273,6 +280,8 @@ export default class IP_Level extends Scene {
         this.viewport.setZoomLevel(1.5);
         this.viewport.follow(this.player);
         this.viewport.setBounds(0, 0, 64*32, 64*16);
+        this.viewport_center = this.viewport.getCenter();
+        this.viewport_size = this.viewport.getZoomLevel();
     }
 
     protected pauseViewport(): void {
@@ -429,10 +438,22 @@ export default class IP_Level extends Scene {
         menu.onClickEventId = inkooEvents.PLAYER_KILLED;
     }
 
-    // protected initBossHealthBar(bossName: String): void {
-    //     this.bossHealthBar = this.createBar(400, 500, 800, 40, Color.GREEN, 28);
-    //     this.bossHealthBarBg = this.createBarBg(400, 500, 800, 40, Color.TRANSPARENT, 28);
-    // }
+    protected initBossHealthBar(bossName: String): void {
+        this.bossHealthBarName = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(this.viewport_center.x - 220, this.viewport_center.y + 190), text: bossName});
+        this.bossHealthBarName.font = "daydream";
+        this.bossHealthBarName.textColor = Color.WHITE;
+        this.bossHealthBarName.fontSize = 20;
+
+        this.bossHealthBar = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(this.viewport_center.x, this.viewport_center.y), text: ""});
+        this.bossHealthBar.size.set(800,50)
+        this.bossHealthBar.setBackgroundColor(Color.GREEN);
+        
+        this.bossHealthBarBg = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(this.viewport_center.x, this.viewport_center.y), text: ""});
+        this.bossHealthBarBg.size.set(800,50)
+        this.bossHealthBarBg.setBackgroundColor(Color.TRANSPARENT);
+        this.bossHealthBarBg.borderColor = Color.BLACK;
+        this.bossHealthBarBg.borderWidth = 3;
+    }
 
     // protected handleBossHealthChange(currHP: number, maxHP: number): void {
     //     let unit = this.bossHealthBarBg.size.x / maxHP;
@@ -555,24 +576,6 @@ export default class IP_Level extends Scene {
         this.sceneManager.changeToScene(MainMenu,{});
         Input.enableInput();
     }
-
-    // private createBar(posX: number, posY: number, sizeX: number, sizeY: number, color: Color, font?: number) : Label {
-    //     let bar = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(posX, posY), text: ""});
-    //     bar.size = new Vec2(sizeX, sizeY);
-    //     bar.backgroundColor = color;     
-
-    //     return bar;
-    // }
-
-    // private createBarBg(posX: number, posY: number, sizeX: number, sizeY: number, color: Color, font?: number) : Label{
-    //     let barBg = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(posX, posY), text: ""});
-    //     barBg.size = new Vec2(sizeX, sizeY);
-    //     barBg.backgroundColor = color;
-    //     barBg.borderColor = Color.BLACK;
-    //     barBg.borderWidth = 3;
-
-    //     return barBg;
-    // }
 
 }
 
