@@ -55,9 +55,9 @@ export default class IP_Level extends Scene {
     protected trash_Mobs: Map<number,Enemy>;
     protected trash_enemies= new Array<Enemy>();
     protected goldlems = new Array<Goldlem>();
-    protected boss_name: string;
     protected bossHealthBar: Label;
     protected bossHealthBarBg: Label;
+    protected bossHealthBarName: Label;
 
     private heart1: Sprite;
     private heart2: Sprite;
@@ -87,9 +87,6 @@ export default class IP_Level extends Scene {
         this.initViewport();
         this.subscribeToEvents();
         this.addUI();
-        if (this.boss_name != undefined) {
-            // this.initBossHealthBar(this.boss_name);
-        }
         this.trash_Mobs = new Map<number, Enemy>();
         this.respawnTimer = new Timer(1000, () => {
             if(IP_Level.livesCount === 0){
@@ -204,7 +201,10 @@ export default class IP_Level extends Scene {
                 }
                 case inkooEvents.RESUME: {
                     let pauseLayer = this.getLayer(Layers.Pause);
-                    this.initViewport();
+                    let center = this.viewport.getCenter();
+                    this.viewport.setZoomLevel(1.5);
+                    this.viewport.follow(this.player);
+                    this.viewport.setCenter(center);
                     this.getSceneGraph().getAllNodes().forEach(element => {
                         if(element instanceof AnimatedSprite){
                             element.aiActive = true;
@@ -225,6 +225,7 @@ export default class IP_Level extends Scene {
         
         if (Input.isJustPressed("pause")) {
             let pauseLayer = this.getLayer(Layers.Pause);
+            let center = this.viewport.getCenter()
             if (pauseLayer.isHidden()) {
                 this.pauseViewport();
                 this.getSceneGraph().getAllNodes().forEach(element => {
@@ -235,7 +236,9 @@ export default class IP_Level extends Scene {
                 pauseLayer.setHidden(false);
             }
             else {
-                this.initViewport();
+                this.viewport.setZoomLevel(1.5);
+                this.viewport.follow(this.player);
+                this.viewport.setCenter(center);
                 this.getSceneGraph().getAllNodes().forEach(element => {
                     if(element instanceof AnimatedSprite){
                         element.aiActive = true;
@@ -429,10 +432,24 @@ export default class IP_Level extends Scene {
         menu.onClickEventId = inkooEvents.PLAYER_KILLED;
     }
 
-    // protected initBossHealthBar(bossName: String): void {
-    //     this.bossHealthBar = this.createBar(400, 500, 800, 40, Color.GREEN, 28);
-    //     this.bossHealthBarBg = this.createBarBg(400, 500, 800, 40, Color.TRANSPARENT, 28);
-    // }
+    protected initBossHealthBar(bossName: String): void {
+        let center = this.viewport.getCenter();
+
+        this.bossHealthBarName = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(center.x - 220, center.y + 190), text: bossName});
+        this.bossHealthBarName.font = "daydream";
+        this.bossHealthBarName.textColor = Color.WHITE;
+        this.bossHealthBarName.fontSize = 20;
+
+        this.bossHealthBar = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(center.x, center.y), text: ""});
+        this.bossHealthBar.size.set(800,50)
+        this.bossHealthBar.setBackgroundColor(Color.GREEN);
+        
+        this.bossHealthBarBg = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(center.x, center.y), text: ""});
+        this.bossHealthBarBg.size.set(800,50)
+        this.bossHealthBarBg.setBackgroundColor(Color.TRANSPARENT);
+        this.bossHealthBarBg.borderColor = Color.BLACK;
+        this.bossHealthBarBg.borderWidth = 3;
+    }
 
     // protected handleBossHealthChange(currHP: number, maxHP: number): void {
     //     let unit = this.bossHealthBarBg.size.x / maxHP;
@@ -556,13 +573,6 @@ export default class IP_Level extends Scene {
         Input.enableInput();
     }
 
-    // private createBar(posX: number, posY: number, sizeX: number, sizeY: number, color: Color, font?: number) : Label {
-    //     let bar = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(posX, posY), text: ""});
-    //     bar.size = new Vec2(sizeX, sizeY);
-    //     bar.backgroundColor = color;     
-
-    //     return bar;
-    // }
 
     // private createBarBg(posX: number, posY: number, sizeX: number, sizeY: number, color: Color, font?: number) : Label{
     //     let barBg = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(posX, posY), text: ""});
