@@ -21,7 +21,8 @@ import MainMenu from "./Inkoo'sPalette/scenes/MainMenu";
             {name: "level1", keys: ["1"]},
             {name: "level2", keys: ["2"]},
             {name: "level3", keys: ["3"]},
-            {name: "invincible", keys: ["i"]}
+            {name: "invincible", keys: ["i"]},
+            {name: "dash", keys: ["shift"]}
         ],
         useWebGL: false,                        // Tell the game we want to use webgl
         showDebug: true                       // Whether to show debug messages. You can change this to true if you want

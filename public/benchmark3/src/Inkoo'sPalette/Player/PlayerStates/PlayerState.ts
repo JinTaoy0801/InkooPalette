@@ -18,6 +18,8 @@ export default abstract class  PlayerState extends State{
     gravity: number=1000;
     parent: PlayerController;
     positionTimer: Timer;
+	dashTimer = new Timer(250);
+	dashCooldown = new Timer(750);
 //this parent to Statemachine
     constructor (parent: StateMachine, owner: GameNode){
         super(parent);
@@ -39,12 +41,17 @@ export default abstract class  PlayerState extends State{
 
 
 	update(deltaT: number): void {
-		// Do gravity
-		// if (this.positionTimer.isStopped()){
-		// 	this.emitter.fireEvent(inkooEvents.PLAYER_MOVE, {position: this.owner.position.clone()});
-		// 	this.positionTimer.start();
-		// }
 		this.parent.velocity.y += this.gravity*deltaT;
+		if (Input.isPressed("dash") && this.dashCooldown.isStopped()) {
+			this.dashTimer.start();
+			this.dashCooldown.start();
+		}
+		if (!this.dashTimer.isStopped()) {
+			let dir = this.getInputDirection();
+			this.parent.velocity.x += dir.x*100;
+			this.parent.velocity.y = 0;
+		}
+		
 	}
 
 	isAttacking () {
