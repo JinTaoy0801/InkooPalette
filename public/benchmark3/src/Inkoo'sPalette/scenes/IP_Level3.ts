@@ -62,6 +62,7 @@ export default class IP_Level3 extends IP_Level {
         this.layers.get("foreground").setDepth(10);
         this.layers.get("ground").setDepth(2);
         super.startScene();
+        this.boss_name = "midas"
         this.addLevelEnd(new Vec2(32*1, 600), new Vec2(2*32, 10*32), Areas.Midas_Mountains);
 
         this.midasdoor = this.add.sprite('midasdoor', Layers.Bg);

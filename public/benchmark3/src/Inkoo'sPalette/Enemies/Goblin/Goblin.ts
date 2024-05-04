@@ -31,7 +31,6 @@ export default class Goblin extends Enemy{
                     start: 0,
                     end: 1,
                     ease: EaseFunctionType.LINEAR,
-                    resetOnComplete: true
                 }
             ],
             onEnd: inkooEvents.TRASH_MOB_KILLED

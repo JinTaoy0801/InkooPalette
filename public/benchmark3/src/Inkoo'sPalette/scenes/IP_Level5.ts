@@ -23,7 +23,7 @@ export default class IP_Level1 extends IP_Level {
     
     loadScene(): void {
         // Load resources
-        this.load.tilemap("level1", "assets/tilemaps/level1.json");
+        this.load.tilemap("level5", "assets/tilemaps/level5.json");
         this.load.spritesheet("player", "assets/player/inkoo.json");
         this.load.spritesheet("goblin", "assets/enemies/goblin/goblin_movement.json");
         this.load.image("fullheart", "assets/player/heart.png");
@@ -35,7 +35,6 @@ export default class IP_Level1 extends IP_Level {
         this.load.spritesheet("GOBLIN_LIGHT_ATTACK", "assets/enemies/goblin/goblin_light_attack.json");
         this.load.audio("attack", "assets/sounds/attack.wav");
         this.load.audio("dead", "assets/sounds/dead.wav");
-        this.load.audio("enemy_dead", "assets/sounds/enemy_dead.wav");
         this.load.audio("hit_enemy", "assets/sounds/hit_enemy.wav");
         this.load.audio("jump", "assets/sounds/jump.wav");
         this.load.audio("took_damage", "assets/sounds/took_damage.wav");
@@ -59,11 +58,10 @@ export default class IP_Level1 extends IP_Level {
     }
 
     startScene(): void {
-        this.add.tilemap("level1", new Vec2(2, 2));
+        this.add.tilemap("level5", new Vec2(2, 2));
         this.layers.get("foreground").setDepth(10);
         super.startScene();
-        this.addLevelEnd(new Vec2(63*32, 18*32), new Vec2(2*32, 10*32), Areas.Mountains);
-        this.initGoblin();
+        this.viewport.setBounds(0, 0, 64*16, 64*32);
         // console.log("trashmobs", this.trash_Mobs);
         this.nextLevel = IP_Level2;
         console.log("enemy array", this.trash_Mobs);
@@ -72,34 +70,7 @@ export default class IP_Level1 extends IP_Level {
     updateScene(deltaT: number): void {
         Input.enableInput();
 
-        while (this.receiver.hasNextEvent() && this.isArea(this.receiver.peekNextEvent().type)) {
-            let event = this.receiver.getNextEvent();
-            switch (event.type) {
-                case Areas.Mountains: {
-                    // Go to the next level    
-                    setPlayerSpawn(new Vec2(32*5, 493.5));
-                    this.sceneManager.changeToScene(IP_Level2, {}, sceneOptions);
-                    break;
-                }
-                default: {
-                }
-            }
-        }
         super.updateScene(deltaT);
-        
-    }
-
-    protected initGoblin(): void {
-        var i;
-        for (i=0; i<2; i++) {
-            const goblinOptions = {
-                owner: this.add.animatedSprite('goblin', Layers.Main),
-                spawn: this.goblinSpawns[i],
-                tilemap: Layers.Main,
-            }
-            let temp = new Goblin(goblinOptions,5);
-            this.trash_Mobs.set(goblinOptions.owner.id,temp);
-        }
         
     }
 

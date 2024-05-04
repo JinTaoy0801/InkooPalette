@@ -38,6 +38,7 @@ export enum Layers {
 export enum Areas {
     Tutorial = "Tutorial",
     Mountains = "Mountains",
+    Parkour = "Parkour",
     Midas = "Midas",
 
     Mountains_Tutorial = "Mountains_Tutorial",
@@ -54,6 +55,9 @@ export default class IP_Level extends Scene {
     protected trash_Mobs: Map<number,Enemy>;
     protected trash_enemies= new Array<Enemy>();
     protected goldlems = new Array<Goldlem>();
+    protected boss_name: string;
+    protected bossHealthBar: Label;
+    protected bossHealthBarBg: Label;
 
     private heart1: Sprite;
     private heart2: Sprite;
@@ -83,6 +87,9 @@ export default class IP_Level extends Scene {
         this.initViewport();
         this.subscribeToEvents();
         this.addUI();
+        if (this.boss_name != undefined) {
+            // this.initBossHealthBar(this.boss_name);
+        }
         this.trash_Mobs = new Map<number, Enemy>();
         this.respawnTimer = new Timer(1000, () => {
             if(IP_Level.livesCount === 0){
@@ -109,7 +116,7 @@ export default class IP_Level extends Scene {
 
 
     updateScene(deltaT: number){
-        if(this.player.position.y > 1200 ){
+        if(this.player.position.y > 2048 ){
             this.player.position.copy(getLastPlayerPosition());
             this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "took_damage", loop: false, holdReference: false });
             this.incPlayerLife(-1);
@@ -164,11 +171,19 @@ export default class IP_Level extends Scene {
                         console.log("playerhit data", event.data.toString());
                         if (this.trash_Mobs.get(event.data.get("node"))!) {
                             const trash_mob = this.trash_Mobs.get(event.data.get("node"));
-                            this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "hit_enemy", loop: false, holdReference: false });
                             if (!trash_mob.isInvincible) {
                                 trash_mob.setHp(-1);
                             }
+                            if (trash_mob.getHp() > 0) {
+                                this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "hit_enemy", loop: false, holdReference: false });
+                            }
+                            else {
+                                this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "enemy_dead", loop: false, holdReference: false });
+                            }
                             console.log("trashMob hp", trash_mob.getHp());
+                            // if (trash_mob.getName() == 'midas') {
+                            //     this.handleBossHealthChange(trash_mob.getHp(), 10)
+                            // }
                         }
                         
                         this.emitter.fireEvent("POGOTIME");
@@ -181,7 +196,6 @@ export default class IP_Level extends Scene {
                 //key => DEATH node =>id of mob
                 case inkooEvents.TRASH_MOB_KILLED:{
                     this.sceneGraph.getNode(event.data.get("node")).destroy();
-                    
                     break;
                 }
                 case inkooEvents.PLAYER_KILLED: {
@@ -232,6 +246,7 @@ export default class IP_Level extends Scene {
         }
 
         if (Input.isJustPressed("level1")) {
+            setPlayerSpawn(new Vec2(5*32, 25*32));
             this.sceneManager.changeToScene(IP_Level1, {}, this.sceneOptions);
         }
         if (Input.isJustPressed("level2")) {
@@ -414,6 +429,18 @@ export default class IP_Level extends Scene {
         menu.onClickEventId = inkooEvents.PLAYER_KILLED;
     }
 
+    // protected initBossHealthBar(bossName: String): void {
+    //     this.bossHealthBar = this.createBar(400, 500, 800, 40, Color.GREEN, 28);
+    //     this.bossHealthBarBg = this.createBarBg(400, 500, 800, 40, Color.TRANSPARENT, 28);
+    // }
+
+    // protected handleBossHealthChange(currHP: number, maxHP: number): void {
+    //     let unit = this.bossHealthBarBg.size.x / maxHP;
+        
+	// 	this.bossHealthBar.size.set(this.bossHealthBarBg.size.x - unit * (maxHP - currHP), this.bossHealthBarBg.size.y);
+	// 	this.bossHealthBar.position.set(this.bossHealthBarBg.position.x - (unit / 2 / this.getViewScale()) * (maxHP - currHP), this.bossHealthBarBg.position.y);
+    // }
+
     protected initPlayer(): void {
         this.player = this.add.animatedSprite("player", Layers.Player);
 
@@ -451,6 +478,7 @@ export default class IP_Level extends Scene {
             this.heart1.destroy();
             Input.disableInput();
             this.player.disablePhysics();
+            setPlayerSpawn(new Vec2(5*32, 25*32));
             this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "dead", loop: false, holdReference: false });
             this.player.tweens.play("death");
         }
@@ -527,6 +555,24 @@ export default class IP_Level extends Scene {
         this.sceneManager.changeToScene(MainMenu,{});
         Input.enableInput();
     }
+
+    // private createBar(posX: number, posY: number, sizeX: number, sizeY: number, color: Color, font?: number) : Label {
+    //     let bar = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(posX, posY), text: ""});
+    //     bar.size = new Vec2(sizeX, sizeY);
+    //     bar.backgroundColor = color;     
+
+    //     return bar;
+    // }
+
+    // private createBarBg(posX: number, posY: number, sizeX: number, sizeY: number, color: Color, font?: number) : Label{
+    //     let barBg = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(posX, posY), text: ""});
+    //     barBg.size = new Vec2(sizeX, sizeY);
+    //     barBg.backgroundColor = color;
+    //     barBg.borderColor = Color.BLACK;
+    //     barBg.borderWidth = 3;
+
+    //     return barBg;
+    // }
 
 }
 
