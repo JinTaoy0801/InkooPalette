@@ -160,7 +160,7 @@ export default class MainMenu extends Scene {
         const level_4 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x - 200, center.y), text: "4"});
         level_4.borderColor = Color.TRANSPARENT;
         level_4.backgroundColor = Color.TRANSPARENT;
-        level_4.onClickEventId = MainMenuName.MENU;
+        level_4.onClickEventId = MainMenuName.LEVEL_4;
         level_4.font = "daydream"
 
         const level_5 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x, center.y), text: "5"});
@@ -172,7 +172,7 @@ export default class MainMenu extends Scene {
         const level_6 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x + 200, center.y), text: "6"});
         level_6.borderColor = Color.TRANSPARENT;
         level_6.backgroundColor = Color.TRANSPARENT;
-        level_6.onClickEventId = MainMenuName.MENU;
+        level_6.onClickEventId = MainMenuName.LEVEL_6;
         level_6.font = "daydream"
         
 
@@ -367,7 +367,7 @@ export default class MainMenu extends Scene {
             }
             case MainMenuName.LEVEL_4: {
                 this.emitter.fireEvent(inkooEvents.LEVEL_START);
-                setPlayerSpawn(new Vec2(4*32, 18*32));
+                setPlayerSpawn(new Vec2(4*32, 2*32));
                 this.sceneManager.changeToScene(IP_Level4, {}, sceneOptions);
                 break;
             }

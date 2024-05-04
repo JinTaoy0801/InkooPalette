@@ -10,7 +10,6 @@ export default class Reform extends Big_GoldlemState{
     }
     update(deltaT: number): void {
         if(!this.owner.animation.isPlaying("REFORM")){
-            
             this.finished(Big_GoldlemStates.IDLE);
         }
         this.owner.move(Vec2.ZERO);

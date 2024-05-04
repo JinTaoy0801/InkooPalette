@@ -16,8 +16,8 @@ export default class Big_Goldlem extends Enemy {
         this.owner.addAI(Big_GoldlemController, options);
         this.owner.position.copy(options.spawn);
         this.owner.scale.set(1.5, 1.5);
-        this.owner.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(42, 56)));
-        this.owner.colliderOffset.set(0, 1);
+        //this.owner.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(42, 56)));
+        //this.owner.colliderOffset.set(0, 1);
         this.owner.setGroup("enemy");
     }
     setHp(dmg:number){

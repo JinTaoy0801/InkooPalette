@@ -39,10 +39,10 @@ export default class Big_GoldlemController extends EnemyController {
 
     initializeAI(owner: AnimatedSprite, options: Record<string, any>) {
         super.initializeAI(owner, options);
-        this.patrolArea.leftBound = (options.spawn.x)-128;
+        this.patrolArea.leftBound = (options.spawn.x)-(7*32);
         if (this.patrolArea.leftBound < 0)
             this.patrolArea.leftBound = 0;
-        this.patrolArea.rightBound = 128+(options.spawn.x);
+        this.patrolArea.rightBound = (7*32)+(options.spawn.x);
 
         this.addState(Big_GoldlemStates.SLEEP, new Sleeping(this, this.owner));
         this.addState(Big_GoldlemStates.WALKING, new Walking(this, this.owner));

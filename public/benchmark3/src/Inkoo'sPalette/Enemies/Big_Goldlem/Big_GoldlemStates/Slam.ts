@@ -6,10 +6,14 @@ import Vec2 from "../../../../Wolfie2D/DataTypes/Vec2";
 import Timer from "../../../../Wolfie2D/Timing/Timer";
 import Hitbox from "../../../Hitbox/Hitbox";
 import { setBG_Invincible } from "../../../Global/big_Goldem_Invincible";
+import AABB from "../../../../Wolfie2D/DataTypes/Shapes/AABB";
+import Circle from "../../../../Wolfie2D/DataTypes/Shapes/Circle";
 
 export default class Slam extends Big_GoldlemState{
     attack: AnimatedSprite;
     onEnter(options: Record<string, any>): void {
+        this.owner.setCollisionShape(new Circle(new Vec2(0,0),36));
+        this.owner.colliderOffset.set(0, 40);
         this.attackTimer.start()
         this.owner.animation.play("SLAM",false);
         this.attack = this.owner.getScene().add.animatedSprite("goldlem_wave", Layers.Main);
