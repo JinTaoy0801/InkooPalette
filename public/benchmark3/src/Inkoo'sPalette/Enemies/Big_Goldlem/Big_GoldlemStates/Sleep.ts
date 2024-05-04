@@ -1,18 +1,19 @@
 import { Big_GoldlemStates } from "../Big_GoldlemController";
 import Big_GoldlemState from "./Big_GoldlemState";
 
-
-export default class Reform extends Big_GoldlemState{
+export default class Sleeping extends Big_GoldlemState {
     onEnter(options: Record<string, any>): void {
-        this.owner.animation.play("REFORM", false);
+        this.owner.animation.playIfNotAlready("SLEEP", true);
     }
+    
     update(deltaT: number): void {
-        if(!this.owner.animation.isPlaying("REFORM")){
-            this.finished(Big_GoldlemStates.IDLE);
+        super.update(deltaT);
+        if(this.playerInPatrol(this.patrolArea)){
+            this.finished(Big_GoldlemStates.AWAKEN);
         }
     }
+    
     onExit(): Record<string, any> {
         return {};
     }
-
 }
