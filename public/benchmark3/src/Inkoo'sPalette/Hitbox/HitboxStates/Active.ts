@@ -106,8 +106,7 @@ export default class Active extends HitboxState {
                     velocity.y -= 1000 * deltaT;
                 
                     this.owner.move(velocity.scaled(deltaT));
-                
-                    if (distance < 1) {
+                    if (distance < 3) {
                         this.owner.destroy();
                     } else if (distance > 1000){
                         this.owner.destroy();
