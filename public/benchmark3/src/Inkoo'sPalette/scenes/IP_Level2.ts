@@ -33,6 +33,8 @@ export default class IP_Level2 extends IP_Level {
         this.load.spritesheet("GOBLIN_LIGHT_ATTACK", "assets/enemies/goblin/goblin_light_attack.json")
         this.load.spritesheet("rock", "assets/enemies/midas/rock.json");
         this.load.spritesheet("gold", "assets/enemies/goldlem/gold.json");
+        this.load.spritesheet("big_goldlem", "assets/enemies/big_goldlem/big_goldlem.json");
+        this.load.spritesheet("goldlem_wave","assets/enemies/big_goldlem/goldlem_wave.json");
     }
     unloadScene(): void {
         
@@ -44,7 +46,7 @@ export default class IP_Level2 extends IP_Level {
         super.startScene();
         this.addLevelEnd(new Vec2(63*32, 10*32), new Vec2(2*32, 10*32), Areas.Midas);
         this.addLevelEnd(new Vec2(32*1, 400), new Vec2(2*32, 10*32), Areas.Mountains_Tutorial);
-        this.initGoldlem();
+        //this.initGoldlem();
         this.initBigGoldlem();
         this.nextLevel = IP_Level3;
         console.log("enemy array", this.trash_Mobs);
@@ -73,19 +75,19 @@ export default class IP_Level2 extends IP_Level {
        
     }
 
-    protected initGoldlem(): void {
-        var i;
-        for (i=0; i<1; i++) {
-            const goldlemOptions = {
-                owner: this.add.animatedSprite('goldlem', Layers.Main),
-                spawn: this.goldlemSpawns[i],
-                tilemap: Layers.Main,
-            }
-            let temp = new Goldlem(goldlemOptions,7);
-            this.trash_Mobs.set(goldlemOptions.owner.id, temp);
-        }
+    // protected initGoldlem(): void {
+    //     var i;
+    //     for (i=0; i<1; i++) {
+    //         const goldlemOptions = {
+    //             owner: this.add.animatedSprite('goldlem', Layers.Main),
+    //             spawn: this.goldlemSpawns[i],
+    //             tilemap: Layers.Main,
+    //         }
+    //         let temp = new Goldlem(goldlemOptions,7);
+    //         this.trash_Mobs.set(goldlemOptions.owner.id, temp);
+    //     }
         
-    }
+    // }
     
     protected initBigGoldlem(): void {
         var i;

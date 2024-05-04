@@ -7,17 +7,17 @@ import Sprite from "../../../../Wolfie2D/Nodes/Sprites/Sprite";
 import Timer from "../../../../Wolfie2D/Timing/Timer";
 import IP_Level from "../../../scenes/IP_Level";
 import Big_GoldlemController from "../Big_GoldlemController";
-
 export default abstract class Big_GoldlemState extends State {
     owner: AnimatedSprite;
     parent: Big_GoldlemController;
 	playerPosition: Vec2 = Vec2.ZERO;
     attackTimer: Timer;
     lightAttackRange = 64;
+
     constructor(parent: StateMachine, owner: AnimatedSprite) {
 		super(parent);
 		this.owner = owner;
-        this.attackTimer = new Timer(2000);
+        this.attackTimer = new Timer(5000);
 	}
     patrolArea = new Vec2(this.parent.patrolArea.leftBound,this.parent.patrolArea.rightBound);
     handleInput(event: GameEvent): void {

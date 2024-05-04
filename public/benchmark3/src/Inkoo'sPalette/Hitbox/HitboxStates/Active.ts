@@ -45,7 +45,7 @@ export default class Active extends HitboxState {
     update(deltaT: number): void {
         super.update(deltaT);
         if (this.wait.isStopped()) {
-            if (this.setting.shape !== "circle") {
+            if (this.setting.shape === "AABB") {
                 if (!this.delay.isStopped()) {
                     this.owner.setCollisionShape(new AABB(new Vec2(0, 0), new Vec2(0,0)));
                 }
@@ -54,6 +54,8 @@ export default class Active extends HitboxState {
 
             if (this.setting.customLocation!) {
                 this.owner.position = this.setting.customLocation;
+                this.owner.invertX = this.setting.invertX
+
             }
             else {
                 if (this.setting.actor!) {
@@ -89,6 +91,12 @@ export default class Active extends HitboxState {
                 else if (this.setting.customProperties === "left") {
                     this.owner.move(new Vec2(-6, 0));
                 }
+                else if (this.setting.customProperties === "right_wave") {
+                    this.owner.move(new Vec2(2, 0));
+                }
+                else if (this.setting.customProperties === "left_wave") {
+                    this.owner.move(new Vec2(-2, 0));
+                }
                 else if (this.setting.customProperties === "projectile") {
                     const direction = this.setting.targetPosition.clone().sub(this.owner.position).normalize();
                     const distance = this.owner.position.distanceTo(this.setting.targetPosition);
@@ -106,8 +114,7 @@ export default class Active extends HitboxState {
                     velocity.y -= 1000 * deltaT;
                 
                     this.owner.move(velocity.scaled(deltaT));
-                
-                    if (distance < 1) {
+                    if (distance < 3) {
                         this.owner.destroy();
                     } else if (distance > 1000){
                         this.owner.destroy();
