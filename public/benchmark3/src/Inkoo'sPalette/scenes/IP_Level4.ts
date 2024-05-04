@@ -14,14 +14,18 @@ import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import Input from "../../Wolfie2D/Input/Input";
 import { getPlayerSpawn, setPlayerSpawn} from "../Global/playerSpawn";
 import { sceneOptions } from "./MainMenu";
+import Big_Goldlem from "../Enemies/Big_Goldlem/Big_Goldlem";
 
 export default class IP_Level4 extends IP_Level {
-    
+    big_goldlemSpawns = [
+        new Vec2(32*66, 772)
+    ];
     loadScene(): void {
         // Load resources
         this.load.tilemap("level4", "assets/tilemaps/level4.json");
         this.load.spritesheet("player", "assets/player/inkoo.json");
         this.load.spritesheet("goblin", "assets/enemies/goblin/goblin_movement.json");
+        this.load.spritesheet("biggoldlem", "assets/enemies/big_goldlem/big_goldlem.json");
         this.load.image("fullheart", "assets/player/heart.png");
         this.load.image("halfheart", "assets/player/halfheart.png");
         this.load.image("background", "assets/images/mainmenu_bg.png");
@@ -29,6 +33,9 @@ export default class IP_Level4 extends IP_Level {
         this.load.spritesheet("ATTACK_UP", "assets/player/attack/attack_up.json");
         this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
         this.load.spritesheet("GOBLIN_LIGHT_ATTACK", "assets/enemies/goblin/goblin_light_attack.json");
+        this.load.spritesheet("gold", "assets/enemies/goldlem/gold.json");
+        this.load.spritesheet("big_goldlem", "assets/enemies/big_goldlem/big_goldlem.json");
+        this.load.spritesheet("goldlem_wave","assets/enemies/big_goldlem/goldlem_wave.json");
         this.load.audio("attack", "assets/sounds/attack.wav");
         this.load.audio("dead", "assets/sounds/dead.wav");
         this.load.audio("hit_enemy", "assets/sounds/hit_enemy.wav");
@@ -57,8 +64,8 @@ export default class IP_Level4 extends IP_Level {
         this.add.tilemap("level4", new Vec2(2, 2));
         this.layers.get("foreground").setDepth(10);
         super.startScene();
-        this.viewport.setBounds(0, 0, 64*16, 64*32);
-        // console.log("trashmobs", this.trash_Mobs);
+        this.viewport.setBounds(0, 0, 80*32, 32*32);
+        this.initBigGoldlem();
         //this.nextLevel = IP_Level2;
         console.log("enemy array", this.trash_Mobs);
     }
@@ -71,6 +78,19 @@ export default class IP_Level4 extends IP_Level {
 
     protected subscribeToEvents() {
         super.subscribeToEvents();
+    }
+    protected initBigGoldlem(): void {
+        var i;
+        for (i=0; i<1; i++) {
+            const biggoldlemOptions = {
+                owner: this.add.animatedSprite('biggoldlem', Layers.Main),
+                spawn: this.big_goldlemSpawns[i],
+                tilemap: Layers.Main,
+            }
+            let temp = new Big_Goldlem(biggoldlemOptions, 10);
+            this.trash_Mobs.set(biggoldlemOptions.owner.id, temp);
+        }
+        
     }
 
     protected addUI() {
