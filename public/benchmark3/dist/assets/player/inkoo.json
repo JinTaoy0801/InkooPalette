@@ -4,7 +4,7 @@
   "spriteWidth": 24,
   "spriteHeight": 24,
   "columns": 27,
-  "rows": 15,
+  "rows": 17,
   "durationType": "time",
   "animations": [
       { 
@@ -357,6 +357,13 @@
                     {"index": 236, "duration": 4},
                     {"index": 237, "duration": 4},
                     {"index": 238, "duration": 4}
+        ]
+    },
+    {
+      "name": "DASHING",
+        "frames":[  {"index": 432, "duration": 20},  
+                    {"index": 433, "duration": 20}, 
+                    {"index": 434, "duration": 20}
         ]
     }
   ]

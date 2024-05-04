@@ -47,6 +47,7 @@ export default abstract class  PlayerState extends State{
 			this.dashCooldown.start();
 		}
 		if (!this.dashTimer.isStopped()) {
+			this.owner.animation.playIfNotAlready("DASHING");
 			let dir = this.getInputDirection();
 			this.parent.velocity.x += dir.x*100;
 			this.parent.velocity.y = 0;
@@ -61,7 +62,8 @@ export default abstract class  PlayerState extends State{
 			"IDLE_ATTACK_UP",
 			"SPIN_ATTACK",
 			"ATTACK_DOWN",
-			"HIT"
+			"HIT",
+			"DASHING"
 		]
 		return attacks.some(attack => this.owner.animation.isPlaying(attack));
 	}
