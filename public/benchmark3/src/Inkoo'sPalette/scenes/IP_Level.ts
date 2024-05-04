@@ -25,6 +25,7 @@ import { getPlayerSpawn, setPlayerSpawn } from "../Global/playerSpawn";
 import { getSceneOptions } from "../Global/sceneOptions";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import Midas from "../Enemies/Midas/Midas";
+import IP_Level5 from "./IP_Level5";
 
 export enum Layers {
     Player = "player",
@@ -75,6 +76,8 @@ export default class IP_Level extends Scene {
     protected levelTransitionScreen: Rect;
 
     private pause_bg: Sprite;
+    protected viewport_size: number;
+    protected viewport_center: Vec2;
     
 
     //invinciblity timers
@@ -201,10 +204,9 @@ export default class IP_Level extends Scene {
                 }
                 case inkooEvents.RESUME: {
                     let pauseLayer = this.getLayer(Layers.Pause);
-                    let center = this.viewport.getCenter();
-                    this.viewport.setZoomLevel(1.5);
+                    this.viewport.setZoomLevel(this.viewport_size);
+                    this.viewport.setCenter(this.viewport_center);
                     this.viewport.follow(this.player);
-                    this.viewport.setCenter(center);
                     this.getSceneGraph().getAllNodes().forEach(element => {
                         if(element instanceof AnimatedSprite){
                             element.aiActive = true;
@@ -225,8 +227,10 @@ export default class IP_Level extends Scene {
         
         if (Input.isJustPressed("pause")) {
             let pauseLayer = this.getLayer(Layers.Pause);
-            let center = this.viewport.getCenter()
             if (pauseLayer.isHidden()) {
+                this.viewport_center = this.viewport.getCenter();
+                this.viewport_size = this.viewport.getZoomLevel()
+                console.log(this.viewport_size)
                 this.pauseViewport();
                 this.getSceneGraph().getAllNodes().forEach(element => {
                     if(element instanceof AnimatedSprite){
@@ -236,9 +240,9 @@ export default class IP_Level extends Scene {
                 pauseLayer.setHidden(false);
             }
             else {
-                this.viewport.setZoomLevel(1.5);
+                this.viewport.setZoomLevel(this.viewport_size);
+                this.viewport.setCenter(this.viewport_center);
                 this.viewport.follow(this.player);
-                this.viewport.setCenter(center);
                 this.getSceneGraph().getAllNodes().forEach(element => {
                     if(element instanceof AnimatedSprite){
                         element.aiActive = true;
@@ -276,6 +280,8 @@ export default class IP_Level extends Scene {
         this.viewport.setZoomLevel(1.5);
         this.viewport.follow(this.player);
         this.viewport.setBounds(0, 0, 64*32, 64*16);
+        this.viewport_center = this.viewport.getCenter();
+        this.viewport_size = this.viewport.getZoomLevel();
     }
 
     protected pauseViewport(): void {
@@ -433,18 +439,16 @@ export default class IP_Level extends Scene {
     }
 
     protected initBossHealthBar(bossName: String): void {
-        let center = this.viewport.getCenter();
-
-        this.bossHealthBarName = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(center.x - 220, center.y + 190), text: bossName});
+        this.bossHealthBarName = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(this.viewport_center.x - 220, this.viewport_center.y + 190), text: bossName});
         this.bossHealthBarName.font = "daydream";
         this.bossHealthBarName.textColor = Color.WHITE;
         this.bossHealthBarName.fontSize = 20;
 
-        this.bossHealthBar = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(center.x, center.y), text: ""});
+        this.bossHealthBar = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(this.viewport_center.x, this.viewport_center.y), text: ""});
         this.bossHealthBar.size.set(800,50)
         this.bossHealthBar.setBackgroundColor(Color.GREEN);
         
-        this.bossHealthBarBg = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(center.x, center.y), text: ""});
+        this.bossHealthBarBg = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(this.viewport_center.x, this.viewport_center.y), text: ""});
         this.bossHealthBarBg.size.set(800,50)
         this.bossHealthBarBg.setBackgroundColor(Color.TRANSPARENT);
         this.bossHealthBarBg.borderColor = Color.BLACK;
@@ -572,17 +576,6 @@ export default class IP_Level extends Scene {
         this.sceneManager.changeToScene(MainMenu,{});
         Input.enableInput();
     }
-
-
-    // private createBarBg(posX: number, posY: number, sizeX: number, sizeY: number, color: Color, font?: number) : Label{
-    //     let barBg = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(posX, posY), text: ""});
-    //     barBg.size = new Vec2(sizeX, sizeY);
-    //     barBg.backgroundColor = color;
-    //     barBg.borderColor = Color.BLACK;
-    //     barBg.borderWidth = 3;
-
-    //     return barBg;
-    // }
 
 }
 

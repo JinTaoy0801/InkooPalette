@@ -61,6 +61,7 @@ export default class IP_Level1 extends IP_Level {
         this.add.tilemap("level5", new Vec2(2, 2));
         this.layers.get("foreground").setDepth(10);
         super.startScene();
+        this.viewport.setZoomLevel(1.5)
         this.viewport.setBounds(0, 0, 64*16, 64*32);
         // console.log("trashmobs", this.trash_Mobs);
         this.nextLevel = IP_Level2;
