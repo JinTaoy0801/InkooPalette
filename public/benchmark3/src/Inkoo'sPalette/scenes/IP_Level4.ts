@@ -26,8 +26,12 @@ export default class IP_Level4 extends IP_Level {
         this.load.spritesheet("player", "assets/player/inkoo.json");
         this.load.spritesheet("goblin", "assets/enemies/goblin/goblin_movement.json");
         this.load.spritesheet("biggoldlem", "assets/enemies/big_goldlem/big_goldlem.json");
-        this.load.image("fullheart", "assets/player/heart.png");
-        this.load.image("halfheart", "assets/player/halfheart.png");
+        this.load.image("6", "assets/images/6.png");
+        this.load.image("5", "assets/images/5.png");
+        this.load.image("4", "assets/images/4.png");
+        this.load.image("3", "assets/images/3.png");
+        this.load.image("2", "assets/images/2.png");
+        this.load.image("1", "assets/images/1.png");
         this.load.image("background", "assets/images/mainmenu_bg.png");
         this.load.spritesheet("ARM_RIGHT", "assets/player/attack/arm_right.json");
         this.load.spritesheet("ATTACK_UP", "assets/player/attack/attack_up.json");

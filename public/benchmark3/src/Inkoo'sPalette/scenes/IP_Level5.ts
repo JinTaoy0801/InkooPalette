@@ -29,8 +29,12 @@ export default class IP_Level5 extends IP_Level {
         this.load.tilemap("level5", "assets/tilemaps/level5.json");
         this.load.spritesheet("player", "assets/player/inkoo.json");
         this.load.spritesheet("goblin", "assets/enemies/goblin/goblin_movement.json");
-        this.load.image("fullheart", "assets/player/heart.png");
-        this.load.image("halfheart", "assets/player/halfheart.png");
+        this.load.image("6", "assets/images/6.png");
+        this.load.image("5", "assets/images/5.png");
+        this.load.image("4", "assets/images/4.png");
+        this.load.image("3", "assets/images/3.png");
+        this.load.image("2", "assets/images/2.png");
+        this.load.image("1", "assets/images/1.png");
         this.load.image("background", "assets/images/mainmenu_bg.png");
         this.load.image("double_jump", "assets/images/double_jump.png");
         this.load.spritesheet("ARM_RIGHT", "assets/player/attack/arm_right.json");
@@ -38,6 +42,7 @@ export default class IP_Level5 extends IP_Level {
         this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
         this.load.spritesheet("GOBLIN_LIGHT_ATTACK", "assets/enemies/goblin/goblin_light_attack.json");
         this.load.audio("attack", "assets/sounds/attack.wav");
+        this.load.audio("pickup", "assets/sounds/pickup.wav");
         this.load.audio("dead", "assets/sounds/dead.wav");
         this.load.audio("hit_enemy", "assets/sounds/hit_enemy.wav");
         this.load.audio("jump", "assets/sounds/jump.wav");
@@ -88,8 +93,10 @@ export default class IP_Level5 extends IP_Level {
             let event = this.receiver.getNextEvent();
             switch (event.type) {
                 case "PICK_UP": {
+                    this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "pickup", loop: false, holdReference: false });
                     this.doubleJumpBuff.destroy();
                     setDoubleJump(true);
+                    this.initBuffIcon();
                     break;
                 }
             }
