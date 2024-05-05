@@ -21,6 +21,8 @@ import Color from "../../Wolfie2D/Utils/Color";
 import Goldlem from "../Enemies/Goldlem/Goldlem";
 import { getDash, setDash } from "../Global/dash";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
+import Label from "../../Wolfie2D/Nodes/UIElements/Label";
+import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 
 export default class IP_Level3 extends IP_Level {
     goblinSpawns = [
@@ -31,6 +33,7 @@ export default class IP_Level3 extends IP_Level {
         new Vec2(32*43.5,4*32)
     ];
     protected dashBuff: Sprite;
+    protected text: Label;
     mushroom:Rect;
     loadScene(): void {
         // Load resources
@@ -126,6 +129,10 @@ export default class IP_Level3 extends IP_Level {
                     this.initBuffIcon();
                     this.addLevelEnd(new Vec2(22*32, 9*32), new Vec2(2*32, 2*32), Areas.Mountains);
                     this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "pickup", loop: false, holdReference: false });
+                    this.text = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Main, {position: new Vec2(30*32, 5.5*32), text: "Press Shift to dash"});
+                    this.text.font = "daydream"
+                    this.text.setTextColor(Color.WHITE)
+                    this.text.fontSize = 12;
                     break;
                     }
                 

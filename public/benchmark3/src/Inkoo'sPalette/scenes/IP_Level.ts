@@ -267,6 +267,15 @@ export default class IP_Level extends Scene {
             this.emitter.fireEvent(Areas.Mountains);
         }
         if (Input.isJustPressed("level3")) {
+            this.emitter.fireEvent(Areas.Fallen);
+        }
+        if (Input.isJustPressed("level4")) {
+            this.emitter.fireEvent(Areas.Ruins);
+        }
+        if (Input.isJustPressed("level5")) {
+            this.emitter.fireEvent(Areas.Parkour);
+        }
+        if (Input.isJustPressed("level6")) {
             this.emitter.fireEvent(Areas.Midas);
         }
         if (Input.isJustPressed("invincible")) {

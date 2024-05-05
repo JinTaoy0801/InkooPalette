@@ -17,9 +17,14 @@ import { getPlayerSpawn, setPlayerSpawn} from "../Global/playerSpawn";
 import { sceneOptions } from "./MainMenu";
 import { getDoubleJump, setDoubleJump } from "../Global/doubleJump";
 import IP_Level1 from "./IP_Level1";
+import Label from "../../Wolfie2D/Nodes/UIElements/Label";
+import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
+import Color from "../../Wolfie2D/Utils/Color";
 
 export default class IP_Level5 extends IP_Level {
     protected doubleJumpBuff: Sprite;
+    protected text: Label;
+    protected text2: Label;
     goblinSpawns = [
         new Vec2(200, 800),
         new Vec2(400, 800)
@@ -99,6 +104,15 @@ export default class IP_Level5 extends IP_Level {
                     setDoubleJump(true);
                     this.initBuffIcon();
                     this.addLevelEnd(new Vec2(32, 32*53), new Vec2(2*32, 5*32), Areas.Mountains_Tutorial);
+                    this.text = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Main, {position: new Vec2(28*32, 2*32), text: "Double Jump Unlocked"});
+                    this.text.font = "daydream"
+                    this.text.setTextColor(Color.WHITE)
+                    this.text.fontSize = 12;
+
+                    this.text = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Main, {position: new Vec2(28*32, 2.5*32), text: "Go Back To Tree"});
+                    this.text.font = "daydream"
+                    this.text.setTextColor(Color.WHITE)
+                    this.text.fontSize = 12;
                     break;
                 }
                 case Areas.Mountains_Tutorial: {

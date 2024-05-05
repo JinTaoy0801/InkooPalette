@@ -17,12 +17,20 @@ import { sceneOptions } from "./MainMenu";
 import Rect from "../../Wolfie2D/Nodes/Graphics/Rect";
 import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
 import IP_Level6 from "./IP_Level6";
+import Color from "../../Wolfie2D/Utils/Color";
+import Label from "../../Wolfie2D/Nodes/UIElements/Label";
+import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 
 export default class IP_Level1 extends IP_Level {
     goblinSpawns = [
         new Vec2(1000, 800),
         new Vec2(1200, 800)
     ];
+
+    protected tree: Rect;
+    protected textRemove: Rect;
+    protected text: Label;
+    protected text2: Label;
     
     loadScene(): void {
         // Load resources
@@ -70,6 +78,8 @@ export default class IP_Level1 extends IP_Level {
         this.nextLevel = IP_Level2;
         console.log("enemy array", this.trash_Mobs);
 
+        this.initTree();
+
         let walloffleft = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
             position: new Vec2(22*32+16, 250),
             size: new Vec2(32, 20*32),
@@ -86,7 +96,8 @@ export default class IP_Level1 extends IP_Level {
     updateScene(deltaT: number): void {
         Input.enableInput();
 
-        while (this.receiver.hasNextEvent() && this.isArea(this.receiver.peekNextEvent().type)) {
+        while (this.receiver.hasNextEvent() && (this.isArea(this.receiver.peekNextEvent().type) ||
+        this.checkEvent(this.receiver.peekNextEvent().type))) {
             let event = this.receiver.getNextEvent();
             switch (event.type) {
                 case Areas.Mountains: {
@@ -98,6 +109,24 @@ export default class IP_Level1 extends IP_Level {
                 case Areas.Midas: {
                     setPlayerSpawn(new Vec2(439, 585));
                     this.sceneManager.changeToScene(IP_Level6, {}, sceneOptions);
+                    break;
+                }
+                case "TEXT": {
+                    this.text = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Main, {position: new Vec2(400, 700), text: "Find a way to"});
+                    this.text2 = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Main, {position: new Vec2(400, 714), text: "get up the tree"});
+                    this.text.font = "daydream"
+                    this.text.setTextColor(Color.WHITE)
+                    this.text.fontSize = 12;
+                    this.text2.font = "daydream"
+                    this.text2.setTextColor(Color.WHITE)
+                    this.text2.fontSize = 12;
+                    this.tree.destroy();
+                    break;
+                }
+                case "REMOVE_TEXT": {
+                    this.text.text = "";
+                    this.text2.text = "";
+                    this.textRemove.destroy();
                     break;
                 }
             }
@@ -124,11 +153,47 @@ export default class IP_Level1 extends IP_Level {
         super.subscribeToEvents();
         this.receiver.subscribe([
             Areas.Mountains,
-            Areas.Midas
+            Areas.Midas,
+            "TEXT",
+            "REMOVE_TEXT"
         ]);
+    }
+
+    checkEvent(s: String) {
+        let checks = [
+            "TEXT",
+            "REMOVE_TEXT"
+        ]
+        return checks.some(check => check === s);
     }
 
     protected addUI() {
         super.addUI();
+    }
+
+    protected initTree() {
+        this.tree = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
+            position: new Vec2(400, 750),
+            size: new Vec2(32, 5*32),
+        });
+        this.tree.addPhysics(undefined, undefined, false, true);
+        this.tree.setTrigger(
+            "player",
+            "TEXT",
+            "null",
+        );
+        this.tree.setColor(Color.TRANSPARENT)
+
+        this.textRemove = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
+            position: new Vec2(700, 750),
+            size: new Vec2(32, 5*32),
+        });
+        this.textRemove.addPhysics(undefined, undefined, false, true);
+        this.textRemove.setTrigger(
+            "player",
+            "REMOVE_TEXT",
+            "null",
+        );
+        this.textRemove.setColor(Color.TRANSPARENT)
     }
 }

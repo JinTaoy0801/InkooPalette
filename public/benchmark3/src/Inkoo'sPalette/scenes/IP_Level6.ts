@@ -111,6 +111,7 @@ export default class IP_Level6 extends IP_Level {
         this.triggerdoor = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
             position: new Vec2(1000, 520),
             size: new Vec2(32, 5*32),
+            color: Color.TRANSPARENT
         });
         this.triggerdoor.addPhysics(undefined, undefined, true, true);
         this.triggerdoor.setTrigger(
