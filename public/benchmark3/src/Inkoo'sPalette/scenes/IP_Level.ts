@@ -132,11 +132,19 @@ export default class IP_Level extends Scene {
                     break;
                 }
                 case inkooEvents.PLAYER_ENTERED_LEVEL_END:{
+                    // console.log('node in end level', this.sceneGraph.getNode(event.data.get("other")));
+                    this.sceneGraph.getNode(event.data.get("other")).destroy();
                     if(!this.levelEndTimer.hasRun() && this.levelEndTimer.isStopped()){
                         this.levelEndTimer.start();
                         this.levelEndLabel.tweens.play("slideIn");
                     }
                     Input.disableInput();
+                    setTimeout(()=> {
+                    //     this.sceneManager.changeToScene(MainMenu);
+                        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "levelmusic"});
+                        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level6"});
+                        this.sceneManager.changeToScene(MainMenu,{});
+                    }, 1500);
                     break;
                 }
                 case inkooEvents.LEVEL_START:{
@@ -354,7 +362,7 @@ export default class IP_Level extends Scene {
             this.healthbar.position.copy(new Vec2(60, 30));
         }
 
-        this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(-500, 200), text: "Level Complete"});
+        this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(-1000, 200), text: "You Beat The Game!"});
         this.levelEndLabel.size.set(1200, 60);
         this.levelEndLabel.borderRadius = 0;
         this.levelEndLabel.backgroundColor = new Color(34, 32, 52);
@@ -368,10 +376,10 @@ export default class IP_Level extends Scene {
                 {
                     property: TweenableProperties.posX,
                     start: -300,
-                    end: 400,
+                    end: 600,
                     ease: EaseFunctionType.OUT_SINE
                 }
-            ]
+            ],
         });
         this.levelTransitionScreen = <Rect>this.add.graphic(GraphicType.RECT, Layers.UI, {position: new Vec2(300, 200), size: new Vec2(64*32, 64*16)});
         this.levelTransitionScreen.color = new Color(34, 32, 52);

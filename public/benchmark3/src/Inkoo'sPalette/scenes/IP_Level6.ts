@@ -42,6 +42,8 @@ export default class IP_Level6 extends IP_Level {
         new Vec2(50*32, 9*32),
     ];
 
+    endBlock: Rect;
+
     loadScene(): void {
         this.load.tilemap("level6", "assets/tilemaps/kingmidas.json");
         this.load.spritesheet("player", "assets/player/inkoo.json");
@@ -127,6 +129,18 @@ export default class IP_Level6 extends IP_Level {
         });
         this.walloffthrone.setColor(new Color(0,0,0,0));
         this.walloffthrone.addPhysics(undefined, undefined, true, true);
+
+        this.endBlock = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
+            position: new Vec2(1970, 558),
+            size: new Vec2(32*2, 32),
+            color: Color.TRANSPARENT
+        });
+        this.endBlock.addPhysics(undefined, undefined, false, true);
+        this.endBlock.setTrigger(
+            "player",
+            inkooEvents.PLAYER_ENTERED_LEVEL_END,
+            null,
+        );
 
         //make the warning beams:
         this.initBeams();
