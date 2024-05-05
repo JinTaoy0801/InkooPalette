@@ -16,6 +16,7 @@ import Input from "../../Wolfie2D/Input/Input";
 import { getPlayerSpawn, setPlayerSpawn} from "../Global/playerSpawn";
 import { sceneOptions } from "./MainMenu";
 import { getDoubleJump, setDoubleJump } from "../Global/doubleJump";
+import IP_Level1 from "./IP_Level1";
 
 export default class IP_Level5 extends IP_Level {
     protected doubleJumpBuff: Sprite;
@@ -36,6 +37,7 @@ export default class IP_Level5 extends IP_Level {
         this.load.image("2", "assets/images/2.png");
         this.load.image("1", "assets/images/1.png");
         this.load.image("background", "assets/images/mainmenu_bg.png");
+        this.load.image("dash", "assets/images/dash.png");
         this.load.image("double_jump", "assets/images/double_jump.png");
         this.load.spritesheet("ARM_RIGHT", "assets/player/attack/arm_right.json");
         this.load.spritesheet("ATTACK_UP", "assets/player/attack/attack_up.json");
@@ -46,6 +48,7 @@ export default class IP_Level5 extends IP_Level {
         this.load.audio("dead", "assets/sounds/dead.wav");
         this.load.audio("hit_enemy", "assets/sounds/hit_enemy.wav");
         this.load.audio("jump", "assets/sounds/jump.wav");
+        this.load.audio("double_jump", "assets/sounds/jump2.wav");
         this.load.audio("took_damage", "assets/sounds/took_damage.wav");
     }
 
@@ -81,8 +84,6 @@ export default class IP_Level5 extends IP_Level {
             this.doubleJumpBuff.addPhysics(undefined, undefined, false, true);
             this.doubleJumpBuff.setTrigger("player", "PICK_UP", null);
         }
-        // console.log("trashmobs", this.trash_Mobs);
-        this.nextLevel = IP_Level2;
         console.log("enemy array", this.trash_Mobs);
     }
 
@@ -97,6 +98,13 @@ export default class IP_Level5 extends IP_Level {
                     this.doubleJumpBuff.destroy();
                     setDoubleJump(true);
                     this.initBuffIcon();
+                    this.addLevelEnd(new Vec2(32, 32*53), new Vec2(2*32, 5*32), Areas.Mountains_Tutorial);
+                    break;
+                }
+                case Areas.Mountains_Tutorial: {
+                    // Go to the next level  
+                    setPlayerSpawn(new Vec2(1930, 621.5));
+                    this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
                     break;
                 }
             }
@@ -115,7 +123,6 @@ export default class IP_Level5 extends IP_Level {
     protected subscribeToEvents() {
         super.subscribeToEvents();
         this.receiver.subscribe([
-            Areas.Mountains,
             Areas.Mountains_Tutorial,
             "PICK_UP"
         ]);

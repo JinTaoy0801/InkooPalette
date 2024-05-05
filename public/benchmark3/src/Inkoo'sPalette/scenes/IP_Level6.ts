@@ -54,6 +54,8 @@ export default class IP_Level6 extends IP_Level {
         this.load.image("1", "assets/images/1.png");
         this.load.image("background", "assets/images/mainmenu_bg.png");
         this.load.image("midasdoor", "assets/images/midas_door.png");
+        this.load.image("dash", "assets/images/dash.png");
+        this.load.image("double_jump", "assets/images/double_jump.png");
         this.load.spritesheet("ARM_RIGHT", "assets/player/attack/arm_right.json");
         this.load.spritesheet("ATTACK_UP", "assets/player/attack/attack_up.json");
         this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
@@ -66,6 +68,7 @@ export default class IP_Level6 extends IP_Level {
         this.load.audio("enemy_dead", "assets/sounds/enemy_dead.wav");
         this.load.audio("hit_enemy", "assets/sounds/hit_enemy.wav");
         this.load.audio("jump", "assets/sounds/jump.wav");
+        this.load.audio("double_jump", "assets/sounds/jump2.wav");
         this.load.audio("laser_charge", "assets/sounds/laser_charge.wav");
         this.load.audio("laser", "assets/sounds/laser.wav");
         this.load.audio("rock_forming", "assets/sounds/rock_forming.wav");

@@ -47,16 +47,19 @@ export default class IP_Level3 extends IP_Level {
         this.load.image("1", "assets/images/1.png");
         this.load.image("background", "assets/images/mainmenu_bg.png");
         this.load.image("dash", "assets/images/dash.png");
+        this.load.image("double_jump", "assets/images/double_jump.png");
         this.load.spritesheet("ARM_RIGHT", "assets/player/attack/arm_right.json");
         this.load.spritesheet("ATTACK_UP", "assets/player/attack/attack_up.json");
         this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
         this.load.spritesheet("GOBLIN_LIGHT_ATTACK", "assets/enemies/goblin/goblin_light_attack.json");
         this.load.audio("attack", "assets/sounds/attack.wav");
         this.load.audio("dead", "assets/sounds/dead.wav");
+        this.load.audio("dash", "assets/sounds/dash.wav");
         this.load.audio("enemy_dead", "assets/sounds/enemy_dead.wav");
         this.load.audio("pickup", "assets/sounds/pickup.wav");
         this.load.audio("hit_enemy", "assets/sounds/hit_enemy.wav");
         this.load.audio("jump", "assets/sounds/jump.wav");
+        this.load.audio("double_jump", "assets/sounds/jump2.wav");
         this.load.audio("took_damage", "assets/sounds/took_damage.wav");
     }
 
@@ -93,6 +96,9 @@ export default class IP_Level3 extends IP_Level {
             this.dashBuff.position.copy(new Vec2(29.5*32, 5.5*32));
             this.dashBuff.addPhysics(undefined, undefined, false, true);
             this.dashBuff.setTrigger("player", "PICK_UP", null);
+        }
+        else {
+            this.addLevelEnd(new Vec2(22*32, 9*32), new Vec2(2*32, 2*32), Areas.Mountains);
         }
  
         this.mushroom.addPhysics(undefined, undefined, false, true);

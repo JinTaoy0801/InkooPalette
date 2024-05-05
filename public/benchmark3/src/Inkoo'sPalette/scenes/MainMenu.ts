@@ -19,6 +19,8 @@ import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import Input from "../../Wolfie2D/Input/Input";
 import { getSceneOptions } from "../Global/sceneOptions";
 import { getPlayerSpawn, setPlayerSpawn } from "../Global/playerSpawn";
+import { setDash } from "../Global/dash";
+import { setDoubleJump } from "../Global/doubleJump";
 
 const MainMenuName = {
     MAIN_MENU: "MAIN_MENU",
@@ -63,6 +65,8 @@ export default class MainMenu extends Scene {
         let center = this.viewport.getHalfSize();
         this.viewport.setFocus(center);
         this.viewport.setZoomLevel(1);
+        setDash(false);
+        setDoubleJump(false);
 
         // Create screens
         this.mainMenu = this.addUILayer(MainMenuName.MAIN_MENU);

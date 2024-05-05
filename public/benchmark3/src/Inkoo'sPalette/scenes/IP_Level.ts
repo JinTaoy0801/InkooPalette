@@ -26,8 +26,8 @@ import { getSceneOptions } from "../Global/sceneOptions";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import Midas from "../Enemies/Midas/Midas";
 import IP_Level5 from "./IP_Level5";
-import { getDoubleJump } from "../Global/doubleJump";
-import { getDash } from "../Global/dash";
+import { getDoubleJump, setDoubleJump } from "../Global/doubleJump";
+import { getDash, setDash } from "../Global/dash";
 
 export enum Layers {
     Player = "player",
@@ -45,6 +45,7 @@ export enum Areas {
     Midas = "Midas",
     Fallen = "Fallen",
     Ruins = "Runes",
+    GOLDLEM = "Goldlem",
     Mountains_Tutorial = "Mountains_Tutorial",
     Midas_Tutorial = "Midas_Tutorial"
 
@@ -142,6 +143,7 @@ export default class IP_Level extends Scene {
                     break;
                 }
                 case inkooEvents.MUSHROOM_HIT:{
+                    this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "double_jump", loop: false, holdReference: false });
                     this.emitter.fireEvent("TRAMPOLINE");
                     break;
                 }
@@ -201,6 +203,9 @@ export default class IP_Level extends Scene {
                 //though it has the death key, the id of the trash mob is in node
                 //key => DEATH node =>id of mob
                 case inkooEvents.TRASH_MOB_KILLED:{
+                    if (Math.random() < 0.5) {
+                        this.incPlayerLife(1)
+                    }
                     this.sceneGraph.getNode(event.data.get("node")).destroy();
                     break;
                 }
@@ -265,6 +270,8 @@ export default class IP_Level extends Scene {
         }
         if (Input.isJustPressed("invincible")) {
             this.incPlayerLife(1000);
+            setDash(true);
+            setDoubleJump(true);
         }
     }
 
@@ -485,7 +492,10 @@ export default class IP_Level extends Scene {
     protected incPlayerLife(amt: number): void {
         IP_Level.livesCount += amt;
         
-        if (IP_Level.livesCount >= 6) {
+        if (IP_Level.livesCount >= 1000) {
+            IP_Level.livesCount = 1000;
+        }
+        else if (IP_Level.livesCount >= 6) {
             IP_Level.livesCount = 6;
         }
 

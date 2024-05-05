@@ -35,6 +35,7 @@ export default class IP_Level1 extends IP_Level {
         this.load.image("3", "assets/images/3.png");
         this.load.image("2", "assets/images/2.png");
         this.load.image("1", "assets/images/1.png");
+        this.load.image("dash", "assets/images/dash.png");
         this.load.image("double_jump", "assets/images/double_jump.png");
         this.load.image("background", "assets/images/mainmenu_bg.png");
         this.load.spritesheet("ARM_RIGHT", "assets/player/attack/arm_right.json");
@@ -48,36 +49,11 @@ export default class IP_Level1 extends IP_Level {
         this.load.audio("enemy_dead", "assets/sounds/enemy_dead.wav");
         this.load.audio("hit_enemy", "assets/sounds/hit_enemy.wav");
         this.load.audio("jump", "assets/sounds/jump.wav");
+        this.load.audio("double_jump", "assets/sounds/jump2.wav");
         this.load.audio("took_damage", "assets/sounds/took_damage.wav");
     }
 
     unloadScene(){
-        this.load.spritesheet("player", "assets/player/inkoo.json");
-        this.load.spritesheet("goblin", "assets/enemies/goblin/goblin_movement.json");
-        this.load.image("6", "assets/images/6.png");
-        this.load.image("5", "assets/images/5.png");
-        this.load.image("4", "assets/images/4.png");
-        this.load.image("3", "assets/images/3.png");
-        this.load.image("2", "assets/images/2.png");
-        this.load.image("1", "assets/images/1.png");
-        this.load.image("background", "assets/images/mainmenu_bg.png");
-        this.load.spritesheet("ARM_RIGHT", "assets/player/attack/arm_right.json");
-        this.load.spritesheet("ATTACK_UP", "assets/player/attack/attack_up.json");
-        this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
-        this.load.spritesheet("GOBLIN_LIGHT_ATTACK", "assets/enemies/goblin/goblin_light_attack.json")
-        this.load.audio("attack", "assets/sounds/attack.wav");
-        this.load.audio("dash", "assets/sounds/dash.wav");
-        this.load.audio("dead", "assets/sounds/dead.wav");
-        this.load.audio("enemy_dead", "assets/sounds/enemy_dead.wav");
-        this.load.audio("hit_enemy", "assets/sounds/hit_enemy.wav");
-        this.load.audio("jump", "assets/sounds/jump.wav");
-        this.load.audio("jump2", "assets/sounds/jump2.wav");
-        this.load.audio("laser_charge", "assets/sounds/laser_charge.wav");
-        this.load.audio("laser", "assets/sounds/laser.wav");
-        this.load.audio("rock_forming", "assets/sounds/rock_forming.wav");
-        this.load.audio("rock_slide", "assets/sounds/rock_slide.wav");
-        this.load.audio("shield_hit", "assets/sounds/shield_hit.wav");
-        this.load.audio("took_damage", "assets/sounds/took_damage.wav");
     }
 
     startScene(): void {

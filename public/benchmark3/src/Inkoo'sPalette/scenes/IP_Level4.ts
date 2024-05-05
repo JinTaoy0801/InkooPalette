@@ -33,6 +33,8 @@ export default class IP_Level4 extends IP_Level {
         this.load.image("2", "assets/images/2.png");
         this.load.image("1", "assets/images/1.png");
         this.load.image("background", "assets/images/mainmenu_bg.png");
+        this.load.image("dash", "assets/images/dash.png");
+        this.load.image("double_jump", "assets/images/double_jump.png");
         this.load.spritesheet("ARM_RIGHT", "assets/player/attack/arm_right.json");
         this.load.spritesheet("ATTACK_UP", "assets/player/attack/attack_up.json");
         this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
