@@ -14,6 +14,9 @@ import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import Input from "../../Wolfie2D/Input/Input";
 import { getPlayerSpawn, setPlayerSpawn} from "../Global/playerSpawn";
 import { sceneOptions } from "./MainMenu";
+import Rect from "../../Wolfie2D/Nodes/Graphics/Rect";
+import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
+import IP_Level6 from "./IP_Level6";
 
 export default class IP_Level1 extends IP_Level {
     goblinSpawns = [
@@ -33,6 +36,7 @@ export default class IP_Level1 extends IP_Level {
         this.load.spritesheet("ATTACK_UP", "assets/player/attack/attack_up.json");
         this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
         this.load.spritesheet("GOBLIN_LIGHT_ATTACK", "assets/enemies/goblin/goblin_light_attack.json");
+        this.load.spritesheet("arrow", "assets/images/arrow.json");
         this.load.audio("attack", "assets/sounds/attack.wav");
         this.load.audio("dash", "assets/sounds/dash.wav");
         this.load.audio("dead", "assets/sounds/dead.wav");
@@ -72,10 +76,24 @@ export default class IP_Level1 extends IP_Level {
         this.layers.get("foreground").setDepth(10);
         super.startScene();
         this.addLevelEnd(new Vec2(63*32, 18*32), new Vec2(2*32, 10*32), Areas.Mountains);
+
+        this.addLevelEnd(new Vec2(32*32, 0), new Vec2(10*32, 1*32), Areas.Midas);
         this.initGoblin();
         // console.log("trashmobs", this.trash_Mobs);
         this.nextLevel = IP_Level2;
         console.log("enemy array", this.trash_Mobs);
+
+        let walloffleft = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
+            position: new Vec2(22*32+16, 250),
+            size: new Vec2(32, 20*32),
+        });
+        walloffleft.addPhysics(undefined, undefined, true, true);
+        walloffleft.color.set(0,0,0,0);
+
+        let arrow = this.add.animatedSprite("arrow", Layers.Main);
+        arrow.scale = new Vec2(2, 2);
+        arrow.position = new Vec2(32*32-8, 100);
+        arrow.animation.play("POINTING", true);
     }
 
     updateScene(deltaT: number): void {
@@ -90,7 +108,10 @@ export default class IP_Level1 extends IP_Level {
                     this.sceneManager.changeToScene(IP_Level2, {}, sceneOptions);
                     break;
                 }
-                default: {
+                case Areas.Midas: {
+                    setPlayerSpawn(new Vec2(439, 585));
+                    this.sceneManager.changeToScene(IP_Level6, {}, sceneOptions);
+                    break;
                 }
             }
         }
@@ -116,7 +137,7 @@ export default class IP_Level1 extends IP_Level {
         super.subscribeToEvents();
         this.receiver.subscribe([
             Areas.Mountains,
-            Areas.Mountains_Tutorial
+            Areas.Midas
         ]);
     }
 

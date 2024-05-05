@@ -13,6 +13,7 @@ import { inkooEvents } from "../../inkooEvents";
 
 export default abstract class InAir extends PlayerState {
     owner: AnimatedSprite;
+	jumpCount: number;
 
     update(deltaT: number): void {
         super.update(deltaT);
@@ -67,9 +68,13 @@ export default abstract class InAir extends PlayerState {
             	delay: new Timer(0)
 			}
 			let hitbox = new Hitbox(HB_options, "playerattack");
-
 		}
 
+		if (Input.isKeyJustPressed("space") && this.jumpCount<1) {
+			console.log('double jump?????');
+			this.parent.velocity.y = -450;
+			this.jumpCount++;
+		}
     }
 	 
 	handleInput(event: GameEvent): void {

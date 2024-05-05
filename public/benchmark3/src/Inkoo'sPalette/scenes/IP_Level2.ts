@@ -51,7 +51,6 @@ export default class IP_Level2 extends IP_Level {
         this.add.tilemap("level2", new Vec2(2, 2));
         this.layers.get("foreground").setDepth(10);
         super.startScene();
-        this.addLevelEnd(new Vec2(63*32, 10*32), new Vec2(2*32, 10*32), Areas.Midas);
         this.addLevelEnd(new Vec2(32*1, 400), new Vec2(2*32, 10*32), Areas.Mountains_Tutorial);
         //this.initGoldlem();
         this.initBigGoldlem();
@@ -68,11 +67,6 @@ export default class IP_Level2 extends IP_Level {
                     // Go to the next level  
                     setPlayerSpawn(new Vec2(1930, 621.5));
                     this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
-                    break;
-                }
-                case Areas.Midas: {
-                    setPlayerSpawn(new Vec2(100, 100));
-                    this.sceneManager.changeToScene(IP_Level3, {}, sceneOptions);
                     break;
                 }
             }
@@ -113,8 +107,7 @@ export default class IP_Level2 extends IP_Level {
     protected subscribeToEvents() {
         super.subscribeToEvents();
         this.receiver.subscribe([
-            Areas.Mountains_Tutorial,
-            Areas.Midas
+            Areas.Mountains_Tutorial
         ]);
     }
 

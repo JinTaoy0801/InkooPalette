@@ -30,7 +30,7 @@ export default class Midas extends Enemy {
             }
             if (this.getHp() === 0) {
                 console.log("this code ran when mdias dasdkjajklsdlkjhasdlalsdljkas")
-                this.owner.animation.play("DEAD", false, "DEADMIDAS");
+                this.owner.animation.play("DYING", false, "DEADMIDAS");
             }
         }
     }

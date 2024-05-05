@@ -43,7 +43,7 @@ export enum Areas {
     Midas = "Midas",
 
     Mountains_Tutorial = "Mountains_Tutorial",
-    Midas_Mountains = "Midas_Mountains"
+    Midas_Tutorial = "Midas_Tutorial"
 
 }
 
@@ -181,8 +181,10 @@ export default class IP_Level extends Scene {
                                 this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "enemy_dead", loop: false, holdReference: false });
                             }
                             console.log("trashMob hp", trash_mob.getHp());
-                            if (trash_mob.getName() == 'midas') {
-                                this.handleBossHealthChange(trash_mob.getHp(), 10)
+                            if (trash_mob.getHp() >= 0) {
+                                if (trash_mob.getName() == 'midas') {
+                                    this.handleBossHealthChange(trash_mob.getHp(), 10)
+                                }
                             }
                         }
                         

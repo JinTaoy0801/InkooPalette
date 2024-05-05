@@ -42,11 +42,18 @@
           ]
         },
         { 
-          "name": "DEAD",
+          "name": "DYING",
           "frames": [ {"index": 46, "duration": 15},
                       {"index": 47, "duration": 15},
                       {"index": 48, "duration": 100}
           ]
+        },
+        { 
+          "name": "DEAD",
+          "frames": [ 
+                      {"index": 48, "duration": 100}
+          ]
         }
+
     ]
 }
