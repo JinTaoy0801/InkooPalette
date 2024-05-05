@@ -7,7 +7,7 @@ import Big_GoldlemState from "./Big_GoldlemState";
 export default class Awaken extends Big_GoldlemState {
     onEnter(options: Record<string, any>): void {
 
-        this.owner.animation.play("AWAKEN",false);
+        this.owner.animation.playIfNotAlready("AWAKEN",false, "BOSS_AWAKEN");
     }
     update(deltaT: number): void {
         if(!this.owner.animation.isPlaying("AWAKEN")){

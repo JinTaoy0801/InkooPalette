@@ -15,17 +15,22 @@ import Input from "../../Wolfie2D/Input/Input";
 import { getPlayerSpawn, setPlayerSpawn} from "../Global/playerSpawn";
 import { sceneOptions } from "./MainMenu";
 import Big_Goldlem from "../Enemies/Big_Goldlem/Big_Goldlem";
+import IP_Level5 from "./IP_Level5";
+import Goldlem from "../Enemies/Goldlem/Goldlem";
 
 export default class IP_Level4 extends IP_Level {
     big_goldlemSpawns = [
         new Vec2(32*66, 772)
     ];
+    boss:Big_Goldlem;
     loadScene(): void {
         // Load resources
         this.load.tilemap("level4", "assets/tilemaps/level4.json");
         this.load.spritesheet("player", "assets/player/inkoo.json");
         this.load.spritesheet("goblin", "assets/enemies/goblin/goblin_movement.json");
+        this.load.spritesheet("goldlem", "assets/enemies/goldlem/goldlem.json");
         this.load.spritesheet("biggoldlem", "assets/enemies/big_goldlem/big_goldlem.json");
+        this.load.spritesheet("deadsplit", "assets/enemies/big_goldlem/deadsplit.json");
         this.load.image("6", "assets/images/6.png");
         this.load.image("5", "assets/images/5.png");
         this.load.image("4", "assets/images/4.png");
@@ -75,35 +80,85 @@ export default class IP_Level4 extends IP_Level {
         this.layers.get("foreground").setDepth(10);
         super.startScene();
         this.viewport.setBounds(0, 0, 80*32, 32*32);
-        this.initBigGoldlem();
-        //this.nextLevel = IP_Level2;
+        const biggoldlemOptions = {
+            owner: this.add.animatedSprite('biggoldlem', Layers.Main),
+            spawn: this.big_goldlemSpawns[0],
+            tilemap: Layers.Main,
+        }
+        this.boss = new Big_Goldlem(biggoldlemOptions,10);
+        this.trash_Mobs.set(biggoldlemOptions.owner.id, this.boss);
+        
         console.log("enemy array", this.trash_Mobs);
     }
 
     updateScene(deltaT: number): void {
-        Input.enableInput();
+        while (this.receiver.hasNextEvent() && (this.isArea(this.receiver.peekNextEvent().type) ||
+        this.checkEvent(this.receiver.peekNextEvent().type))) {
+            let event = this.receiver.getNextEvent();
+            console.log('event: ', event.type);
+            switch (event.type) {
+                case Areas.RewardRoom: {
+                    // Go to the next level  
+                    setPlayerSpawn(new Vec2(32*32-8, 2*32));
+                    this.sceneManager.changeToScene(IP_Level5, {}, this.sceneOptions);
+                    break;
+                }
+                case "BOSS_AWAKEN":{
+                    this.initBGHealthBar("Big Goldem");
+                    break;
+                }
+                case "BOSS_DEFEATED": {
+                    console.log("godelm dead");
+                    this.boss.owner.animation.play("DEAD", true);
+                    //const lastbosspos = this.boss.owner.position;
+                    // this.boss.owner.removePhysics();
+                    // this.boss.owner.destroy();
+                    // this.boss = undefined;
+                    //this.spawnGoldlems(lastbosspos);
+                    console.log("enemy array", this.trash_Mobs);
+                    break;
+                }
+            }
+        }
+
         super.updateScene(deltaT);
-        
+        // console.log('the rock: ', this.rock)
     }
 
     protected subscribeToEvents() {
         super.subscribeToEvents();
+        this.receiver.subscribe([
+            Areas.RewardRoom,
+            "BOSS_DEFEATED",
+            "BOSS_AWAKEN"
+        ]);
     }
-    protected initBigGoldlem(): void {
-        var i;
-        for (i=0; i<1; i++) {
-            const biggoldlemOptions = {
-                owner: this.add.animatedSprite('biggoldlem', Layers.Main),
-                spawn: this.big_goldlemSpawns[i],
-                tilemap: Layers.Main,
-            }
-            let temp = new Big_Goldlem(biggoldlemOptions, 10);
-            this.trash_Mobs.set(biggoldlemOptions.owner.id, temp);
-        }
-        
+    checkEvent(s: String) {
+        let checks = [
+            "BOSS_DEFEATED",
+            "BOSS_AWAKEN"
+        ]
+        return checks.some(check => check === s);
     }
 
     protected addUI() {
         super.addUI();
+    }
+    protected spawnGoldlems(lastbosspos: Vec2): void {
+        var i;
+        const goldlemspawns = [
+            new Vec2(lastbosspos.x+30, lastbosspos.y+24),
+            new Vec2(lastbosspos.x-36, lastbosspos.y+24)
+        ]
+        for (i=0; i<2; i++) {
+            const goldlemOptions = {
+                owner: this.add.animatedSprite('goldlem', Layers.Main),
+                spawn: goldlemspawns[i],
+                tilemap: Layers.Main,
+            }
+            let temp = new Goldlem(goldlemOptions,7);
+            this.trash_Mobs.set(goldlemOptions.owner.id, temp);
+        }
+        
     }
 }

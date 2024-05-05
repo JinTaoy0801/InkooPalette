@@ -5,6 +5,7 @@ import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Timer from "../../../Wolfie2D/Timing/Timer";
 import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
+import Circle from "../../../Wolfie2D/DataTypes/Shapes/Circle";
 
 
 export default class Active extends HitboxState {
@@ -14,6 +15,8 @@ export default class Active extends HitboxState {
     positionTimer = new Timer(250);
     wait = new Timer(0);
     width: number
+    height:number
+    center:number
     onEnter(options: Record<string, any>) {
         this.owner = this.attack;
         this.setting = this.parent.settings;
@@ -38,6 +41,10 @@ export default class Active extends HitboxState {
         if (this.setting.customProperties!) {
             if (this.setting.customProperties === "shorten") {
                 this.width = this.owner.collisionShape.hw;
+            }
+            else if ( this.setting.customProperties === "right_wave" || this.setting.customProperties === "left_wave"){
+                this.height = this.owner.collisionShape.hh;
+                this.center = 0;
             }
         }
     }
@@ -92,9 +99,23 @@ export default class Active extends HitboxState {
                     this.owner.move(new Vec2(-6, 0));
                 }
                 else if (this.setting.customProperties === "right_wave") {
+                    const currShape = this.owner.collisionShape;
+                    this.height -=0.20
+                    this.center += 0.22
+                    if (this.height < 0) this.height = 0;
+                    let newhh = new Vec2(currShape.hw,this.height);
+                    this.owner.colliderOffset.set(this.setting.colliderOffset.x, this.center);
+                    this.owner.setCollisionShape(new AABB(Vec2.ZERO, newhh));
                     this.owner.move(new Vec2(2, 0));
                 }
                 else if (this.setting.customProperties === "left_wave") {
+                    const currShape = this.owner.collisionShape;
+                    this.height -=0.20
+                    this.center +=0.20
+                    if (this.height < 0) this.height = 0;
+                    let newhh = new Vec2(currShape.hw, this.height);
+                    this.owner.colliderOffset.set(this.setting.colliderOffset.x, this.center);
+                    this.owner.setCollisionShape(new AABB(Vec2.ZERO, newhh));
                     this.owner.move(new Vec2(-2, 0));
                 }
                 else if (this.setting.customProperties === "projectile") {
