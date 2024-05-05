@@ -19,6 +19,8 @@ import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
 import Rect from "../../Wolfie2D/Nodes/Graphics/Rect";
 import Color from "../../Wolfie2D/Utils/Color";
 import Goldlem from "../Enemies/Goldlem/Goldlem";
+import { getDash, setDash } from "../Global/dash";
+import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 
 export default class IP_Level3 extends IP_Level {
     goblinSpawns = [
@@ -28,6 +30,7 @@ export default class IP_Level3 extends IP_Level {
     goldemSpawns = [
         new Vec2(32*43.5,4*32)
     ];
+    protected dashBuff: Sprite;
     mushroom:Rect;
     loadScene(): void {
         // Load resources
@@ -39,6 +42,7 @@ export default class IP_Level3 extends IP_Level {
         this.load.image("fullheart", "assets/player/heart.png");
         this.load.image("halfheart", "assets/player/halfheart.png");
         this.load.image("background", "assets/images/mainmenu_bg.png");
+        this.load.image("dash", "assets/images/dash.png");
         this.load.spritesheet("ARM_RIGHT", "assets/player/attack/arm_right.json");
         this.load.spritesheet("ATTACK_UP", "assets/player/attack/attack_up.json");
         this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
@@ -77,8 +81,15 @@ export default class IP_Level3 extends IP_Level {
         this.initGoldlem();
         this.mushroom = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
             position: new Vec2(32*56.5, 18*32),
-            size: new Vec2(32*3, 2*32),
+            size: new Vec2( 32*3, 2*32),
         });
+        if (!getDash()) {
+            this.dashBuff = this.add.sprite('dash', Layers.Bg);
+            this.dashBuff.scale.set(0.25, 0.25);
+            this.dashBuff.position.copy(new Vec2(29.5*32, 5.5*32));
+            this.dashBuff.addPhysics(undefined, undefined, false, true);
+            this.dashBuff.setTrigger("player", "PICK_UP", null);
+        }
  
         this.mushroom.addPhysics(undefined, undefined, false, true);
         this.mushroom.color = Color.TRANSPARENT;
@@ -90,7 +101,8 @@ export default class IP_Level3 extends IP_Level {
     updateScene(deltaT: number): void {
         Input.enableInput();
 
-        while (this.receiver.hasNextEvent() && this.isArea(this.receiver.peekNextEvent().type)) {
+        while (this.receiver.hasNextEvent() && (this.isArea(this.receiver.peekNextEvent().type) ||
+        this.checkEvent(this.receiver.peekNextEvent().type))){
             let event = this.receiver.getNextEvent();
             switch (event.type) {
                 case Areas.Mountains: {
@@ -98,12 +110,22 @@ export default class IP_Level3 extends IP_Level {
                     this.sceneManager.changeToScene(IP_Level2, {}, sceneOptions);
                     break;
                 }
-                default: {
-                }
+                case "PICK_UP": {
+                    this.dashBuff.destroy();
+                    setDash(true);
+                    break;
+                    }
+                
             }
         }
         super.updateScene(deltaT);
         
+    }
+    checkEvent(s: String) {
+        let checks = [
+            "PICK_UP"
+        ]
+        return checks.some(check => check === s);
     }
 
     protected initGoblin(): void {
@@ -137,7 +159,8 @@ export default class IP_Level3 extends IP_Level {
         super.subscribeToEvents();
         this.receiver.subscribe([
             Areas.Mountains,
-            Areas.Mountains_Tutorial
+            Areas.Mountains_Tutorial,
+            "PICK_UP"
         ]);
     }
 
