@@ -5,6 +5,7 @@ import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Goblin from "../Enemies/Goblin/Goblin";
 import GoblinController from "../Enemies/Goblin/GoblinController";
+import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import IP_Level, { Areas } from "./IP_Level";
 import IP_Level2 from "./IP_Level2";
 import { Layers } from "./IP_Level";
@@ -14,8 +15,10 @@ import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import Input from "../../Wolfie2D/Input/Input";
 import { getPlayerSpawn, setPlayerSpawn} from "../Global/playerSpawn";
 import { sceneOptions } from "./MainMenu";
+import { getDoubleJump, setDoubleJump } from "../Global/doubleJump";
 
 export default class IP_Level5 extends IP_Level {
+    protected doubleJumpBuff: Sprite;
     goblinSpawns = [
         new Vec2(200, 800),
         new Vec2(400, 800)
@@ -29,6 +32,7 @@ export default class IP_Level5 extends IP_Level {
         this.load.image("fullheart", "assets/player/heart.png");
         this.load.image("halfheart", "assets/player/halfheart.png");
         this.load.image("background", "assets/images/mainmenu_bg.png");
+        this.load.image("double_jump", "assets/images/double_jump.png");
         this.load.spritesheet("ARM_RIGHT", "assets/player/attack/arm_right.json");
         this.load.spritesheet("ATTACK_UP", "assets/player/attack/attack_up.json");
         this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
@@ -65,6 +69,13 @@ export default class IP_Level5 extends IP_Level {
         super.startScene();
         this.viewport.setZoomLevel(1.5)
         this.viewport.setBounds(0, 0, 64*16, 64*32);
+        if (!getDoubleJump()) {
+            this.doubleJumpBuff = this.add.sprite('double_jump', Layers.Bg);
+            this.doubleJumpBuff.scale.set(0.25, 0.25);
+            this.doubleJumpBuff.position.copy(new Vec2(29*32, 3*32));
+            this.doubleJumpBuff.addPhysics(undefined, undefined, false, true);
+            this.doubleJumpBuff.setTrigger("player", "PICK_UP", null);
+        }
         // console.log("trashmobs", this.trash_Mobs);
         this.nextLevel = IP_Level2;
         console.log("enemy array", this.trash_Mobs);
@@ -72,16 +83,34 @@ export default class IP_Level5 extends IP_Level {
 
     updateScene(deltaT: number): void {
         Input.enableInput();
-
+        while (this.receiver.hasNextEvent() && (this.isArea(this.receiver.peekNextEvent().type) ||
+        this.checkEvent(this.receiver.peekNextEvent().type))) {
+            let event = this.receiver.getNextEvent();
+            switch (event.type) {
+                case "PICK_UP": {
+                    this.doubleJumpBuff.destroy();
+                    setDoubleJump(true);
+                    break;
+                }
+            }
+        }
         super.updateScene(deltaT);
         
+    }
+
+    checkEvent(s: String) {
+        let checks = [
+            "PICK_UP"
+        ]
+        return checks.some(check => check === s);
     }
 
     protected subscribeToEvents() {
         super.subscribeToEvents();
         this.receiver.subscribe([
             Areas.Mountains,
-            Areas.Mountains_Tutorial
+            Areas.Mountains_Tutorial,
+            "PICK_UP"
         ]);
     }
 
