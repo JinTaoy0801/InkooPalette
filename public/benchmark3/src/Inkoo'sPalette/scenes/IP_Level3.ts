@@ -54,6 +54,7 @@ export default class IP_Level3 extends IP_Level {
         this.load.audio("attack", "assets/sounds/attack.wav");
         this.load.audio("dead", "assets/sounds/dead.wav");
         this.load.audio("enemy_dead", "assets/sounds/enemy_dead.wav");
+        this.load.audio("pickup", "assets/sounds/pickup.wav");
         this.load.audio("hit_enemy", "assets/sounds/hit_enemy.wav");
         this.load.audio("jump", "assets/sounds/jump.wav");
         this.load.audio("took_damage", "assets/sounds/took_damage.wav");
@@ -80,7 +81,6 @@ export default class IP_Level3 extends IP_Level {
         this.add.tilemap("level3", new Vec2(2, 2));
         this.layers.get("foreground").setDepth(10);
         super.startScene();
-        this.addLevelEnd(new Vec2(63*32, 18*32), new Vec2(2*32, 10*32), Areas.Mountains);
         this.initGoblin();
         this.initGoldlem();
         this.mushroom = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
@@ -117,6 +117,9 @@ export default class IP_Level3 extends IP_Level {
                 case "PICK_UP": {
                     this.dashBuff.destroy();
                     setDash(true);
+                    this.initBuffIcon();
+                    this.addLevelEnd(new Vec2(22*32, 9*32), new Vec2(2*32, 2*32), Areas.Mountains);
+                    this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "pickup", loop: false, holdReference: false });
                     break;
                     }
                 
@@ -171,4 +174,5 @@ export default class IP_Level3 extends IP_Level {
     protected addUI() {
         super.addUI();
     }
+
 }

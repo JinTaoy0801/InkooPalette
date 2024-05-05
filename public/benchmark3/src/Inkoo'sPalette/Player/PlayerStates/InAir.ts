@@ -10,6 +10,7 @@ import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import Timer from "../../../Wolfie2D/Timing/Timer";
 import GameEvent from "../../../Wolfie2D/Events/GameEvent";
 import { inkooEvents } from "../../inkooEvents";
+import { getDoubleJump } from "../../Global/doubleJump";
 
 export default abstract class InAir extends PlayerState {
     owner: AnimatedSprite;
@@ -69,12 +70,14 @@ export default abstract class InAir extends PlayerState {
 			}
 			let hitbox = new Hitbox(HB_options, "playerattack");
 		}
-
-		if (Input.isKeyJustPressed("space") && this.jumpCount<1) {
-			console.log('double jump?????');
-			this.parent.velocity.y = -450;
-			this.jumpCount++;
+		if(getDoubleJump()){
+			if (Input.isKeyJustPressed("space") && this.jumpCount<1) {
+				console.log('double jump?????');
+				this.parent.velocity.y = -450;
+				this.jumpCount++;
+			}
 		}
+
     }
 	 
 	handleInput(event: GameEvent): void {

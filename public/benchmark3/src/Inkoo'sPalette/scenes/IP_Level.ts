@@ -27,6 +27,7 @@ import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import Midas from "../Enemies/Midas/Midas";
 import IP_Level5 from "./IP_Level5";
 import { getDoubleJump } from "../Global/doubleJump";
+import { getDash } from "../Global/dash";
 
 export enum Layers {
     Player = "player",
@@ -445,6 +446,11 @@ export default class IP_Level extends Scene {
             this.doubleJumpIcon = this.add.sprite("double_jump", Layers.UI);
             this.doubleJumpIcon.scale.set(0.2, 0.2);
             this.doubleJumpIcon.position.copy(new Vec2(60, 60));
+        }
+        if (getDash()) {
+            this.doubleJumpIcon = this.add.sprite("dash", Layers.UI);
+            this.doubleJumpIcon.scale.set(0.2, 0.2);
+            this.doubleJumpIcon.position.copy(new Vec2(30, 60));
         }
     }
 
