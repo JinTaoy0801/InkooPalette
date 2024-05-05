@@ -6,8 +6,6 @@ import { GoblinStates } from "../GoblinController";
 
 export default class Idle extends GoblinState {
   onEnter(options: Record<string, any>): void {
-      //console.log('went inside goblin idle')
-      //console.log('asdhkasdhaskdasd', this.owner);
   }
 
   update(deltaT: number): void {
@@ -19,6 +17,7 @@ export default class Idle extends GoblinState {
     if(this.playerInPatrol(this.patrolArea)){
       this.finished(GoblinStates.ALERTED);
     }
+    this.owner.move(Vec2.ZERO);
   }
 
   onExit(): Record<string, any> {

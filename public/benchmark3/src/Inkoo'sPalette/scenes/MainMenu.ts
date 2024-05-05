@@ -10,9 +10,17 @@ import GameEvent from "../../Wolfie2D/Events/GameEvent";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import IP_Level1 from "./IP_Level1";
 import IP_Level2 from "./IP_Level2";
+import IP_Level3 from "./IP_Level3";
+import IP_Level4 from "./IP_Level4";
+import IP_Level5 from "./IP_Level5";
+import IP_Level6 from "./IP_Level6";
 import { inkooEvents } from "../inkooEvents";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import Input from "../../Wolfie2D/Input/Input";
+import { getSceneOptions } from "../Global/sceneOptions";
+import { getPlayerSpawn, setPlayerSpawn } from "../Global/playerSpawn";
+import { setDash } from "../Global/dash";
+import { setDoubleJump } from "../Global/doubleJump";
 
 const MainMenuName = {
     MAIN_MENU: "MAIN_MENU",
@@ -21,8 +29,14 @@ const MainMenuName = {
     STORY: "STORY",
     START_GAME: "START_GAME",
     LEVEL_2: "LEVEL_2",
+    LEVEL_3: "LEVEL_3",
+    LEVEL_4: "LEVEL_4",
+    LEVEL_5: "LEVEL_5",
+    LEVEL_6: "LEVEL_6",
     MENU: "MENU"
 } as const
+
+const sceneOptions = getSceneOptions();
 
 export default class MainMenu extends Scene {
     animatedSprite: AnimatedSprite;
@@ -51,6 +65,8 @@ export default class MainMenu extends Scene {
         let center = this.viewport.getHalfSize();
         this.viewport.setFocus(center);
         this.viewport.setZoomLevel(1);
+        setDash(false);
+        setDoubleJump(false);
 
         // Create screens
         this.mainMenu = this.addUILayer(MainMenuName.MAIN_MENU);
@@ -142,25 +158,25 @@ export default class MainMenu extends Scene {
         const level_3 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x + 200, center.y - 150), text: "3"});
         level_3.borderColor = Color.TRANSPARENT;
         level_3.backgroundColor = Color.TRANSPARENT;
-        level_3.onClickEventId = MainMenuName.MENU;
+        level_3.onClickEventId = MainMenuName.LEVEL_3;
         level_3.font = "daydream"
 
         const level_4 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x - 200, center.y), text: "4"});
         level_4.borderColor = Color.TRANSPARENT;
         level_4.backgroundColor = Color.TRANSPARENT;
-        level_4.onClickEventId = MainMenuName.MENU;
+        level_4.onClickEventId = MainMenuName.LEVEL_4;
         level_4.font = "daydream"
 
         const level_5 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x, center.y), text: "5"});
         level_5.borderColor = Color.TRANSPARENT;
         level_5.backgroundColor = Color.TRANSPARENT;
-        level_5.onClickEventId = MainMenuName.MENU;
+        level_5.onClickEventId = MainMenuName.LEVEL_5;
         level_5.font = "daydream"
 
         const level_6 = <Label>this.add.uiElement(UIElementType.BUTTON, MainMenuName.LEVEL_SELECT, {position: new Vec2(center.x + 200, center.y), text: "6"});
         level_6.borderColor = Color.TRANSPARENT;
         level_6.backgroundColor = Color.TRANSPARENT;
-        level_6.onClickEventId = MainMenuName.MENU;
+        level_6.onClickEventId = MainMenuName.LEVEL_6;
         level_6.font = "daydream"
         
 
@@ -292,8 +308,25 @@ export default class MainMenu extends Scene {
         storyHeader.textColor = Color.WHITE;
         storyHeader.font = "daydream";
 
-        const storyText = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.STORY, {position: new Vec2(center.x, center.y - 50), text: "Story Placeholder Text"});
+        const storyText = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.STORY, {position: new Vec2(center.x, center.y - 150), text: "Made by Midas, Inkoo, you've realized his evil doings."});
+        storyText.font = "daydream"
+        storyText.fontSize = 20
         storyText.textColor = Color.WHITE;
+
+        const storyText2 = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.STORY, {position: new Vec2(center.x, center.y - 100), text: "After trying to challenge Midas, Inkoo was sent the"});
+        storyText2.font = "daydream"
+        storyText2.fontSize = 20
+        storyText2.textColor = Color.WHITE;
+
+        const storyText3 = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.STORY, {position: new Vec2(center.x - 11, center.y - 50), text: "overworld. Now you must find your way back to the"});
+        storyText3.font = "daydream"
+        storyText3.fontSize = 20
+        storyText3.textColor = Color.WHITE;
+
+        const storyText4 = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.STORY, {position: new Vec2(center.x - 65, center.y), text: "the tree, defeat Midas, and take the throne!"});
+        storyText4.font = "daydream"
+        storyText4.fontSize = 20
+        storyText4.textColor = Color.WHITE;
 
         this.receiver.subscribe(MainMenuName.START_GAME);
         this.receiver.subscribe(MainMenuName.LEVEL_SELECT);
@@ -301,6 +334,10 @@ export default class MainMenu extends Scene {
         this.receiver.subscribe(MainMenuName.STORY);
         this.receiver.subscribe(MainMenuName.MENU);
         this.receiver.subscribe(MainMenuName.LEVEL_2);
+        this.receiver.subscribe(MainMenuName.LEVEL_3);
+        this.receiver.subscribe(MainMenuName.LEVEL_4);
+        this.receiver.subscribe(MainMenuName.LEVEL_5);
+        this.receiver.subscribe(MainMenuName.LEVEL_6);
     }
 
     updateScene() {
@@ -313,41 +350,59 @@ export default class MainMenu extends Scene {
         if (Input.isJustPressed("level2")) {
             this.emitter.fireEvent(MainMenuName.LEVEL_2);
         }
+        if (Input.isJustPressed("level3")) {
+            this.emitter.fireEvent(MainMenuName.LEVEL_3);
+        }
+        if (Input.isJustPressed("level4")) {
+            this.emitter.fireEvent(MainMenuName.LEVEL_4);
+        }
+        if (Input.isJustPressed("level5")) {
+            this.emitter.fireEvent(MainMenuName.LEVEL_5);
+        }
+        if (Input.isJustPressed("level6")) {
+            this.emitter.fireEvent(MainMenuName.LEVEL_6);
+        }
     }
 
     protected handleEvent(event: GameEvent): void {
         switch(event.type) {
             case MainMenuName.START_GAME: {
                 this.emitter.fireEvent(inkooEvents.LEVEL_START);
-                let sceneOptions = {
-                    physics: {
-                        groupNames: ["ground", "player","enemy"],
-                        collisions:
-                        [
-                            [0, 1, 1],
-                            [1, 0, 1],
-                            [1, 1, 0]
-                        ]
-                    }
-                }
+                setPlayerSpawn(new Vec2(5*32, 25*32));
                 this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
                 break;
             }
 
             case MainMenuName.LEVEL_2: {
                 this.emitter.fireEvent(inkooEvents.LEVEL_START);
-                let sceneOptions = {
-                    physics: {
-                        groupNames: ["ground", "player","enemy"],
-                        collisions:
-                        [
-                            [0, 1, 1],
-                            [1, 0, 1],
-                            [1, 1, 0]
-                        ]
-                    }
-                }
+                setPlayerSpawn(new Vec2(32*5, 493.5));
                 this.sceneManager.changeToScene(IP_Level2, {}, sceneOptions);
+                break;
+            }
+
+            case MainMenuName.LEVEL_3: {
+                this.emitter.fireEvent(inkooEvents.LEVEL_START);
+                setPlayerSpawn(new Vec2(15*32, 4*32));
+                this.sceneManager.changeToScene(IP_Level3, {}, sceneOptions);
+                break;
+            }
+            case MainMenuName.LEVEL_4: {
+                this.emitter.fireEvent(inkooEvents.LEVEL_START);
+                setPlayerSpawn(new Vec2(4*32, 2*32));
+                this.sceneManager.changeToScene(IP_Level4, {}, sceneOptions);
+                break;
+            }
+
+            case MainMenuName.LEVEL_5: {
+                this.emitter.fireEvent(inkooEvents.LEVEL_START);
+                setPlayerSpawn(new Vec2(1*32, 54*32));
+                this.sceneManager.changeToScene(IP_Level5, {}, sceneOptions);
+                break;
+            }
+            case MainMenuName.LEVEL_6: {
+                this.emitter.fireEvent(inkooEvents.LEVEL_START);
+                setPlayerSpawn(new Vec2(4*32, 18*32));
+                this.sceneManager.changeToScene(IP_Level6, {}, sceneOptions);
                 break;
             }
 
@@ -385,3 +440,5 @@ export default class MainMenu extends Scene {
         }
     }
 }
+
+export { sceneOptions };

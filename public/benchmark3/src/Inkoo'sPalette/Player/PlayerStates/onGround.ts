@@ -12,6 +12,7 @@ import Hitbox from "../../Hitbox/Hitbox";
 import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
 import { setLastPlayerPosition } from "../../Global/lastPlayerPosition";
 import Timer from "../../../Wolfie2D/Timing/Timer";
+import { inkooEvents } from "../../inkooEvents";
 
 export default class OnGround extends PlayerState {
 	owner: AnimatedSprite;
@@ -33,6 +34,7 @@ export default class OnGround extends PlayerState {
 		}
 
 		if(Input.isJustPressed("jump")){
+			this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "jump", loop: false, holdReference: false });
 			this.finished(PlayerStates.JUMP);
 			if (direction.x && !this.isAttacking()) {
 				this.owner.tweens.play("tilt_right");
@@ -40,11 +42,12 @@ export default class OnGround extends PlayerState {
 		}
 		
 		if (!this.owner.onGround) {
-			setLastPlayerPosition(this.owner.position);
+			setLastPlayerPosition(this.owner.position,this.owner.invertX);
 			this.finished(PlayerStates.FALL);
 		}
 
 		if (Input.isJustPressed("attack") && !this.isAttacking()) {
+			this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "attack", loop: false, holdReference: false });
 			var attack_name;
 			var halfSize;
 			var offset;
@@ -69,7 +72,7 @@ export default class OnGround extends PlayerState {
 				actor: this.owner,
 				sprite: this.attack,
 				attack_name: attack_name,
-				eventType: "player",
+				eventType: "playerattack",
 				center: new Vec2(0, 0),
 				halfSize: halfSize,
 				invertX: this.owner.invertX,
@@ -78,9 +81,7 @@ export default class OnGround extends PlayerState {
 				colliderOffset: new Vec2(0, 0),
             	delay: new Timer(0)
 			}
-			let hitbox = new Hitbox(HB_options, "player");
-			hitbox.box.setGroup("player");
-			console.log("playergounrdattack", hitbox);
+			let hitbox = new Hitbox(HB_options, "playerattack");
 		}
 	}
 

@@ -24,7 +24,7 @@ export default class Fall extends InAir{
             !this.owner.onCeiling && 
             !this.owner.onWall) {
                 this.finished(PlayerStates.IDLE);
-            }
+        }
 
     }
 

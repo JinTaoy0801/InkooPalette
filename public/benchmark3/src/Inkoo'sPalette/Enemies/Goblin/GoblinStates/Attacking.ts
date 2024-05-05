@@ -24,7 +24,7 @@ export default class Attacking extends GoblinState{
             invertX: this.owner.invertX,
             offset : new Vec2(-15, 0),
             shape: "AABB",
-            colliderOffset: new Vec2(0, 5),
+            colliderOffset: new Vec2(5, 5),
             delay: new Timer(300)
         }
         let hitbox = new Hitbox(HB_options,"enemy");

@@ -8,6 +8,7 @@ export default class Idle extends OnGround{
     owner : AnimatedSprite;
     
 	onEnter(options: Record<string, any>): void {
+		setLastPlayerPosition(this.owner.position,this.owner.invertX);
 		this.parent.speed = this.parent.MIN_SPEED;
 	}
 
@@ -27,7 +28,7 @@ export default class Idle extends OnGround{
 	}
 
 	onExit(): Record<string, any> {
-		setLastPlayerPosition(this.owner.position);
+		//setLastPlayerPosition(this.owner.position);
 		return {};
 	}
 }

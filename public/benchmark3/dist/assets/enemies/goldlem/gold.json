@@ -1,0 +1,16 @@
+{
+    "name": "gold",
+    "spriteSheetImage": "gold.png",
+    "spriteWidth": 4,
+    "spriteHeight": 4,
+    "columns": 1,
+    "rows": 1,
+    "durationType": "time",
+    "animations": [
+        { 
+          "name": "ATTACK",
+          "frames": [ {"index": 0, "duration": 250}
+          ]
+        }
+    ]
+}

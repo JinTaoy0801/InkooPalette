@@ -8,16 +8,19 @@ import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import { inkooEvents } from "../../inkooEvents";
 import PlayerController from "../PlayerController";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+import { getDash } from "../../Global/dash";
 
 
 
 //if this code does not work change owner to GameNode and 
-export default abstract class PlayerState extends State{
+export default abstract class  PlayerState extends State{
     owner: AnimatedSprite;
 	attack: AnimatedSprite
     gravity: number=1000;
     parent: PlayerController;
     positionTimer: Timer;
+	dashTimer = new Timer(250);
+	dashCooldown = new Timer(1250);
 //this parent to Statemachine
     constructor (parent: StateMachine, owner: GameNode){
         super(parent);
@@ -39,13 +42,21 @@ export default abstract class PlayerState extends State{
 
 
 	update(deltaT: number): void {
-		// Do gravity
-		if (this.positionTimer.isStopped()){
-			this.emitter.fireEvent(inkooEvents.PLAYER_MOVE, {position: this.owner.position.clone()});
-			this.positionTimer.start();
-		}
 		this.parent.velocity.y += this.gravity*deltaT;
-		// console.log(this.owner.position);
+		if(getDash()){
+			if (Input.isPressed("dash") && this.dashCooldown.isStopped()) {
+				this.dashTimer.start();
+				this.dashCooldown.start();
+				this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "dash", loop: false, holdReference: false });
+			}
+			if (!this.dashTimer.isStopped()) {
+				this.owner.animation.playIfNotAlready("DASHING");
+				let dir = this.getInputDirection();
+				this.parent.velocity.x += dir.x*100;
+				this.parent.velocity.y = 0;
+			}
+		}
+
 	}
 
 	isAttacking () {
@@ -55,8 +66,9 @@ export default abstract class PlayerState extends State{
 			"IDLE_ATTACK_UP",
 			"SPIN_ATTACK",
 			"ATTACK_DOWN",
-			"HIT"
+			"HIT",
+			"DASHING"
 		]
-		return attacks.some(attack => this.owner.animation.isPlaying(attack))
+		return attacks.some(attack => this.owner.animation.isPlaying(attack));
 	}
 }

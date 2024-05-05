@@ -1,14 +1,14 @@
 import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+import { TweenableProperties } from "../../../Wolfie2D/Nodes/GameNode";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+import { EaseFunctionType } from "../../../Wolfie2D/Utils/EaseFunctions";
 import { inkooEvents } from "../../inkooEvents";
 import Enemy from "../Enemy";
 import GoldlemController from "./GoldlemController";
 
 
 export default class Goldlem extends Enemy{
-    protected _health: number;
-    protected _maxHealth: 10;
     owner: AnimatedSprite;
     speed: number = 100;
 
@@ -22,9 +22,41 @@ export default class Goldlem extends Enemy{
         this.owner.scale.set(1.5, 1.5);
         this.owner.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(29, 27)));
         this.owner.colliderOffset.set(0, 1);
-        this.owner.setGroup("enemy");
-        this.owner.setTrigger("playerAttack", inkooEvents.PLAYER_ATTACK,null);
-        this._health = this._maxHealth;
-    }
+        this.owner.tweens.add("DEATH", {
+            startDelay: 0,
+            duration: 200,
+            effects: [
+                {
+                    property: TweenableProperties.alpha,
+                    start: 0,
+                    end: 1,
+                    ease: EaseFunctionType.LINEAR,
+                }
+            ],
+            onEnd: inkooEvents.TRASH_MOB_KILLED
+        });
+        this.owner.tweens.add("take_DMG", {
+            startDelay: 0,
+            duration: 500,
+            effects: [
+                {
+                    property: TweenableProperties.alpha,
+                    start: 0,
+                    end: 1,
+                    ease: EaseFunctionType.LINEAR,
+                    resetOnComplete: true
+                }
+            ]
+        });
 
+    }
+    setHp(dmg:number){
+        super.setHp(dmg);
+        if(this._health <= 0)
+            this.owner.tweens.play("DEATH");
+        else
+            this.owner.tweens.play("take_DMG");
+
+    }
+    
 }

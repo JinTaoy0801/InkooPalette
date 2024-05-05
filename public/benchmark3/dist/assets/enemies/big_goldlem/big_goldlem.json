@@ -1,5 +1,5 @@
 {
-    "name": "BigGoldlem",
+    "name": "big_goldlem",
     "spriteSheetImage": "big_goldlem.png",
     "spriteWidth": 56,
     "spriteHeight": 80,
@@ -8,20 +8,122 @@
     "durationType": "time",
     "animations": [
         { 
-          "name": "INACTIVE_IDLE",
-          "frames": [ {"index": 0, "duration": 100},
-                      {"index": 1, "duration": 100},
-                      {"index": 2, "duration": 100},
-                      {"index": 3, "duration": 100}
+          "name": "SLEEP",
+          "frames": [ {"index": 0, "duration": 50},
+                      {"index": 1, "duration": 50},
+                      {"index": 2, "duration": 50},
+                      {"index": 3, "duration": 50}
           ]
         },
         { 
-          "name": "ATTACK",
-          "frames": [ {"index": 0, "duration": 150},
-                      {"index": 1, "duration": 150},
-                      {"index": 2, "duration": 150},
-                      {"index": 3, "duration": 150},
-                      {"index": 4, "duration": 150}
+          "name": "AWAKEN",   
+          "frames": [ {"index": 30, "duration": 10},
+                      {"index": 31, "duration": 10},
+                      {"index": 32, "duration": 10},
+                      {"index": 33, "duration": 10},
+                      {"index": 34, "duration": 10},
+                      {"index": 35, "duration": 10},
+                      {"index": 36, "duration": 10},
+                      {"index": 37, "duration": 10},
+                      {"index": 38, "duration": 10},
+                      {"index": 39, "duration": 10},
+                      {"index": 40, "duration": 10},
+                      {"index": 41, "duration": 10},
+                      {"index": 42, "duration": 10},
+                      {"index": 43, "duration": 10},
+                      {"index": 44, "duration": 10},
+                      {"index": 45, "duration": 10},
+                      {"index": 46, "duration": 10},
+                      {"index": 47, "duration": 10},
+                      {"index": 48, "duration": 10},
+                      {"index": 49, "duration": 10},
+                      {"index": 50, "duration": 10},
+                      {"index": 51, "duration": 10},
+                      {"index": 52, "duration": 10},
+                      {"index": 53, "duration": 10},
+                      {"index": 54, "duration": 10},
+                      {"index": 55, "duration": 10},
+                      {"index": 56, "duration": 10},
+                      {"index": 57, "duration": 10}
+                      
+
+          ]
+        },
+        { 
+          "name": "IDLE",
+          "frames": [ {"index": 60, "duration": 20},
+                      {"index": 61, "duration": 20},
+                      {"index": 62, "duration": 20},
+                      {"index": 63, "duration": 20},
+                      {"index": 64, "duration": 20}
+          ]
+        },
+        {
+          "name":"TURN_LEFT",
+          "frames": [ {"index": 90, "duration": 15},
+                      {"index": 91, "duration": 15},
+                      {"index": 92, "duration": 15},
+                      {"index": 93, "duration": 15}
+          ]
+        },
+        {
+          "name":"WALKING_LEFT",
+          "frames": [
+                      {"index": 124, "duration": 25},
+                      {"index": 125, "duration": 25},
+                      {"index": 126, "duration": 25},
+                      {"index": 127, "duration": 25},
+                      {"index": 128, "duration": 25},
+                      {"index": 129, "duration": 25},
+                      {"index": 130, "duration": 25},
+                      {"index": 131, "duration": 25},
+                      {"index": 132, "duration": 25},
+                      {"index": 133, "duration": 25},
+                      {"index": 134, "duration": 25}
+          ]
+        },
+        { 
+          "name": "SLAM",
+          "frames": [ {"index": 150, "duration": 15},
+                      {"index": 151, "duration": 15},
+                      {"index": 152, "duration": 15},
+                      {"index": 153, "duration": 15},
+                      {"index": 154, "duration": 15},
+                      {"index": 155, "duration": 15},
+                      {"index": 156, "duration": 15},
+                      {"index": 157, "duration": 15},
+                      {"index": 158, "duration": 15},
+                      {"index": 159, "duration": 15}
+
+          ]
+        },
+        {
+          "name":"REFORM",
+          "frames":[
+                    {"index": 159, "duration": 100},
+                    {"index": 180, "duration": 10},
+                    {"index": 181, "duration": 10},
+                    {"index": 182, "duration": 10},
+                    {"index": 183, "duration": 10},
+                    {"index": 184, "duration": 10},
+                    {"index": 185, "duration": 10},
+                    {"index": 186, "duration": 10},
+                    {"index": 187, "duration": 10},
+                    {"index": 188, "duration": 10},
+                    {"index": 189, "duration": 10},
+                    {"index": 190, "duration": 10},
+                    {"index": 123, "duration": 10},
+                    {"index": 122, "duration": 10},
+                    {"index": 121, "duration": 10},
+                    {"index": 120, "duration": 10}    
+                    
+          ]
+        },        { 
+          "name": "DYING",
+          "frames": 
+          [ 
+            {"index": 4, "duration": 250}
+
           ]
         }
     ]

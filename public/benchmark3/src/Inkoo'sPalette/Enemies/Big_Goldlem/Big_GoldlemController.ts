@@ -2,14 +2,21 @@ import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import OrthogonalTilemap from "../../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import EnemyController from "../EnemyController";
-import InactiveIdle from "./Big_GoldlemStates/InactiveIdle";
-
+import Awaken from "./Big_GoldlemStates/Awaken";
+import Sleeping from "./Big_GoldlemStates/Sleep";
+import Idle from "./Big_GoldlemStates/Idle";
+import Walking from "./Big_GoldlemStates/Walk";
+import Alerted from "../Goldlem/GoldlemStates/Alerted";
+import Slam from "./Big_GoldlemStates/Slam";
+import Reform from "./Big_GoldlemStates/Reform";
 export enum Big_GoldlemStates {
-    INACTIVE_IDLE = "inactive_idle",
-    ACTIVE_IDLE = "active_idle",
+    SLEEP = "sleep",
+    AWAKEN = "awaken",
     WALKING = "walking",
-    ATTACKING = "attacking",
+    SLAM = "slam",
     ALERTED = "alerted",
+    IDLE = "idle",
+    REFORM = "reform"
 
 }
 
@@ -27,13 +34,24 @@ export default class Big_GoldlemController extends EnemyController {
         rightBound: 0
     };
     directionPatrol = "left";
-
+    
     lastFlipped = 0;
 
     initializeAI(owner: AnimatedSprite, options: Record<string, any>) {
         super.initializeAI(owner, options);
-        this.addState(Big_GoldlemStates.INACTIVE_IDLE, new InactiveIdle(this, this.owner));
-        this.initialize(Big_GoldlemStates.INACTIVE_IDLE);
+        this.patrolArea.leftBound = (options.spawn.x)-(10*32);
+        if (this.patrolArea.leftBound < 0)
+            this.patrolArea.leftBound = 0;
+        this.patrolArea.rightBound = (10*32)+(options.spawn.x);
+
+        this.addState(Big_GoldlemStates.SLEEP, new Sleeping(this, this.owner));
+        this.addState(Big_GoldlemStates.WALKING, new Walking(this, this.owner));
+        this.addState(Big_GoldlemStates.IDLE, new Idle(this, this.owner));
+        this.addState(Big_GoldlemStates.AWAKEN, new Awaken(this, this.owner));
+        this.addState(Big_GoldlemStates.REFORM, new Reform(this, this.owner));
+        this.addState(Big_GoldlemStates.SLAM, new Slam(this, this.owner));
+        this.initialize(Big_GoldlemStates.SLEEP);
+        this.owner.setGroup("enemy");
     }
 
     changeState(stateName: string): void {

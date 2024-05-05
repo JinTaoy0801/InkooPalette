@@ -5,6 +5,7 @@ import { inkooEvents } from "../../inkooEvents";
 import Enemy from "../Enemy";
 import GoblinController from "./GoblinController";
 import { EaseFunctionType } from "../../../Wolfie2D/Utils/EaseFunctions";
+import { TweenableProperties } from "../../../Wolfie2D/Nodes/GameNode";
 
 export default class Goblin extends Enemy{
     owner: AnimatedSprite;
@@ -21,7 +22,41 @@ export default class Goblin extends Enemy{
         this.owner.scale.set(2, 2);
         this.owner.setCollisionShape(new AABB(new Vec2(0,0), new Vec2(29, 27)));
         this.owner.colliderOffset.set(0, 1);
-        this.owner.setGroup("enemy");
-    }
+        this.owner.tweens.add("DEATH", {
+            startDelay: 0,
+            duration: 200,
+            effects: [
+                {
+                    property: TweenableProperties.alpha,
+                    start: 0,
+                    end: 1,
+                    ease: EaseFunctionType.LINEAR,
+                }
+            ],
+            onEnd: inkooEvents.TRASH_MOB_KILLED
+        });
+        this.owner.tweens.add("take_DMG", {
+            startDelay: 0,
+            duration: 500,
+            effects: [
+                {
+                    property: TweenableProperties.alpha,
+                    start: 0,
+                    end: 1,
+                    ease: EaseFunctionType.LINEAR,
+                    resetOnComplete: true
+                }
+            ]
+        });
 
+    }
+    setHp(dmg:number){
+        super.setHp(dmg);
+        if(this._health <= 0)
+            this.owner.tweens.play("DEATH");
+        else
+            this.owner.tweens.play("take_DMG");
+
+    }
+    
 }

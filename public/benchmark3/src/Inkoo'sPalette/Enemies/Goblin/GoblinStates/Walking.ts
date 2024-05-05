@@ -5,7 +5,6 @@ import GoblinState from "./GoblinState";
 export default class Walking extends GoblinState {
     onEnter(options: Record<string, any>): void {
         this.owner.animation.playIfNotAlready("TURN_LEFT", false);
-        //console.log('WALKING ASLKJDLAKSDLAKSD', this.owner);
     }
 
     update(deltaT: number): void {
@@ -16,10 +15,6 @@ export default class Walking extends GoblinState {
         if(this.playerInPatrol(this.patrolArea)){
             this.finished(GoblinStates.ALERTED);
         }
-        // else if(this.owner.position.distanceTo(this.playerPosition) < this.lightAttackRange){
-        //     console.log("in walking to attakc");
-        //     this.finished(GoblinStates.ATTACKING);
-        // }
         else if (this.parent.coinFlip()) {
             this.finished(GoblinStates.IDLE);
         } else{

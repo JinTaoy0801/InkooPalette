@@ -16,7 +16,8 @@ export default class Jump extends InAir{
         this.parent.velocity.y = -215;
         this.owner.setCollisionShape(new AABB(new Vec2(0, 0), new Vec2(12, 16)));
         this.owner.colliderOffset.set(0, 0);
-        setLastPlayerPosition(this.owner.position);
+        setLastPlayerPosition(this.owner.position,this.owner.invertX);
+        this.jumpCount = 0;
     }
 
     update(deltaT: number): void {

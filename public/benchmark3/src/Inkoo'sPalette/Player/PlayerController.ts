@@ -12,6 +12,7 @@ import GameNode from "../../Wolfie2D/Nodes/GameNode";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import State from "../../Wolfie2D/DataTypes/State/State";
 import OnGround from "./PlayerStates/onGround";
+import { inkooEvents } from "../inkooEvents";
 
 
 export enum PlayerType {
@@ -39,8 +40,6 @@ export default class PlayerController extends StateMachineAI {
     
     initializeAI(owner: GameNode, options: Record<string, any>){
         this.owner = owner;
-
-        // console.log('owner in playercontroller', owner);
         let idle = new Idle(this, this.owner);
         this.addState(PlayerStates.IDLE, idle);
         let walk = new Walk(this, this.owner);
@@ -53,6 +52,10 @@ export default class PlayerController extends StateMachineAI {
         this.initialize(PlayerStates.IDLE);
 
         this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
+
+        this.receiver.subscribe("POGOTIME");
+        this.receiver.subscribe("TRAMPOLINE");
+
 
         owner.tweens.add("tilt_right", {
             startDelay: 0,
@@ -87,6 +90,26 @@ export default class PlayerController extends StateMachineAI {
 
             ],
             reverseOnComplete: true
+        });
+
+        owner.tweens.add("death", {
+            startDelay: 0,
+            duration: 1000,
+            effects: [
+                {
+                    property: "alpha",
+                    start: 1,
+                    end: 0,
+                    ease: EaseFunctionType.IN_OUT_QUAD
+                },
+                {
+                    property: "positionY",
+                    start: this.owner.position.y,
+                    end: this.owner.position.y + 300,
+                    ease: EaseFunctionType.IN_OUT_QUAD
+                }
+            ],
+            onEnd: inkooEvents.PLAYER_KILLED
         });
         this.owner.setGroup("player");
 

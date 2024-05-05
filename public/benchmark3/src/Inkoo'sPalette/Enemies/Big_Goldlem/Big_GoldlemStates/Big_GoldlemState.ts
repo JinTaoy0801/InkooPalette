@@ -7,17 +7,18 @@ import Sprite from "../../../../Wolfie2D/Nodes/Sprites/Sprite";
 import Timer from "../../../../Wolfie2D/Timing/Timer";
 import IP_Level from "../../../scenes/IP_Level";
 import Big_GoldlemController from "../Big_GoldlemController";
-
 export default abstract class Big_GoldlemState extends State {
     owner: AnimatedSprite;
     parent: Big_GoldlemController;
 	playerPosition: Vec2 = Vec2.ZERO;
     attackTimer: Timer;
     lightAttackRange = 64;
+    bossAwakened:boolean
     constructor(parent: StateMachine, owner: AnimatedSprite) {
 		super(parent);
 		this.owner = owner;
-        this.attackTimer = new Timer(2000);
+        this.bossAwakened = false;
+        this.attackTimer = new Timer(5000);
 	}
     patrolArea = new Vec2(this.parent.patrolArea.leftBound,this.parent.patrolArea.rightBound);
     handleInput(event: GameEvent): void {
@@ -40,12 +41,20 @@ export default abstract class Big_GoldlemState extends State {
         let blocks = x * 32;
         return Math.abs(this.owner.position.x - this.playerPosition.x) <= blocks;
     }
+    checkPriorityAnimations() {
+        const anis = [
+			"DAMAGED",
+            "DEAD",
+            "DYING"
+		]
+		return anis.some(ani => this.owner.animation.isPlaying(ani));
+    }
     
 
     update(deltaT: number): void {
         let direction = this.parent.directionPatrol;
         (<Sprite>this.owner).invertX = (direction == "right") ? true : false;
         this.playerPosition = (<IP_Level>this.owner.getScene()).player.position;
-        // console.log('goblin position', this.owner.position);
+        this.owner.move(Vec2.ZERO);
     }
 }
