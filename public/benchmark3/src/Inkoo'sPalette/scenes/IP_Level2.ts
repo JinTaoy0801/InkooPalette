@@ -35,6 +35,13 @@ export default class IP_Level2 extends IP_Level {
         this.load.spritesheet("gold", "assets/enemies/goldlem/gold.json");
         this.load.spritesheet("big_goldlem", "assets/enemies/big_goldlem/big_goldlem.json");
         this.load.spritesheet("goldlem_wave","assets/enemies/big_goldlem/goldlem_wave.json");
+        this.load.audio("attack", "assets/sounds/attack.wav");
+        this.load.audio("dash", "assets/sounds/dash.wav");
+        this.load.audio("dead", "assets/sounds/dead.wav");
+        this.load.audio("enemy_dead", "assets/sounds/enemy_dead.wav");
+        this.load.audio("hit_enemy", "assets/sounds/hit_enemy.wav");
+        this.load.audio("jump", "assets/sounds/jump.wav");
+        this.load.audio("took_damage", "assets/sounds/took_damage.wav");
     }
     unloadScene(): void {
         

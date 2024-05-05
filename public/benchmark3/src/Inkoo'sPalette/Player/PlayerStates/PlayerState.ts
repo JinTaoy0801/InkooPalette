@@ -19,7 +19,7 @@ export default abstract class  PlayerState extends State{
     parent: PlayerController;
     positionTimer: Timer;
 	dashTimer = new Timer(250);
-	dashCooldown = new Timer(750);
+	dashCooldown = new Timer(1250);
 //this parent to Statemachine
     constructor (parent: StateMachine, owner: GameNode){
         super(parent);
@@ -45,6 +45,7 @@ export default abstract class  PlayerState extends State{
 		if (Input.isPressed("dash") && this.dashCooldown.isStopped()) {
 			this.dashTimer.start();
 			this.dashCooldown.start();
+			this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "dash", loop: false, holdReference: false });
 		}
 		if (!this.dashTimer.isStopped()) {
 			this.owner.animation.playIfNotAlready("DASHING");

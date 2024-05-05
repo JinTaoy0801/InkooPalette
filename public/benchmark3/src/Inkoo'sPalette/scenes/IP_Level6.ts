@@ -12,6 +12,7 @@ import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import Midas from "../Enemies/Midas/Midas";
 import { setPlayerSpawn } from "../Global/playerSpawn";
 import Shield from "../Shield/Shield";
+import { inkooEvents } from "../inkooEvents";
 import IP_Level, { Areas, Layers } from "./IP_Level";
 import IP_Level2 from "./IP_Level2";
 import { sceneOptions } from "./MainMenu";
@@ -55,6 +56,18 @@ export default class IP_Level6 extends IP_Level {
         this.load.spritesheet("gold", "assets/enemies/goldlem/gold.json");
         this.load.spritesheet("shield", "assets/enemies/midas/shield.json");
         this.load.spritesheet("rock", "assets/enemies/midas/rock.json");
+        this.load.audio("attack", "assets/sounds/attack.wav");
+        this.load.audio("dash", "assets/sounds/dash.wav");
+        this.load.audio("dead", "assets/sounds/dead.wav");
+        this.load.audio("enemy_dead", "assets/sounds/enemy_dead.wav");
+        this.load.audio("hit_enemy", "assets/sounds/hit_enemy.wav");
+        this.load.audio("jump", "assets/sounds/jump.wav");
+        this.load.audio("laser_charge", "assets/sounds/laser_charge.wav");
+        this.load.audio("laser", "assets/sounds/laser.wav");
+        this.load.audio("rock_forming", "assets/sounds/rock_forming.wav");
+        this.load.audio("rock_slide", "assets/sounds/rock_slide.wav");
+        this.load.audio("shield_hit", "assets/sounds/shield_hit.wav");
+        this.load.audio("took_damage", "assets/sounds/took_damage.wav");
     }
 
     startScene(): void {
@@ -62,7 +75,6 @@ export default class IP_Level6 extends IP_Level {
         this.layers.get("foreground").setDepth(10);
         this.layers.get("ground").setDepth(2);
         super.startScene();
-        this.boss_name = "midas"
         this.addLevelEnd(new Vec2(32*1, 600), new Vec2(2*32, 10*32), Areas.Midas_Mountains);
 
         this.midasdoor = this.add.sprite('midasdoor', Layers.Bg);
@@ -134,6 +146,9 @@ export default class IP_Level6 extends IP_Level {
                     this.triggerdoor.destroy();
 
                     this.viewport.setZoomLevel(1);
+                    this.viewport_size = this.viewport.getZoomLevel();
+                    this.viewport_center = this.viewport.getCenter();
+                    this.initBossHealthBar("MIDAS");
                     break;
                 }
                 case "SPAWNBEAM": {
@@ -207,6 +222,7 @@ export default class IP_Level6 extends IP_Level {
                         this.rockvelocity = new Vec2(20, 0);
                         if (this.shield! && this.shielddmgbuffer.isStopped()) {
                             this.shielddmgbuffer.start();
+                            this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "shield_hit", loop: false, holdReference: false });
                             this.shield.setHp(-1);
                             if (this.shield.getHp() === 0) {
                                 this.shield.box.animation.play("BROKEN", false, "BROKENSHIELD");
@@ -217,7 +233,9 @@ export default class IP_Level6 extends IP_Level {
                         else {
                             if (this.dmgcooldown.isStopped() && !this.midas.isInvincible) {
                                 this.dmgcooldown.start();
+                                this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "hit_enemy", loop: false, holdReference: false });
                                 this.midas.setHp(-1);
+                                this.handleBossHealthChange(this.midas.getHp(), 10)
                                 // console.log('midas hp:', this.midas.getHp());
                             }
                         }
