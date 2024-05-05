@@ -81,8 +81,6 @@ export default class IP_Level6 extends IP_Level {
         this.midasdoor.scale.set(2, 2);
         this.midasdoor.position.copy(new Vec2(27*32+16, 14*32-16));
         this.midasdoor.addPhysics(new AABB(Vec2.ZERO, new Vec2(16, 64)), Vec2.ZERO, true, true);
-        // this.midasdoor.setGroup("ground");
-        // console.log(this.midasdoor);
 
         const midasOptions = {
             owner: this.add.animatedSprite('midas1', Layers.Main),
@@ -90,7 +88,6 @@ export default class IP_Level6 extends IP_Level {
             tilemap: Layers.Main,
         }
         this.midas = new Midas(midasOptions, 10);
-        // this.midas = midas.owner;
 
         this.trash_Mobs.set(this.midas.owner.id, this.midas);
         this.triggerdoor = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
