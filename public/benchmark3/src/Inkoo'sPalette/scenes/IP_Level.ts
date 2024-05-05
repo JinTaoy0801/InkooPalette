@@ -26,6 +26,7 @@ import { getSceneOptions } from "../Global/sceneOptions";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import Midas from "../Enemies/Midas/Midas";
 import IP_Level5 from "./IP_Level5";
+import { getDoubleJump } from "../Global/doubleJump";
 
 export enum Layers {
     Player = "player",
@@ -59,9 +60,8 @@ export default class IP_Level extends Scene {
     protected bossHealthBarBg: Label;
     protected bossHealthBarName: Label;
 
-    private heart1: Sprite;
-    private heart2: Sprite;
-    private heart3: Sprite;
+    private healthbar: Sprite;
+    private doubleJumpIcon: Sprite;
     protected respawnTimer: Timer;
 
     protected static livesCount: number = 6;
@@ -89,6 +89,7 @@ export default class IP_Level extends Scene {
         this.initViewport();
         this.subscribeToEvents();
         this.addUI();
+        this.initBuffIcon();
         this.trash_Mobs = new Map<number, Enemy>();
         this.respawnTimer = new Timer(1000, () => {
             if(IP_Level.livesCount === 0){
@@ -304,59 +305,36 @@ export default class IP_Level extends Scene {
 
     protected addUI() {
         if (IP_Level.livesCount === 6) {
-            this.heart1 = this.add.sprite('fullheart', Layers.UI)
-            this.heart1.scale.set(2, 2);
-            this.heart1.position.copy(new Vec2(30, 30));
-
-            this.heart2 = this.add.sprite('fullheart', Layers.UI)
-            this.heart2.scale.set(2, 2);
-            this.heart2.position.copy(new Vec2(60, 30));
-
-            this.heart3 = this.add.sprite('fullheart', Layers.UI)
-            this.heart3.scale.set(2, 2);
-            this.heart3.position.copy(new Vec2(90, 30));
+            this.healthbar = this.add.sprite('6', Layers.UI)
+            this.healthbar.scale.set(2, 2);
+            this.healthbar.position.copy(new Vec2(60, 30));
         }
         else if (IP_Level.livesCount === 5) {
-            this.heart1 = this.add.sprite('fullheart', Layers.UI)
-            this.heart1.scale.set(2, 2);
-            this.heart1.position.copy(new Vec2(30, 30));
-
-            this.heart2 = this.add.sprite('fullheart', Layers.UI)
-            this.heart2.scale.set(2, 2);
-            this.heart2.position.copy(new Vec2(60, 30));
-
-            this.heart3 = this.add.sprite('halfheart', Layers.UI)
-            this.heart3.scale.set(2, 2);
-            this.heart3.position.copy(new Vec2(90, 30));
+            this.healthbar = this.add.sprite('5', Layers.UI)
+            this.healthbar.scale.set(2, 2);
+            this.healthbar.position.copy(new Vec2(60, 30));
         }
         else if (IP_Level.livesCount === 4) {
-            this.heart1 = this.add.sprite('fullheart', Layers.UI)
-            this.heart1.scale.set(2, 2);
-            this.heart1.position.copy(new Vec2(30, 30));
-
-            this.heart2 = this.add.sprite('fullheart', Layers.UI)
-            this.heart2.scale.set(2, 2);
-            this.heart2.position.copy(new Vec2(60, 30));
+            this.healthbar = this.add.sprite('4', Layers.UI)
+            this.healthbar.scale.set(2, 2);
+            this.healthbar.position.copy(new Vec2(60, 30));
         }
         else if (IP_Level.livesCount === 3) {
-            this.heart1 = this.add.sprite('fullheart', Layers.UI)
-            this.heart1.scale.set(2, 2);
-            this.heart1.position.copy(new Vec2(30, 30));
-
-            this.heart2 = this.add.sprite('halfheart', Layers.UI)
-            this.heart2.scale.set(2, 2);
-            this.heart2.position.copy(new Vec2(60, 30));
+            this.healthbar = this.add.sprite('3', Layers.UI)
+            this.healthbar.scale.set(2, 2);
+            this.healthbar.position.copy(new Vec2(60, 30));
         }
         else if (IP_Level.livesCount === 2) {
-            this.heart1 = this.add.sprite('fullheart', Layers.UI)
-            this.heart1.scale.set(2, 2);
-            this.heart1.position.copy(new Vec2(30, 30));
+            this.healthbar = this.add.sprite('2', Layers.UI)
+            this.healthbar.scale.set(2, 2);
+            this.healthbar.position.copy(new Vec2(60, 30));
         }
         else if (IP_Level.livesCount === 1) {
-            this.heart1 = this.add.sprite('halfheart', Layers.UI)
-            this.heart1.scale.set(2, 2);
-            this.heart1.position.copy(new Vec2(30, 30));
+            this.healthbar = this.add.sprite('1', Layers.UI)
+            this.healthbar.scale.set(2, 2);
+            this.healthbar.position.copy(new Vec2(60, 30));
         }
+
         this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(-500, 200), text: "Level Complete"});
         this.levelEndLabel.size.set(1200, 60);
         this.levelEndLabel.borderRadius = 0;
@@ -461,6 +439,14 @@ export default class IP_Level extends Scene {
 		this.bossHealthBar.position.set(this.bossHealthBarBg.position.x - (unit / 2 / this.getViewScale()) * (maxHP - currHP), this.bossHealthBarBg.position.y);
     }
 
+    protected initBuffIcon(): void {
+        if (getDoubleJump()) {
+            this.doubleJumpIcon = this.add.sprite("double_jump", Layers.UI);
+            this.doubleJumpIcon.scale.set(0.2, 0.2);
+            this.doubleJumpIcon.position.copy(new Vec2(60, 60));
+        }
+    }
+
     protected initPlayer(): void {
         this.player = this.add.animatedSprite("player", Layers.Player);
 
@@ -491,11 +477,18 @@ export default class IP_Level extends Scene {
 
     protected incPlayerLife(amt: number): void {
         IP_Level.livesCount += amt;
-        this.isInvincible.start();
-        this.player.animation.play("HIT", false);
-        this.player.tweens.play("take_DMG");
+        
+        if (IP_Level.livesCount >= 6) {
+            IP_Level.livesCount = 6;
+        }
+
+        if (amt < 0) {
+            this.isInvincible.start();
+            this.player.animation.play("HIT", false);
+            this.player.tweens.play("take_DMG");
+        }
         if (IP_Level.livesCount == 0){
-            this.heart1.destroy();
+            this.healthbar.destroy();
             Input.disableInput();
             this.player.disablePhysics();
             setPlayerSpawn(new Vec2(5*32, 25*32));
@@ -505,49 +498,40 @@ export default class IP_Level extends Scene {
 
 
         if (IP_Level.livesCount === 6) {
-            this.heart1 = this.add.sprite('fullheart', Layers.UI)
-            this.heart1.scale.set(2, 2);
-            this.heart1.position.copy(new Vec2(30, 30));
-
-            this.heart2 = this.add.sprite('fullheart', Layers.UI)
-            this.heart2.scale.set(2, 2);
-            this.heart2.position.copy(new Vec2(60, 30));
-
-            this.heart3 = this.add.sprite('fullheart', Layers.UI)
-            this.heart3.scale.set(2, 2);
-            this.heart3.position.copy(new Vec2(90, 30));
+            this.healthbar.destroy();
+            this.healthbar = this.add.sprite('6', Layers.UI)
+            this.healthbar.scale.set(2, 2);
+            this.healthbar.position.copy(new Vec2(60, 30));
         }
         else if (IP_Level.livesCount === 5) {
-            this.heart3.destroy();
-            this.heart3 = this.add.sprite('halfheart', Layers.UI)
-            this.heart3.scale.set(2, 2);
-            this.heart3.position.copy(new Vec2(90, 30));
+            this.healthbar.destroy();
+            this.healthbar = this.add.sprite('5', Layers.UI)
+            this.healthbar.scale.set(2, 2);
+            this.healthbar.position.copy(new Vec2(60, 30));
         }
         else if (IP_Level.livesCount === 4) {
-            this.heart2.destroy();
-            this.heart3.destroy();
-            this.heart2 = this.add.sprite('fullheart', Layers.UI)
-            this.heart2.scale.set(2, 2);
-            this.heart2.position.copy(new Vec2(60, 30));
+            this.healthbar.destroy();
+            this.healthbar = this.add.sprite('4', Layers.UI)
+            this.healthbar.scale.set(2, 2);
+            this.healthbar.position.copy(new Vec2(60, 30));
         }
         else if (IP_Level.livesCount === 3) {
-            this.heart2.destroy();
-            this.heart2 = this.add.sprite('halfheart', Layers.UI)
-            this.heart2.scale.set(2, 2);
-            this.heart2.position.copy(new Vec2(60, 30));
+            this.healthbar.destroy();
+            this.healthbar = this.add.sprite('3', Layers.UI)
+            this.healthbar.scale.set(2, 2);
+            this.healthbar.position.copy(new Vec2(60, 30));
         }
         else if (IP_Level.livesCount === 2) {
-            this.heart1.destroy();
-            this.heart2.destroy();
-            this.heart1 = this.add.sprite('fullheart', Layers.UI)
-            this.heart1.scale.set(2, 2);
-            this.heart1.position.copy(new Vec2(30, 30));
+            this.healthbar.destroy();
+            this.healthbar = this.add.sprite('2', Layers.UI)
+            this.healthbar.scale.set(2, 2);
+            this.healthbar.position.copy(new Vec2(60, 30));
         }
         else if (IP_Level.livesCount === 1) {
-            this.heart1.destroy();
-            this.heart1 = this.add.sprite('halfheart', Layers.UI)
-            this.heart1.scale.set(2, 2);
-            this.heart1.position.copy(new Vec2(30, 30));
+            this.healthbar.destroy();
+            this.healthbar = this.add.sprite('1', Layers.UI)
+            this.healthbar.scale.set(2, 2);
+            this.healthbar.position.copy(new Vec2(60, 30));
         }
 
     }
