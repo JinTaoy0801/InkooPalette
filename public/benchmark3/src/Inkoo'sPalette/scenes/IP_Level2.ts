@@ -9,14 +9,16 @@ import IP_Level3 from "./IP_Level3";
 import { getPlayerSpawn, setPlayerSpawn } from "../Global/playerSpawn";
 import { sceneOptions } from "./MainMenu";
 import IP_Level4 from "./IP_Level4";
+import Goblin from "../Enemies/Goblin/Goblin";
 
 export default class IP_Level2 extends IP_Level {  
-    goldlemSpawns = [
-        new Vec2(32*16, 476)
+    goblinSpawns = [
+        new Vec2(1200, 480),
+        new Vec2(1600, 480)
     ];
 
-    big_goldlemSpawns = [
-        new Vec2(32*45, 452)
+    goldemSpawns = [
+        new Vec2(1450, 470)
     ];
 
     loadScene(): void {
@@ -62,8 +64,8 @@ export default class IP_Level2 extends IP_Level {
         this.addLevelEnd(new Vec2(32*1, 400), new Vec2(2*32, 10*32), Areas.Mountains_Tutorial);
         this.addLevelEnd(new Vec2(32*20, 36*32), new Vec2(20*32, 10*32), Areas.Fallen);
         this.addLevelEnd(new Vec2(32*60, 400), new Vec2(2*32, 10*32), Areas.Ruins);
-        //this.initGoldlem();
-
+        this.initGoblin();
+        this.initGoldlem();
         this.nextLevel = IP_Level3;
         console.log("enemy array", this.trash_Mobs);
     }
@@ -109,5 +111,32 @@ export default class IP_Level2 extends IP_Level {
 
     protected addUI() {
         super.addUI();
+    }
+
+    protected initGoblin(): void {
+        var i;
+        for (i=0; i<2; i++) {
+            const goblinOptions = {
+                owner: this.add.animatedSprite('goblin', Layers.Main),
+                spawn: this.goblinSpawns[i],
+                tilemap: Layers.Main,
+            }
+            let temp = new Goblin(goblinOptions,5);
+            this.trash_Mobs.set(goblinOptions.owner.id,temp);
+        }
+        
+    }
+
+    protected initGoldlem(): void {
+        var i;
+        for (i=0; i<1; i++) {
+            const goldlemOptions = {
+                owner: this.add.animatedSprite('goldlem', Layers.Main),
+                spawn: this.goldemSpawns[i],
+                tilemap: Layers.Main,
+            }
+            let temp = new Goldlem(goldlemOptions,7);
+            this.trash_Mobs.set(goldlemOptions.owner.id, temp);
+        }
     }
 }

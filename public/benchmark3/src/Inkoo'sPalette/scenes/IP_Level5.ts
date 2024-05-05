@@ -20,21 +20,24 @@ import IP_Level1 from "./IP_Level1";
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Color from "../../Wolfie2D/Utils/Color";
+import Goldlem from "../Enemies/Goldlem/Goldlem";
 
 export default class IP_Level5 extends IP_Level {
+    goblinSpawns = [
+        new Vec2(26*32, 53*32),
+        new Vec2(1600, 480)
+    ];
+
     protected doubleJumpBuff: Sprite;
     protected text: Label;
     protected text2: Label;
-    goblinSpawns = [
-        new Vec2(200, 800),
-        new Vec2(400, 800)
-    ];
     
     loadScene(): void {
         // Load resources
         this.load.tilemap("level5", "assets/tilemaps/level5.json");
         this.load.spritesheet("player", "assets/player/inkoo.json");
         this.load.spritesheet("goblin", "assets/enemies/goblin/goblin_movement.json");
+        this.load.spritesheet("goldlem", "assets/enemies/goldlem/goldlem.json");
         this.load.image("6", "assets/images/6.png");
         this.load.image("5", "assets/images/5.png");
         this.load.image("4", "assets/images/4.png");
@@ -90,6 +93,7 @@ export default class IP_Level5 extends IP_Level {
             this.doubleJumpBuff.setTrigger("player", "PICK_UP", null);
         }
         console.log("enemy array", this.trash_Mobs);
+        this.initGoblin();
     }
 
     updateScene(deltaT: number): void {
@@ -145,4 +149,19 @@ export default class IP_Level5 extends IP_Level {
     protected addUI() {
         super.addUI();
     }
+
+    protected initGoblin(): void {
+        var i;
+        for (i=0; i<2; i++) {
+            const goblinOptions = {
+                owner: this.add.animatedSprite('goblin', Layers.Main),
+                spawn: this.goblinSpawns[i],
+                tilemap: Layers.Main,
+            }
+            let temp = new Goblin(goblinOptions,5);
+            this.trash_Mobs.set(goblinOptions.owner.id,temp);
+        }
+        
+    }
+
 }
