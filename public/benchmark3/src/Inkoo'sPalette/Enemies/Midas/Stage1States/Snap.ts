@@ -100,7 +100,6 @@ export default class Snap extends Stage1State {
 
     update(deltaT: number): void {
         if (!this.owner.animation.isPlaying("SNAP")) {
-            //console.log('dude snapping')
             if (this.typeofattack == "beam") {
                 // this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "laser_charge", loop: false, holdReference: false });
                 this.emitter.fireEvent("SPAWNBEAM");

@@ -65,7 +65,6 @@ export default class Slam extends Big_GoldlemState{
         }
     }
     onExit(): Record<string, any> {
-        console.log("exit slam");
         return {};
     }
     

@@ -17,11 +17,21 @@ import { sceneOptions } from "./MainMenu";
 import Big_Goldlem from "../Enemies/Big_Goldlem/Big_Goldlem";
 import IP_Level5 from "./IP_Level5";
 import Goldlem from "../Enemies/Goldlem/Goldlem";
+import { setBG_Invincible } from "../Global/big_Goldem_Invincible";
+import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
+import Rect from "../../Wolfie2D/Nodes/Graphics/Rect";
+import Label from "../../Wolfie2D/Nodes/UIElements/Label";
+import Color from "../../Wolfie2D/Utils/Color";
+import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 
 export default class IP_Level4 extends IP_Level {
     big_goldlemSpawns = [
         new Vec2(32*66, 772)
     ];
+    protected flower:Rect;
+    protected textRemove: Rect;
+    protected text: Label;
+    protected text2: Label;
     boss:Big_Goldlem;
     loadScene(): void {
         // Load resources
@@ -87,7 +97,7 @@ export default class IP_Level4 extends IP_Level {
         }
         this.boss = new Big_Goldlem(biggoldlemOptions,10);
         this.trash_Mobs.set(biggoldlemOptions.owner.id, this.boss);
-        
+        this.initFlower();
         console.log("enemy array", this.trash_Mobs);
     }
 
@@ -99,7 +109,7 @@ export default class IP_Level4 extends IP_Level {
             switch (event.type) {
                 case Areas.RewardRoom: {
                     // Go to the next level  
-                    setPlayerSpawn(new Vec2(32*32-8, 2*32));
+                    setPlayerSpawn(new Vec2(1*32, 54*32));
                     this.sceneManager.changeToScene(IP_Level5, {}, this.sceneOptions);
                     break;
                 }
@@ -109,15 +119,33 @@ export default class IP_Level4 extends IP_Level {
                 }
                 case "BOSS_DEFEATED": {
                     console.log("godelm dead");
-                    this.boss.owner.animation.play("DEAD", true);
-                    //const lastbosspos = this.boss.owner.position;
-                    // this.boss.owner.removePhysics();
-                    // this.boss.owner.destroy();
-                    // this.boss = undefined;
-                    //this.spawnGoldlems(lastbosspos);
+                    //this.boss.owner.animation.play("DEAD", true);
+                    const lastbosspos = this.boss.owner.position;
+                    this.boss.owner.destroy();
+                    this.boss = undefined;
+                    this.spawnGoldlems(lastbosspos);
+                    this.addLevelEnd(new Vec2(32*78.5, 772), new Vec2(3*32, 9*32), Areas.RewardRoom);
                     console.log("enemy array", this.trash_Mobs);
                     break;
                 }
+                case "TEXT": {
+                    this.text = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Main, {position: new Vec2(32*45.5, 10*32), text: "TASKETTE SVAROGGG"});
+                    this.text2 = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Main, {position: new Vec2(32*45.5, 10.5*32), text: "ahem. please defeat that golem"});
+                    this.text.font = "daydream"
+                    this.text.setTextColor(Color.WHITE)
+                    this.text.fontSize = 12;
+                    this.text2.font = "daydream"
+                    this.text2.setTextColor(Color.WHITE)
+                    this.text2.fontSize = 12;
+                    this.flower.destroy();
+                    break;
+                }
+                case "REMOVE_TEXT": {
+                    this.text.text = "";
+                    this.text2.text = "";
+                    this.textRemove.destroy();
+                    break;
+                } 
             }
         }
 
@@ -130,13 +158,17 @@ export default class IP_Level4 extends IP_Level {
         this.receiver.subscribe([
             Areas.RewardRoom,
             "BOSS_DEFEATED",
-            "BOSS_AWAKEN"
+            "BOSS_AWAKEN",
+            "TEXT",
+            "REMOVE_TEXT"
         ]);
     }
     checkEvent(s: String) {
         let checks = [
             "BOSS_DEFEATED",
-            "BOSS_AWAKEN"
+            "BOSS_AWAKEN",
+            "TEXT",
+            "REMOVE_TEXT"
         ]
         return checks.some(check => check === s);
     }
@@ -160,5 +192,30 @@ export default class IP_Level4 extends IP_Level {
             this.trash_Mobs.set(goldlemOptions.owner.id, temp);
         }
         
+    }
+    protected initFlower() {
+        this.flower = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
+            position: new Vec2(32*44.5, 12*32),
+            size: new Vec2(1*32, 5*32),
+        });
+        this.flower.addPhysics(undefined, undefined, false, true);
+        this.flower.setTrigger(
+            "player",
+            "TEXT",
+            "null",
+        );
+        this.flower.setColor(Color.TRANSPARENT)
+
+        this.textRemove = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
+            position: new Vec2(32*48, 16*32),
+            size: new Vec2(32, 20*32),
+        });
+        this.textRemove.addPhysics(undefined, undefined, false, true);
+        this.textRemove.setTrigger(
+            "player",
+            "REMOVE_TEXT",
+            "null",
+        );
+        this.textRemove.setColor(Color.TRANSPARENT)
     }
 }

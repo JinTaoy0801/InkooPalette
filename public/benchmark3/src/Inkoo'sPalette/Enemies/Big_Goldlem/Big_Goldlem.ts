@@ -43,8 +43,6 @@ export default class Big_Goldlem extends Enemy {
         }
             
         if (this.getHp() == 0) {
-            console.log("dying");
-            // this.owner.removePhysics();
             this.owner.animation.play("DYING",false,"BOSS_DEFEATED");
             this.dead = this.owner.getScene().add.animatedSprite("deadsplit", Layers.Main);
             this.dead.scale.set(1.5, 1.5);

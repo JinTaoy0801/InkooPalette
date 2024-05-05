@@ -7,7 +7,6 @@ import { GoldlemStates } from "../GoldlemController";
 export default class Idle extends GoldlemState {
   onEnter(options: Record<string, any>): void {
     this.owner.animation.playIfNotAlready("IDLE_LEFT", true);
-      //console.log('went inside goblin idle')
   }
 
   update(deltaT: number): void {

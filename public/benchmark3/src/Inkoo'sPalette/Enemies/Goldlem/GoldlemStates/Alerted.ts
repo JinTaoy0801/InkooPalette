@@ -18,7 +18,6 @@ export default class Alerted extends GoldlemState {
             this.owner.invertX = true;
         }
         if(this.attackTimer.isStopped()){
-            console.log("go into attack");
             this.finished(GoldlemStates.ATTACKING);
             this.attackTimer.start()
         }

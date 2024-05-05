@@ -9,6 +9,8 @@ import IP_Level3 from "./IP_Level3";
 import { getPlayerSpawn, setPlayerSpawn } from "../Global/playerSpawn";
 import { sceneOptions } from "./MainMenu";
 import IP_Level4 from "./IP_Level4";
+import { inkooEvents } from "../inkooEvents";
+import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 
 export default class IP_Level2 extends IP_Level {  
     goldlemSpawns = [
@@ -76,6 +78,7 @@ export default class IP_Level2 extends IP_Level {
                 case Areas.Mountains_Tutorial: {
                     // Go to the next level  
                     setPlayerSpawn(new Vec2(1930, 621.5));
+                    this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "levelmusic"});
                     this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
                     break;
                 }
