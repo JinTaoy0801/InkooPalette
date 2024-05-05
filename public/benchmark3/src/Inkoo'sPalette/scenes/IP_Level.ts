@@ -47,7 +47,6 @@ export enum Areas {
 
 }
 
-const sceneOptions = getSceneOptions();
 
 
 export default class IP_Level extends Scene {
@@ -141,6 +140,11 @@ export default class IP_Level extends Scene {
                     Input.enableInput();
                     break;
                 }
+                case inkooEvents.MUSHROOM_HIT:{
+                    this.emitter.fireEvent("POGOTIME");
+                    console.log("POGOTIMEEEEE");
+                    break;
+                }
                 case inkooEvents.PLAYER_ATTACK: {
                     if(this.sceneGraph.getNode(event.data.get("node")) === this.player) {
                         if(this.isInvincible.isStopped()){
@@ -220,11 +224,6 @@ export default class IP_Level extends Scene {
                 }
             }
         }
-
-        // if (Input.isJustPressed("attack")) {
-        //     this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "attack", loop: false, holdReference: false });
-        // }
-        
         if (Input.isJustPressed("pause")) {
             let pauseLayer = this.getLayer(Layers.Pause);
             if (pauseLayer.isHidden()) {
@@ -299,6 +298,7 @@ export default class IP_Level extends Scene {
             inkooEvents.TRASH_MOB_HIT,
             inkooEvents.TRASH_MOB_KILLED,
             inkooEvents.COLLIDED,
+            inkooEvents.MUSHROOM_HIT,
             inkooEvents.RESUME
         ]);
     }

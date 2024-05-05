@@ -361,7 +361,7 @@ export default class MainMenu extends Scene {
 
             case MainMenuName.LEVEL_3: {
                 this.emitter.fireEvent(inkooEvents.LEVEL_START);
-                setPlayerSpawn(new Vec2(4*32, 18*32));
+                setPlayerSpawn(new Vec2(15*32, 4*32));
                 this.sceneManager.changeToScene(IP_Level3, {}, sceneOptions);
                 break;
             }

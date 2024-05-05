@@ -14,14 +14,16 @@ import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import Input from "../../Wolfie2D/Input/Input";
 import { getPlayerSpawn, setPlayerSpawn} from "../Global/playerSpawn";
 import { sceneOptions } from "./MainMenu";
-import Hitbox from "../Hitbox/Hitbox";
+import Circle from "../../Wolfie2D/DataTypes/Shapes/Circle";
+import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
+import Rect from "../../Wolfie2D/Nodes/Graphics/Rect";
 
 export default class IP_Level3 extends IP_Level {
     goblinSpawns = [
         new Vec2(200, 800),
         new Vec2(400, 800)
     ];
-    
+    mushroom:Rect;
     loadScene(): void {
         // Load resources
         this.load.tilemap("level3", "assets/tilemaps/level3.json");
@@ -65,24 +67,14 @@ export default class IP_Level3 extends IP_Level {
         super.startScene();
         this.addLevelEnd(new Vec2(63*32, 18*32), new Vec2(2*32, 10*32), Areas.Mountains);
         this.initGoblin();
-        // const HB_options2 = {
-        //     actor: this.owner,
-        //     sprite: this.attack,
-        //     attack_name: "WAVE_ATTACK",
-        //     eventType: "enemy",
-        //     center: new Vec2(0, 0),
-        //     halfSize: 32,
-        //     invertX: true,
-        //     offset : new Vec2(0, 0),
-        //     shape: "circle",
-        //     customLocation: new Vec2(this.owner.position.x,this.owner.position.y+24),
-        //     customProperties: "right_wave",
-        //     colliderOffset: new Vec2(0, 0),
-        //     delay: new Timer(0),
-        //     wait: 200
-        // }
-        // let hitbox2 = new Hitbox(HB_options2, "enemy");
-        // console.log("trashmobs", this.trash_Mobs);
+        this.mushroom = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
+            position: new Vec2(32*56.5, 18*32),
+            size: new Vec2(32*3, 2*32),
+        });
+ 
+        this.mushroom.addPhysics(undefined, undefined, true, true);
+        this.mushroom.setTrigger("playerattack", inkooEvents.MUSHROOM_HIT, null);
+        console.log("this.scene",this.mushroom);
         this.nextLevel = IP_Level2;
         console.log("enemy array", this.trash_Mobs);
     }
