@@ -62,15 +62,12 @@ export default class IP_Level6 extends IP_Level {
         this.layers.get("foreground").setDepth(10);
         this.layers.get("ground").setDepth(2);
         super.startScene();
-        this.boss_name = "midas"
         this.addLevelEnd(new Vec2(32*1, 600), new Vec2(2*32, 10*32), Areas.Midas_Mountains);
 
         this.midasdoor = this.add.sprite('midasdoor', Layers.Bg);
         this.midasdoor.scale.set(2, 2);
         this.midasdoor.position.copy(new Vec2(27*32+16, 14*32-16));
         this.midasdoor.addPhysics(new AABB(Vec2.ZERO, new Vec2(16, 64)), Vec2.ZERO, true, true);
-        // this.midasdoor.setGroup("ground");
-        // console.log(this.midasdoor);
 
         const midasOptions = {
             owner: this.add.animatedSprite('midas1', Layers.Main),
@@ -78,7 +75,6 @@ export default class IP_Level6 extends IP_Level {
             tilemap: Layers.Main,
         }
         this.midas = new Midas(midasOptions, 10);
-        // this.midas = midas.owner;
 
         this.trash_Mobs.set(this.midas.owner.id, this.midas);
         this.triggerdoor = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
@@ -218,7 +214,7 @@ export default class IP_Level6 extends IP_Level {
                             if (this.dmgcooldown.isStopped() && !this.midas.isInvincible) {
                                 this.dmgcooldown.start();
                                 this.midas.setHp(-1);
-                                // console.log('midas hp:', this.midas.getHp());
+                                console.log('midas hp:', this.midas.getHp());
                             }
                         }
                     }
