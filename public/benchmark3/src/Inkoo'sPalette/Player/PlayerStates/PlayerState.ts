@@ -53,7 +53,7 @@ export default abstract class  PlayerState extends State{
 			this.parent.velocity.x += dir.x*100;
 			this.parent.velocity.y = 0;
 		}
-		
+		console.log(this.owner.position);
 	}
 
 	isAttacking () {

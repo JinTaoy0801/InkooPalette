@@ -24,11 +24,10 @@ export default class Snap extends Stage1State {
         this.owner.animation.play("SNAP", false);
 
         if (this.parent.coinFlip()) {
-            this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "laser_charge", loop: false, holdReference: false });
             this.typeofattack = "beam";
         }
         else {
-            this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "rock_forming", loop: false, holdReference: false });
+            
             this.typeofattack = "rock";
         }
 
@@ -103,9 +102,11 @@ export default class Snap extends Stage1State {
         if (!this.owner.animation.isPlaying("SNAP")) {
             //console.log('dude snapping')
             if (this.typeofattack == "beam") {
+                // this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "laser_charge", loop: false, holdReference: false });
                 this.emitter.fireEvent("SPAWNBEAM");
             }
              else {
+                // this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "rock_forming", loop: false, holdReference: false });
                 this.emitter.fireEvent("GROUNDSHAKE");
              }
             this.finished(MidasStates.STAGE1_IDLE);

@@ -14,7 +14,7 @@ import { setPlayerSpawn } from "../Global/playerSpawn";
 import Shield from "../Shield/Shield";
 import { inkooEvents } from "../inkooEvents";
 import IP_Level, { Areas, Layers } from "./IP_Level";
-import IP_Level2 from "./IP_Level2";
+import IP_Level1 from "./IP_Level1";
 import { sceneOptions } from "./MainMenu";
 
 export default class IP_Level6 extends IP_Level { 
@@ -75,7 +75,15 @@ export default class IP_Level6 extends IP_Level {
         this.layers.get("foreground").setDepth(10);
         this.layers.get("ground").setDepth(2);
         super.startScene();
-        this.addLevelEnd(new Vec2(32*1, 600), new Vec2(2*32, 10*32), Areas.Midas_Mountains);
+        
+        let leftwall = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
+            position: new Vec2(16, 10*32),
+            size: new Vec2(32, 32*20)
+        });
+        leftwall.addPhysics(undefined, undefined, true, true);
+        leftwall.setColor(new Color(0,0,0,0));
+
+        this.addLevelEnd(new Vec2(13*32,23*32), new Vec2(5*32, 1*32), Areas.Midas_Tutorial);
 
         this.midasdoor = this.add.sprite('midasdoor', Layers.Bg);
         this.midasdoor.scale.set(2, 2);
@@ -100,6 +108,7 @@ export default class IP_Level6 extends IP_Level {
             "CLOSE_DOOR",
             null,
         );
+        this.triggerdoor.setColor(new Color(0,0,0,0));
 
         this.walloffthrone = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
             position: new Vec2(55*32, 350),
@@ -119,10 +128,10 @@ export default class IP_Level6 extends IP_Level {
             let event = this.receiver.getNextEvent();
             console.log('event: ', event.type);
             switch (event.type) {
-                case Areas.Midas_Mountains: {
+                case Areas.Midas_Tutorial: {
                     // Go to the next level  
-                    setPlayerSpawn(new Vec2(1900, 365.5));
-                    this.sceneManager.changeToScene(IP_Level2, {}, this.sceneOptions);
+                    setPlayerSpawn(new Vec2(32*32-8, 2*32));
+                    this.sceneManager.changeToScene(IP_Level1, {}, this.sceneOptions);
                     break;
                 }
                 case "CLOSE_DOOR": {
@@ -152,6 +161,10 @@ export default class IP_Level6 extends IP_Level {
                     this.beams.forEach(beam => {
                         beam.tweens.play("beamflash");
                     });
+                    this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "laser_charge", loop: false, holdReference: false });
+                    setTimeout(()=> {
+                        this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "laser", loop: false, holdReference: false });
+                    }, 800);
                     break;
                 }
                 case "SPAWNSHIELD": {
@@ -173,6 +186,7 @@ export default class IP_Level6 extends IP_Level {
                     break;
                 }
                 case "GROUNDSHAKE": {
+                    this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "rock_forming", loop: false, holdReference: false });
                     let shake1 = this.add.animatedSprite("rock", Layers.Main);
                     shake1.scale.set(2, 2);
                     
@@ -252,9 +266,11 @@ export default class IP_Level6 extends IP_Level {
                         this.rock = undefined;
                     }
                     this.walloffthrone.removePhysics();
+                    this.midas.owner.animation.play("DEAD", true);
+                    this.midas.owner.removePhysics();
 
-                    this.midas.owner.destroy();
-                    this.midas = undefined;
+                    // this.midas.owner.destroy();
+                    // this.midas = undefined;
                     break;
                 }
             }
@@ -309,7 +325,7 @@ export default class IP_Level6 extends IP_Level {
     protected subscribeToEvents() {
         super.subscribeToEvents();
         this.receiver.subscribe([
-            Areas.Midas_Mountains,
+            Areas.Midas_Tutorial,
             "CLOSE_DOOR",
             "SPAWNBEAM",
             "SPAWNSHIELD",

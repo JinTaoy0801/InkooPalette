@@ -54,7 +54,8 @@ export default abstract class Stage1State extends State {
     checkPriorityAnimations() {
         const anis = [
 			"DAMAGED",
-            "DEAD"
+            "DEAD",
+            "DYING"
 		]
 		return anis.some(ani => this.owner.animation.isPlaying(ani));
     }
