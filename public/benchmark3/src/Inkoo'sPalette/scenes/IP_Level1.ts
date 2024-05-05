@@ -71,7 +71,8 @@ export default class IP_Level1 extends IP_Level {
         this.layers.get("foreground").setDepth(10);
         super.startScene();
         this.addLevelEnd(new Vec2(63*32, 18*32), new Vec2(2*32, 10*32), Areas.Mountains);
-
+        this.text = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Main, {position: new Vec2(400, 700), text: ""});
+        this.text2 = <Label>this.add.uiElement(UIElementType.LABEL, Layers.Main, {position: new Vec2(400, 700), text: ""});
         this.addLevelEnd(new Vec2(32*32, 0), new Vec2(10*32, 1*32), Areas.Midas);
         this.initGoblin();
         // console.log("trashmobs", this.trash_Mobs);

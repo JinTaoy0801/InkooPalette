@@ -213,6 +213,8 @@ export default class IP_Level extends Scene {
                         this.incPlayerLife(1)
                     }
                     this.sceneGraph.getNode(event.data.get("node")).destroy();
+                    this.trash_Mobs.delete(event.data.get("node"));
+                    console.log("enemyArray", this.trash_Mobs);
                     break;
                 }
                 case inkooEvents.PLAYER_KILLED: {

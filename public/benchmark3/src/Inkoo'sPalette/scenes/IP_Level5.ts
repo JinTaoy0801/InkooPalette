@@ -119,6 +119,7 @@ export default class IP_Level5 extends IP_Level {
                     // Go to the next level  
                     setPlayerSpawn(new Vec2(1930, 621.5));
                     this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
+                    this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "levelmusic"});
                     break;
                 }
             }

@@ -40,8 +40,6 @@ export default class PlayerController extends StateMachineAI {
     
     initializeAI(owner: GameNode, options: Record<string, any>){
         this.owner = owner;
-
-        // console.log('owner in playercontroller', owner);
         let idle = new Idle(this, this.owner);
         this.addState(PlayerStates.IDLE, idle);
         let walk = new Walk(this, this.owner);

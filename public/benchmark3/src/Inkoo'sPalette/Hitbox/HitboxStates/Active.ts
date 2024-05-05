@@ -145,7 +145,6 @@ export default class Active extends HitboxState {
             }
 
             if (!this.owner.animation.isPlaying(this.setting.attack_name) && this.setting.customProperties !== "projectile") {
-                console.log('this.setting.asdasdasd', this.setting.attack_name)
                 if (this.setting.attack_name == "ROCK_ATTACK") {
                     this.emitter.fireEvent("SPAWNROCK");
                 }

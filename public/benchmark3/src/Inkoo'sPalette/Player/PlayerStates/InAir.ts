@@ -73,7 +73,6 @@ export default abstract class InAir extends PlayerState {
 		if(getDoubleJump()){
 			if (Input.isKeyJustPressed("space") && this.jumpCount<1) {
 				this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "double_jump", loop: false, holdReference: false });
-				console.log('double jump?????');
 				this.parent.velocity.y = -450;
 				this.jumpCount++;
 			}
