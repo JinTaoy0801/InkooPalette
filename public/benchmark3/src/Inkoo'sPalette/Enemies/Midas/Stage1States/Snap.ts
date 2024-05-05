@@ -2,6 +2,7 @@ import Vec2 from "../../../../Wolfie2D/DataTypes/Vec2";
 import AnimatedSprite from "../../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Timer from "../../../../Wolfie2D/Timing/Timer";
 import Hitbox from "../../../Hitbox/Hitbox";
+import { inkooEvents } from "../../../inkooEvents";
 import { Layers } from "../../../scenes/IP_Level";
 import { MidasStates } from "../MidasController";
 import Stage1State from "./Stage1State";
@@ -23,9 +24,11 @@ export default class Snap extends Stage1State {
         this.owner.animation.play("SNAP", false);
 
         if (this.parent.coinFlip()) {
+            this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "laser_charge", loop: false, holdReference: false });
             this.typeofattack = "beam";
         }
         else {
+            this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "rock_forming", loop: false, holdReference: false });
             this.typeofattack = "rock";
         }
 

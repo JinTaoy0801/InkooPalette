@@ -34,6 +34,7 @@ export default class IP_Level1 extends IP_Level {
         this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
         this.load.spritesheet("GOBLIN_LIGHT_ATTACK", "assets/enemies/goblin/goblin_light_attack.json");
         this.load.audio("attack", "assets/sounds/attack.wav");
+        this.load.audio("dash", "assets/sounds/dash.wav");
         this.load.audio("dead", "assets/sounds/dead.wav");
         this.load.audio("enemy_dead", "assets/sounds/enemy_dead.wav");
         this.load.audio("hit_enemy", "assets/sounds/hit_enemy.wav");
@@ -52,9 +53,17 @@ export default class IP_Level1 extends IP_Level {
         this.load.spritesheet("SPIN_ATTACK", "assets/player/attack/spin_attack.json");
         this.load.spritesheet("GOBLIN_LIGHT_ATTACK", "assets/enemies/goblin/goblin_light_attack.json")
         this.load.audio("attack", "assets/sounds/attack.wav");
+        this.load.audio("dash", "assets/sounds/dash.wav");
         this.load.audio("dead", "assets/sounds/dead.wav");
+        this.load.audio("enemy_dead", "assets/sounds/enemy_dead.wav");
         this.load.audio("hit_enemy", "assets/sounds/hit_enemy.wav");
         this.load.audio("jump", "assets/sounds/jump.wav");
+        this.load.audio("jump2", "assets/sounds/jump2.wav");
+        this.load.audio("laser_charge", "assets/sounds/laser_charge.wav");
+        this.load.audio("laser", "assets/sounds/laser.wav");
+        this.load.audio("rock_forming", "assets/sounds/rock_forming.wav");
+        this.load.audio("rock_slide", "assets/sounds/rock_slide.wav");
+        this.load.audio("shield_hit", "assets/sounds/shield_hit.wav");
         this.load.audio("took_damage", "assets/sounds/took_damage.wav");
     }
 

@@ -181,9 +181,9 @@ export default class IP_Level extends Scene {
                                 this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "enemy_dead", loop: false, holdReference: false });
                             }
                             console.log("trashMob hp", trash_mob.getHp());
-                            // if (trash_mob.getName() == 'midas') {
-                            //     this.handleBossHealthChange(trash_mob.getHp(), 10)
-                            // }
+                            if (trash_mob.getName() == 'midas') {
+                                this.handleBossHealthChange(trash_mob.getHp(), 10)
+                            }
                         }
                         
                         this.emitter.fireEvent("POGOTIME");
@@ -439,28 +439,28 @@ export default class IP_Level extends Scene {
     }
 
     protected initBossHealthBar(bossName: String): void {
-        this.bossHealthBarName = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(this.viewport_center.x - 220, this.viewport_center.y + 190), text: bossName});
+        this.bossHealthBarName = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(250, 650), text: bossName});
         this.bossHealthBarName.font = "daydream";
         this.bossHealthBarName.textColor = Color.WHITE;
         this.bossHealthBarName.fontSize = 20;
 
-        this.bossHealthBar = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(this.viewport_center.x, this.viewport_center.y), text: ""});
+        this.bossHealthBar = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(600, 700), text: ""});
         this.bossHealthBar.size.set(800,50)
         this.bossHealthBar.setBackgroundColor(Color.GREEN);
         
-        this.bossHealthBarBg = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(this.viewport_center.x, this.viewport_center.y), text: ""});
+        this.bossHealthBarBg = <Label>this.add.uiElement(UIElementType.LABEL, Layers.UI, {position: new Vec2(600, 700), text: ""});
         this.bossHealthBarBg.size.set(800,50)
         this.bossHealthBarBg.setBackgroundColor(Color.TRANSPARENT);
         this.bossHealthBarBg.borderColor = Color.BLACK;
         this.bossHealthBarBg.borderWidth = 3;
     }
 
-    // protected handleBossHealthChange(currHP: number, maxHP: number): void {
-    //     let unit = this.bossHealthBarBg.size.x / maxHP;
+    protected handleBossHealthChange(currHP: number, maxHP: number): void {
+        let unit = this.bossHealthBarBg.size.x / maxHP;
         
-	// 	this.bossHealthBar.size.set(this.bossHealthBarBg.size.x - unit * (maxHP - currHP), this.bossHealthBarBg.size.y);
-	// 	this.bossHealthBar.position.set(this.bossHealthBarBg.position.x - (unit / 2 / this.getViewScale()) * (maxHP - currHP), this.bossHealthBarBg.position.y);
-    // }
+		this.bossHealthBar.size.set(this.bossHealthBarBg.size.x - unit * (maxHP - currHP), this.bossHealthBarBg.size.y);
+		this.bossHealthBar.position.set(this.bossHealthBarBg.position.x - (unit / 2 / this.getViewScale()) * (maxHP - currHP), this.bossHealthBarBg.position.y);
+    }
 
     protected initPlayer(): void {
         this.player = this.add.animatedSprite("player", Layers.Player);
