@@ -5,7 +5,6 @@ import { Layers } from "../../../scenes/IP_Level";
 import Vec2 from "../../../../Wolfie2D/DataTypes/Vec2";
 import Timer from "../../../../Wolfie2D/Timing/Timer";
 import Hitbox from "../../../Hitbox/Hitbox";
-import { setBG_Invincible } from "../../../Global/big_Goldem_Invincible";
 import AABB from "../../../../Wolfie2D/DataTypes/Shapes/AABB";
 import Circle from "../../../../Wolfie2D/DataTypes/Shapes/Circle";
 
