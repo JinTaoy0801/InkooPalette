@@ -42,7 +42,8 @@ export enum Areas {
     Mountains = "Mountains",
     Parkour = "Parkour",
     Midas = "Midas",
-
+    Fallen = "Fallen",
+    Ruins = "Runes",
     Mountains_Tutorial = "Mountains_Tutorial",
     Midas_Tutorial = "Midas_Tutorial"
 

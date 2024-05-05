@@ -5,9 +5,10 @@ import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import Big_Goldlem from "../Enemies/Big_Goldlem/Big_Goldlem";
 import Input from "../../Wolfie2D/Input/Input";
 import IP_Level1 from "./IP_Level1";
-import IP_Level3 from "./IP_Level6";
+import IP_Level3 from "./IP_Level3";
 import { getPlayerSpawn, setPlayerSpawn } from "../Global/playerSpawn";
 import { sceneOptions } from "./MainMenu";
+import IP_Level4 from "./IP_Level4";
 
 export default class IP_Level2 extends IP_Level {  
     goldlemSpawns = [
@@ -56,6 +57,8 @@ export default class IP_Level2 extends IP_Level {
         this.layers.get("foreground").setDepth(10);
         super.startScene();
         this.addLevelEnd(new Vec2(32*1, 400), new Vec2(2*32, 10*32), Areas.Mountains_Tutorial);
+        this.addLevelEnd(new Vec2(32*20, 36*32), new Vec2(20*32, 10*32), Areas.Fallen);
+        this.addLevelEnd(new Vec2(32*1, 400), new Vec2(2*32, 10*32), Areas.Ruins);
         //this.initGoldlem();
         this.initBigGoldlem();
         this.nextLevel = IP_Level3;
@@ -73,26 +76,24 @@ export default class IP_Level2 extends IP_Level {
                     this.sceneManager.changeToScene(IP_Level1, {}, sceneOptions);
                     break;
                 }
+                case Areas.Fallen: {
+                    // Go to the next level  
+                    setPlayerSpawn(new Vec2(15*32, 4*32));
+                    this.sceneManager.changeToScene(IP_Level3, {}, sceneOptions);
+                    break;
+                }
+                case Areas.Ruins: {
+                    // Go to the next level  
+                    setPlayerSpawn(new Vec2(4*32, 2*32));
+                    this.sceneManager.changeToScene(IP_Level4, {}, sceneOptions);
+                    break;
+                }
             }
         }
 
         super.updateScene(deltaT);
        
     }
-
-    // protected initGoldlem(): void {
-    //     var i;
-    //     for (i=0; i<1; i++) {
-    //         const goldlemOptions = {
-    //             owner: this.add.animatedSprite('goldlem', Layers.Main),
-    //             spawn: this.goldlemSpawns[i],
-    //             tilemap: Layers.Main,
-    //         }
-    //         let temp = new Goldlem(goldlemOptions,7);
-    //         this.trash_Mobs.set(goldlemOptions.owner.id, temp);
-    //     }
-        
-    // }
     
     protected initBigGoldlem(): void {
         var i;
@@ -111,7 +112,9 @@ export default class IP_Level2 extends IP_Level {
     protected subscribeToEvents() {
         super.subscribeToEvents();
         this.receiver.subscribe([
-            Areas.Mountains_Tutorial
+            Areas.Mountains_Tutorial,
+            Areas.Fallen,
+            Areas.Ruins,
         ]);
     }
 

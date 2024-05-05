@@ -8,6 +8,7 @@ import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import { inkooEvents } from "../../inkooEvents";
 import PlayerController from "../PlayerController";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+import { getDash } from "../../Global/dash";
 
 
 
@@ -42,18 +43,20 @@ export default abstract class  PlayerState extends State{
 
 	update(deltaT: number): void {
 		this.parent.velocity.y += this.gravity*deltaT;
-		if (Input.isPressed("dash") && this.dashCooldown.isStopped()) {
-			this.dashTimer.start();
-			this.dashCooldown.start();
-			this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "dash", loop: false, holdReference: false });
+		if(getDash()){
+			if (Input.isPressed("dash") && this.dashCooldown.isStopped()) {
+				this.dashTimer.start();
+				this.dashCooldown.start();
+				this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "dash", loop: false, holdReference: false });
+			}
+			if (!this.dashTimer.isStopped()) {
+				this.owner.animation.playIfNotAlready("DASHING");
+				let dir = this.getInputDirection();
+				this.parent.velocity.x += dir.x*100;
+				this.parent.velocity.y = 0;
+			}
 		}
-		if (!this.dashTimer.isStopped()) {
-			this.owner.animation.playIfNotAlready("DASHING");
-			let dir = this.getInputDirection();
-			this.parent.velocity.x += dir.x*100;
-			this.parent.velocity.y = 0;
-		}
-		console.log(this.owner.position);
+
 	}
 
 	isAttacking () {
