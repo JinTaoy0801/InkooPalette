@@ -29,6 +29,7 @@ export default class Midas extends Enemy {
                 this.emitter.fireEvent("SPAWNSHIELD");
             }
             if (this.getHp() === 0) {
+                this.owner.removePhysics();
                 this.owner.animation.play("DYING", false, "DEADMIDAS");
             }
         }

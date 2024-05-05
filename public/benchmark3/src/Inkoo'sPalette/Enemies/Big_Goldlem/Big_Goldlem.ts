@@ -62,6 +62,7 @@ export default class Big_Goldlem extends Enemy {
                 delay: new Timer(0)
             }
             let hitbox = new Hitbox(HB_options,"enemy");
+            this.dead.removePhysics();
         }
     }
 }
