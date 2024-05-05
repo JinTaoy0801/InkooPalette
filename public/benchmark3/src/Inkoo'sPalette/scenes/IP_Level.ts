@@ -28,6 +28,7 @@ import Midas from "../Enemies/Midas/Midas";
 import IP_Level5 from "./IP_Level5";
 import { getDoubleJump, setDoubleJump } from "../Global/doubleJump";
 import { getDash, setDash } from "../Global/dash";
+import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 
 export enum Layers {
     Player = "player",
@@ -492,10 +493,10 @@ export default class IP_Level extends Scene {
     protected incPlayerLife(amt: number): void {
         IP_Level.livesCount += amt;
         
-        if (IP_Level.livesCount >= 1000) {
-            IP_Level.livesCount = 1000;
-        }
-        else if (IP_Level.livesCount >= 6) {
+        // if (IP_Level.livesCount >= 1000) {
+        //     IP_Level.livesCount = 1000;
+        // }
+        if (IP_Level.livesCount >= 6) {
             IP_Level.livesCount = 6;
         }
 
@@ -572,6 +573,8 @@ export default class IP_Level extends Scene {
     }
 
     protected respawnPlayer():void{
+        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "levelmusic"});
+        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level6"});
         IP_Level.livesCount = 6;
         this.sceneManager.changeToScene(MainMenu,{});
         Input.enableInput();

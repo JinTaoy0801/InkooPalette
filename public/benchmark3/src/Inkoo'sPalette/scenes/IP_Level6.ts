@@ -1,5 +1,6 @@
 import AABB from "../../Wolfie2D/DataTypes/Shapes/AABB";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
+import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import Input from "../../Wolfie2D/Input/Input";
 import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
@@ -75,9 +76,11 @@ export default class IP_Level6 extends IP_Level {
         this.load.audio("rock_slide", "assets/sounds/rock_slide.wav");
         this.load.audio("shield_hit", "assets/sounds/shield_hit.wav");
         this.load.audio("took_damage", "assets/sounds/took_damage.wav");
+        this.load.audio("level6", "assets/music/level6.wav");
     }
 
     startScene(): void {
+        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "levelmusic"});
         this.add.tilemap("level6", new Vec2(2, 2));
         this.layers.get("foreground").setDepth(10);
         this.layers.get("ground").setDepth(2);
@@ -142,6 +145,7 @@ export default class IP_Level6 extends IP_Level {
                     break;
                 }
                 case "CLOSE_DOOR": {
+                    this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level6", loop: true, holdReference: true});
                     this.midasdoor.tweens.add("slidedown", {
                         startDelay: 0,
                         duration: 500,

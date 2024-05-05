@@ -20,8 +20,8 @@ import IP_Level6 from "./IP_Level6";
 
 export default class IP_Level1 extends IP_Level {
     goblinSpawns = [
-        new Vec2(200, 800),
-        new Vec2(400, 800)
+        new Vec2(1000, 800),
+        new Vec2(1200, 800)
     ];
     
     loadScene(): void {
@@ -51,12 +51,14 @@ export default class IP_Level1 extends IP_Level {
         this.load.audio("jump", "assets/sounds/jump.wav");
         this.load.audio("double_jump", "assets/sounds/jump2.wav");
         this.load.audio("took_damage", "assets/sounds/took_damage.wav");
+        this.load.audio("levelmusic", "assets/music/levelmusic.wav");
     }
 
     unloadScene(){
     }
 
     startScene(): void {
+        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "levelmusic", loop: true, holdReference: true});
         this.add.tilemap("level1", new Vec2(2, 2));
         this.layers.get("foreground").setDepth(10);
         super.startScene();
