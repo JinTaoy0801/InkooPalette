@@ -118,6 +118,13 @@
                     {"index": 120, "duration": 10}    
                     
           ]
+        },        { 
+          "name": "DYING",
+          "frames": 
+          [ 
+            {"index": 4, "duration": 250}
+
+          ]
         }
     ]
 }

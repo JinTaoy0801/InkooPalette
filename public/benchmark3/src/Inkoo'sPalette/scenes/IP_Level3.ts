@@ -28,7 +28,7 @@ export default class IP_Level3 extends IP_Level {
         new Vec2(32*35, 8*32)
     ];
     goldemSpawns = [
-        new Vec2(32*43.5,4*32)
+        new Vec2(32*43.5,4*32-4)
     ];
     protected dashBuff: Sprite;
     mushroom:Rect;
@@ -154,7 +154,7 @@ export default class IP_Level3 extends IP_Level {
         }
         
     }
-        protected initGoldlem(): void {
+    protected initGoldlem(): void {
         var i;
         for (i=0; i<1; i++) {
             const goldlemOptions = {

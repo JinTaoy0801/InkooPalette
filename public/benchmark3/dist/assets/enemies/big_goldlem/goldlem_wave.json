@@ -1,4 +1,5 @@
-{"name": "goldlem_wave",
+{
+  "name": "goldlem_wave",
     "spriteSheetImage": "wave.png",
     "spriteWidth": 32,
     "spriteHeight": 32,

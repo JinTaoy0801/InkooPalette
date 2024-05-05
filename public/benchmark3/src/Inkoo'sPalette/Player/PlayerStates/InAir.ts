@@ -87,6 +87,7 @@ export default abstract class InAir extends PlayerState {
 				this.parent.velocity.y = -500;
 			}
 		} else if (event.type == "TRAMPOLINE"){
+			//this.emitter.fireEvent(inkooEvents.PLAY_SOUND, { key: "double_jump", loop: false, holdReference: false });
 			this.parent.velocity.y = -500;
 		}
 	}

@@ -24,11 +24,11 @@ export default class Slam extends Big_GoldlemState{
             attack_name: "WAVE_ATTACK",
             eventType: "enemy",
             center: new Vec2(0, 0),
-            halfSize: 32,
+            halfSize: new Vec2(32, 32),
             invertX: false,
             offset : new Vec2(0, 0),
-            shape: "circle",
-            customLocation: new Vec2(this.owner.position.x,this.owner.position.y+24),
+            shape: "AABB",
+            customLocation: new Vec2(this.owner.position.x,this.owner.position.y+28),
             customProperties: "left_wave",
             colliderOffset: new Vec2(0, 0),
             delay: new Timer(0),
@@ -43,11 +43,11 @@ export default class Slam extends Big_GoldlemState{
             attack_name: "WAVE_ATTACK",
             eventType: "enemy",
             center: new Vec2(0, 0),
-            halfSize: 32,
+            halfSize: new Vec2(32, 32),
             invertX: true,
             offset : new Vec2(0, 0),
-            shape: "circle",
-            customLocation: new Vec2(this.owner.position.x,this.owner.position.y+24),
+            shape: "AABB",
+            customLocation: new Vec2(this.owner.position.x,this.owner.position.y+28),
             customProperties: "right_wave",
             colliderOffset: new Vec2(0, 0),
             delay: new Timer(0),
@@ -57,9 +57,11 @@ export default class Slam extends Big_GoldlemState{
     }
     update(deltaT: number): void {
         super.update(deltaT);
-        if(!this.owner.animation.isPlaying("SLAM")){
-            this.finished(Big_GoldlemStates.REFORM)
-            
+        if (!this.checkPriorityAnimations()) {
+            if(!this.owner.animation.isPlaying("SLAM")){
+                this.finished(Big_GoldlemStates.REFORM)
+                
+            }
         }
     }
     onExit(): Record<string, any> {
