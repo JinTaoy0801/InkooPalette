@@ -308,8 +308,25 @@ export default class MainMenu extends Scene {
         storyHeader.textColor = Color.WHITE;
         storyHeader.font = "daydream";
 
-        const storyText = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.STORY, {position: new Vec2(center.x, center.y - 50), text: "Story Placeholder Text"});
+        const storyText = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.STORY, {position: new Vec2(center.x, center.y - 150), text: "Made by Midas, Inkoo, you've realized his evil doings."});
+        storyText.font = "daydream"
+        storyText.fontSize = 20
         storyText.textColor = Color.WHITE;
+
+        const storyText2 = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.STORY, {position: new Vec2(center.x, center.y - 100), text: "After trying to challenge Midas, Inkoo was sent the"});
+        storyText2.font = "daydream"
+        storyText2.fontSize = 20
+        storyText2.textColor = Color.WHITE;
+
+        const storyText3 = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.STORY, {position: new Vec2(center.x - 11, center.y - 50), text: "overworld. Now you must find your way back to the"});
+        storyText3.font = "daydream"
+        storyText3.fontSize = 20
+        storyText3.textColor = Color.WHITE;
+
+        const storyText4 = <Label>this.add.uiElement(UIElementType.LABEL, MainMenuName.STORY, {position: new Vec2(center.x - 65, center.y), text: "the tree, defeat Midas, and take the throne!"});
+        storyText4.font = "daydream"
+        storyText4.fontSize = 20
+        storyText4.textColor = Color.WHITE;
 
         this.receiver.subscribe(MainMenuName.START_GAME);
         this.receiver.subscribe(MainMenuName.LEVEL_SELECT);
