@@ -13,10 +13,11 @@ export default abstract class Big_GoldlemState extends State {
 	playerPosition: Vec2 = Vec2.ZERO;
     attackTimer: Timer;
     lightAttackRange = 64;
-
+    bossAwakened:boolean
     constructor(parent: StateMachine, owner: AnimatedSprite) {
 		super(parent);
 		this.owner = owner;
+        this.bossAwakened = false;
         this.attackTimer = new Timer(5000);
 	}
     patrolArea = new Vec2(this.parent.patrolArea.leftBound,this.parent.patrolArea.rightBound);
@@ -39,6 +40,14 @@ export default abstract class Big_GoldlemState extends State {
         this.playerPosition = (<IP_Level>this.owner.getScene()).player.position;
         let blocks = x * 32;
         return Math.abs(this.owner.position.x - this.playerPosition.x) <= blocks;
+    }
+    checkPriorityAnimations() {
+        const anis = [
+			"DAMAGED",
+            "DEAD",
+            "DYING"
+		]
+		return anis.some(ani => this.owner.animation.isPlaying(ani));
     }
     
 

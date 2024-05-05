@@ -11,12 +11,15 @@ export default class Idle extends Big_GoldlemState {
 
   update(deltaT: number): void {
     super.update(deltaT);
-    this.owner.animation.playIfNotAlready("IDLE", true);
-    if (this.parent.coinFlip()) {
-      this.finished(Big_GoldlemStates.WALKING);
-    }
-    else if(this.playerInPatrol(this.patrolArea)){
-      this.finished(Big_GoldlemStates.SLAM);
+    if (!this.checkPriorityAnimations()) {
+      this.owner.animation.playIfNotAlready("IDLE", true);
+      if (this.parent.coinFlip()) {
+        this.finished(Big_GoldlemStates.WALKING);
+      }
+      else if(this.playerInPatrol(this.patrolArea) && this.attackTimer.isStopped()){
+        this.finished(Big_GoldlemStates.SLAM);
+        this.attackTimer.start();
+      }
     }
   }
 

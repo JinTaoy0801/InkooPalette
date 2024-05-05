@@ -17,7 +17,7 @@ export default class Sleeping extends Big_GoldlemState {
         if(this.playerInPatrol(this.patrolArea)){
             setTimeout(() => {
                 this.finished(Big_GoldlemStates.AWAKEN);
-            }, 1000);
+            }, 300);
         }
     }
     

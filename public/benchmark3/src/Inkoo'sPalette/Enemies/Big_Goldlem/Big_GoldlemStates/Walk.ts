@@ -9,31 +9,33 @@ export default class Walking extends Big_GoldlemState {
 
     update(deltaT: number): void {
         super.update(deltaT);
-        if (!this.owner.animation.isPlaying("TURN_LEFT")) {
-            this.owner.animation.playIfNotAlready("WALKING_LEFT", true);
+        if (!this.checkPriorityAnimations()) {
+            if (!this.owner.animation.isPlaying("TURN_LEFT")) {
+                this.owner.animation.playIfNotAlready("WALKING_LEFT", true);
+            }
+            if(this.inRanged(5) && this.attackTimer.isStopped()){
+                this.finished(Big_GoldlemStates.SLAM);
+                this.attackTimer.start();
+            }
+            else if (this.parent.coinFlip())
+                this.finished(Big_GoldlemStates.IDLE);
+
+            let dir = 0;
+            if (this.parent.directionPatrol == "right")
+                dir = 1;
+            else if (this.parent.directionPatrol == "left")
+                dir = -1;
+
+            if (this.parent.patrolArea.leftBound > this.owner.position.x) {
+                this.parent.directionPatrol = 'right';
+            }
+            else if (this.parent.patrolArea.rightBound < this.owner.position.x)
+                this.parent.directionPatrol = 'left';
+
+            this.parent.velocity.x = dir * this.parent.speed;
+
+            this.owner.move(this.parent.velocity.scaled(deltaT));
         }
-        if(this.inRanged(2) && this.attackTimer.isStopped()){
-            this.finished(Big_GoldlemStates.SLAM);
-            this.attackTimer.start();
-        }
-        else if (this.parent.coinFlip())
-            this.finished(Big_GoldlemStates.IDLE);
-
-        let dir = 0;
-        if (this.parent.directionPatrol == "right")
-            dir = 1;
-        else if (this.parent.directionPatrol == "left")
-            dir = -1;
-
-        if (this.parent.patrolArea.leftBound > this.owner.position.x) {
-            this.parent.directionPatrol = 'right';
-        }
-        else if (this.parent.patrolArea.rightBound < this.owner.position.x)
-            this.parent.directionPatrol = 'left';
-
-        this.parent.velocity.x = dir * this.parent.speed;
-
-        this.owner.move(this.parent.velocity.scaled(deltaT));
     }
 
     onExit(): Record<string, any> {
