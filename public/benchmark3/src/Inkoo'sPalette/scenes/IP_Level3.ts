@@ -17,11 +17,16 @@ import { sceneOptions } from "./MainMenu";
 import Circle from "../../Wolfie2D/DataTypes/Shapes/Circle";
 import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
 import Rect from "../../Wolfie2D/Nodes/Graphics/Rect";
+import Color from "../../Wolfie2D/Utils/Color";
+import Goldlem from "../Enemies/Goldlem/Goldlem";
 
 export default class IP_Level3 extends IP_Level {
     goblinSpawns = [
-        new Vec2(200, 800),
-        new Vec2(400, 800)
+        new Vec2(32*54.5, 24*32),
+        new Vec2(32*35, 8*32)
+    ];
+    goldemSpawns = [
+        new Vec2(32*43.5,4*32)
     ];
     mushroom:Rect;
     loadScene(): void {
@@ -29,6 +34,8 @@ export default class IP_Level3 extends IP_Level {
         this.load.tilemap("level3", "assets/tilemaps/level3.json");
         this.load.spritesheet("player", "assets/player/inkoo.json");
         this.load.spritesheet("goblin", "assets/enemies/goblin/goblin_movement.json");
+        this.load.spritesheet("goldlem", "assets/enemies/goldlem/goldlem.json");
+        this.load.spritesheet("gold", "assets/enemies/goldlem/gold.json");
         this.load.image("fullheart", "assets/player/heart.png");
         this.load.image("halfheart", "assets/player/halfheart.png");
         this.load.image("background", "assets/images/mainmenu_bg.png");
@@ -63,18 +70,19 @@ export default class IP_Level3 extends IP_Level {
 
     startScene(): void {
         this.add.tilemap("level3", new Vec2(2, 2));
-        //this.layers.get("foreground").setDepth(10);
+        this.layers.get("foreground").setDepth(10);
         super.startScene();
         this.addLevelEnd(new Vec2(63*32, 18*32), new Vec2(2*32, 10*32), Areas.Mountains);
         this.initGoblin();
+        this.initGoldlem();
         this.mushroom = <Rect>this.add.graphic(GraphicType.RECT, Layers.Main, {
             position: new Vec2(32*56.5, 18*32),
             size: new Vec2(32*3, 2*32),
         });
  
-        this.mushroom.addPhysics(undefined, undefined, true, true);
-        this.mushroom.setTrigger("playerattack", inkooEvents.MUSHROOM_HIT, null);
-        console.log("this.scene",this.mushroom);
+        this.mushroom.addPhysics(undefined, undefined, false, true);
+        this.mushroom.color = Color.TRANSPARENT;
+        this.mushroom.setTrigger("player", inkooEvents.MUSHROOM_HIT, null);
         this.nextLevel = IP_Level2;
         console.log("enemy array", this.trash_Mobs);
     }
@@ -86,7 +94,6 @@ export default class IP_Level3 extends IP_Level {
             let event = this.receiver.getNextEvent();
             switch (event.type) {
                 case Areas.Mountains: {
-                    // Go to the next level    
                     setPlayerSpawn(new Vec2(32*5, 493.5));
                     this.sceneManager.changeToScene(IP_Level2, {}, sceneOptions);
                     break;
@@ -109,6 +116,19 @@ export default class IP_Level3 extends IP_Level {
             }
             let temp = new Goblin(goblinOptions,5);
             this.trash_Mobs.set(goblinOptions.owner.id,temp);
+        }
+        
+    }
+        protected initGoldlem(): void {
+        var i;
+        for (i=0; i<1; i++) {
+            const goldlemOptions = {
+                owner: this.add.animatedSprite('goldlem', Layers.Main),
+                spawn: this.goldemSpawns[i],
+                tilemap: Layers.Main,
+            }
+            let temp = new Goldlem(goldlemOptions,7);
+            this.trash_Mobs.set(goldlemOptions.owner.id, temp);
         }
         
     }

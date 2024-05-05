@@ -110,7 +110,6 @@ export default class IP_Level extends Scene {
         this.isInvincible = new Timer(1000);
         this.playerAttack = new Timer(500);
         Input.disableInput();
-        // console.log('outsitede', this.sceneOptions.physics);
     }
 
 
@@ -122,7 +121,6 @@ export default class IP_Level extends Scene {
         }
         while (this.receiver.hasNextEvent()) {
             let event = this.receiver.getNextEvent();
-            // console.log('eventype', event.type);
             switch (event.type) {
                 case inkooEvents.PAUSE_MENU: {
                     this.sceneManager.changeToScene(MainMenu);
@@ -141,8 +139,7 @@ export default class IP_Level extends Scene {
                     break;
                 }
                 case inkooEvents.MUSHROOM_HIT:{
-                    this.emitter.fireEvent("POGOTIME");
-                    console.log("POGOTIMEEEEE");
+                    this.emitter.fireEvent("TRAMPOLINE");
                     break;
                 }
                 case inkooEvents.PLAYER_ATTACK: {

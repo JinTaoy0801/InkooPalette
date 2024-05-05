@@ -75,9 +75,10 @@ export default abstract class InAir extends PlayerState {
 	handleInput(event: GameEvent): void {
 		if (event.type == "POGOTIME") {
 			if (Input.isKeyPressed('w') || Input.isKeyPressed('s')) {
-				console.log('inair and hit?');
 				this.parent.velocity.y = -500;
 			}
+		} else if (event.type == "TRAMPOLINE"){
+			this.parent.velocity.y = -500;
 		}
 	}
 }
