@@ -25,7 +25,8 @@ import Goldlem from "../Enemies/Goldlem/Goldlem";
 export default class IP_Level5 extends IP_Level {
     goblinSpawns = [
         new Vec2(26*32, 53*32),
-        new Vec2(1600, 480)
+        new Vec2(2*32, 23*32),
+        new Vec2(10*32, 4*32)
     ];
 
     protected doubleJumpBuff: Sprite;
@@ -153,7 +154,7 @@ export default class IP_Level5 extends IP_Level {
 
     protected initGoblin(): void {
         var i;
-        for (i=0; i<2; i++) {
+        for (i=0; i<3; i++) {
             const goblinOptions = {
                 owner: this.add.animatedSprite('goblin', Layers.Main),
                 spawn: this.goblinSpawns[i],

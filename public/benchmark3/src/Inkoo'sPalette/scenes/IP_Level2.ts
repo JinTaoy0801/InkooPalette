@@ -20,7 +20,7 @@ export default class IP_Level2 extends IP_Level {
     ];
 
     goldemSpawns = [
-        new Vec2(1450, 470)
+        new Vec2(1450, 480)
     ];
 
     loadScene(): void {
