@@ -607,7 +607,7 @@ export default class IP_Level extends Scene {
           where,
           null,
         );
-        this.levelEndArea.color = new Color(255, 255, 255, 1);
+        this.levelEndArea.color = new Color(255, 255, 255, 0);
     }
 
     isArea(s: String): boolean {
